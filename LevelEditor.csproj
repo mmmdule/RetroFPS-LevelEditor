@@ -65,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -78,6 +79,63 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArchwaySingle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArchwaySmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArmorBlink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cacoskull - Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cobweb Wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DoorGateSpriteSkull.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EnergyBall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExitDoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShotgunAmmo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skull2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SmallMedkit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stones 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Torch Spritesheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tri-horn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wallBrick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\select_cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cursor32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\draw.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
