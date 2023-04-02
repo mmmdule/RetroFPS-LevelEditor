@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
@@ -24,7 +23,7 @@ namespace LevelEditor
         Resources.ShotgunAmmo,Resources.SmallMedkit, Resources.Stone, Resources.Torch,
         Resources.Tri_horn, Resources.wallBrick};
 
-        PictureBox[] pictureBoxArr = new PictureBox[64 * 64];
+        PictureBox[] pictureBoxArr; //= new PictureBox[64 * 64];
 
         public FormCopy()
         {
@@ -36,22 +35,48 @@ namespace LevelEditor
             //    pictureBoxArr[i] = null;
 
             typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(panel1, true, null);
+
+            panel1.Paint += Panel1_Paint;
+            panel1.Scroll += Panel1_Scroll;
+            panel1.Resize += Panel1_Resize;
+
+            
+        }
+
+        Rectangle panelAreaRect;
+
+        private void Panel1_Resize(object sender, EventArgs e)
+        {
+            panelAreaRect = new Rectangle((sender as Panel).Location, (sender as Panel).Size);
+        }
+
+
+        private void Panel1_Scroll(object sender, ScrollEventArgs e)
+        {
+            //(sender as Panel).SuspendLayout();
+            //(sender as Panel).Invalidate(panelAreaRect, false);
+            //(sender as Panel).Update();
+            //(sender as Panel).ResumeLayout(true);
+        }
+
+        private void Panel1_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Task.Run(() => { PreparePanel(); });
-            //FillPanelOnLoad(panel1, 30, true);
-            //AddBasicLevelOutline(panel1);
-
-            AddPenChoiceButtonEvents(gameObjectsFlowLayoutPanel);
-        }
-
-        private void PreparePanel()
-        {
+            this.SuspendLayout();
+            pictureBoxArr = new PictureBox[64 * 64];
             FillPanelOnLoad(panel1, 30, true);
             AddBasicLevelOutline(panel1);
+
+            AddPenChoiceButtonEvents(gameObjectsFlowLayoutPanel);
+            this.ResumeLayout(true);
+            panelAreaRect = new Rectangle(panel1.Location, panel1.Size);
         }
+
 
         private bool resizingTable = false;
         
@@ -123,7 +148,8 @@ namespace LevelEditor
 
         private void panelPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            ControlPaint.DrawBorder(e.Graphics, (sender as PictureBox).ClientRectangle, Color.White, ButtonBorderStyle.Dashed);
+            //ControlPaint.DrawBorder(e.Graphics, (sender as PictureBox).ClientRectangle, Color.White, ButtonBorderStyle.Dashed);
+            
         }
 
         private void AddBasicLevelOutline(TableLayoutPanel tablePanel)

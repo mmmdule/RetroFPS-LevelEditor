@@ -17,7 +17,8 @@ namespace LevelEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
-            Application.Run(new FormCopy());
+            //Application.Run(new FormCopy());
+            Application.Run(new FormDraw());
         }
     }
 }
