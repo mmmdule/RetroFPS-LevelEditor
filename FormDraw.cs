@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,10 +28,10 @@ namespace LevelEditor {
         public FormDraw() {
             this.DoubleBuffered = true;
             InitializeComponent();
+            
             //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
-            //for (int i = 0; i < pictureBoxArr.Length; i++)
-            //    pictureBoxArr[i] = null;
+
 
             typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(panel1, true, null);
 
@@ -39,6 +40,86 @@ namespace LevelEditor {
             panel1.Resize += Panel1_Resize;
             panel1.MouseClick += Panel_MouseClick;
             panel1.MouseMove += Panel1_MouseMove;
+            panel1.PreviewKeyDown += Panel1_KeyDownScroll;
+            
+            panel1.MouseWheel += Panel1_MouseWheel;
+
+            panel1.BackgroundImageLayout = ImageLayout.None;
+
+        }
+
+        private void Panel1_MouseWheel(object sender, MouseEventArgs e) {
+            Console.WriteLine("MouseWheel event");
+            if (ModifierKeys == Keys.Shift) {
+                if (e.Delta > 0) {
+                    drawX = drawX > 0 ? drawX - 1 : drawX;
+                    //(sender as Panel).Refresh();
+                    (sender as Panel).Invalidate();
+                    (sender as Panel).Update();
+                }
+                else if (e.Delta < 0) {
+                    drawX = drawX > 62 ? drawX : drawX + 1;
+                    //(sender as Panel).Refresh();
+                    (sender as Panel).Invalidate();
+                    (sender as Panel).Update();
+                }
+            }
+            else {
+                if (e.Delta > 0) {
+                    drawY = drawY > 0 ? drawY - 1 : drawY;
+                    //(sender as Panel).Refresh();
+                    (sender as Panel).Invalidate();
+                    (sender as Panel).Update();
+                }
+                else if (e.Delta < 0) {
+                    drawY = drawY > 62 ? drawY : drawY + 1;
+                    //(sender as Panel).Refresh();
+                    (sender as Panel).Invalidate();
+                    (sender as Panel).Update();
+                }
+            }
+
+            if (ModifierKeys == Keys.Control) {
+                if (e.Delta > 0) {
+                    numericUpDownCellSize.Value = numericUpDownCellSize.Value + 5 > numericUpDownCellSize.Maximum ? numericUpDownCellSize.Maximum : numericUpDownCellSize.Value + 5;
+                    ResizeCells(panel1, (int)numericUpDownCellSize.Value);
+                }
+                else if (e.Delta < 0) {
+                    numericUpDownCellSize.Value = numericUpDownCellSize.Value - 5 < numericUpDownCellSize.Minimum ? numericUpDownCellSize.Minimum : numericUpDownCellSize.Value - 5;
+                    ResizeCells(panel1, (int)numericUpDownCellSize.Value);
+                }
+            }
+        }
+
+        private void Panel1_KeyDownScroll(object sender, PreviewKeyDownEventArgs e) {
+            
+
+            if (e.KeyCode == Keys.Right) {
+                drawX = drawX > 62 ? drawX : drawX + 1;
+                //(sender as Panel).Refresh();
+                (sender as Panel).Invalidate();
+                (sender as Panel).Update();
+            }
+            else if (e.KeyCode == Keys.Left) {
+                drawX = drawX > 0 ? drawX - 1 : drawX;
+                //(sender as Panel).Refresh();
+                (sender as Panel).Invalidate();
+                (sender as Panel).Update();
+            }
+            else if (e.KeyCode == Keys.Down) {
+                drawY = drawY > 62 ? drawY : drawY + 1;
+                //(sender as Panel).Refresh();
+                (sender as Panel).Invalidate();
+                (sender as Panel).Update();
+            }
+            else if (e.KeyCode == Keys.Up) {
+                drawY = drawY > 0 ? drawY - 1 : drawY;
+                //(sender as Panel).Refresh();
+                (sender as Panel).Invalidate();
+                (sender as Panel).Update();
+                    
+            }
+            Console.WriteLine($"{e.KeyCode}, drawX: {drawX}, drawY: {drawY}");
         }
 
         private void Panel1_MouseMove(object sender, MouseEventArgs e) {
@@ -50,16 +131,18 @@ namespace LevelEditor {
         }
 
         private void PanelDrawDirect(object sender, MouseEventArgs e) {
-            if (!drawMode)
+            if (!drawMode) {
+                (sender as Panel).Focus();
                 return;
+            }
 
             Panel panel = sender as Panel;
             int x, y;
             int itemCount = mapGameObjects.Count;
 
-            x = (panel.PointToClient(Cursor.Position).X / CurrentPictureSize); //* CurrentPictureSize;
-            y = (panel.PointToClient(Cursor.Position).Y / CurrentPictureSize); //* CurrentPictureSize;
-            if (y == 0 || y == 63 || x == 0 || x == 63)
+            x = (panel.PointToClient(Cursor.Position).X / CurrentPictureSize) + drawX; //* CurrentPictureSize;
+            y = (panel.PointToClient(Cursor.Position).Y / CurrentPictureSize) + drawY; //* CurrentPictureSize;
+            if (y <= 0 || y >= 63 || x <= 0 || x >= 63)
                 return;
 
             if (e.Button == MouseButtons.Left) {
@@ -68,7 +151,7 @@ namespace LevelEditor {
                 if (panel.Capture)
                     panel.Capture = false;
 
-                Console.WriteLine($"X: {x}, Y: {y}");
+                Console.WriteLine($"Drawing Click, X: {x}, Y: {y}");
 
                 for (int i = 0; i < itemCount; i++)
                     if (mapGameObjects[i].X == x && mapGameObjects[i].Y == y) {
@@ -94,12 +177,15 @@ namespace LevelEditor {
                 for (int i = 0; i < itemCount; i++)
                     if (mapGameObjects[i].X == x && mapGameObjects[i].Y == y) {
                         mapGameObjects.RemoveAt(i);
+
                         panel.Invalidate();
                         panel.Update();
                         break;
                     }
                 //REMOVE GAMEOBJECT FROM LIST ON CALCULATED COORDINATES
             }
+
+            panel.Focus();
         }
 
         Rectangle panelAreaRect;
@@ -108,32 +194,40 @@ namespace LevelEditor {
             panelAreaRect = new Rectangle((sender as Panel).Location, (sender as Panel).Size);
         }
 
-
-        private void Panel1_Scroll(object sender, ScrollEventArgs e) {
-            //(sender as Panel).SuspendLayout();
-            //(sender as Panel).Invalidate(panelAreaRect, false);
-            //(sender as Panel).Update();
-            //(sender as Panel).ResumeLayout(true);
+        bool drawScroll = false;
+        private void Panel1_Scroll(object sender, ScrollEventArgs se) {
+            
         }
 
+        int drawX = 0, drawY = 0;
         Pen GridPen = new Pen(Brushes.White);
+        
         private void Panel1_Paint(object sender, PaintEventArgs e) {
+
             base.OnPaint(e);
+
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
+            //Rectangle r = (sender as Panel).DisplayRectangle;
+
             foreach (MapGameObject gObject in mapGameObjects) {
-                e.Graphics.DrawImage(gObject.Image, gObject.X * CurrentPictureSize, gObject.Y * CurrentPictureSize,
+                if(gObject.X >= drawX && gObject.Y >= drawY)
+                    e.Graphics.DrawImage(gObject.Image, (gObject.X - drawX) * CurrentPictureSize, (gObject.Y - drawY) * CurrentPictureSize,
                                      CurrentPictureSize, CurrentPictureSize);
+                
             }
 
             //GRID
-            for (int i = 0; i < 64; i++) {
+            for (int i = 0; i < 64 - drawX; i++) {
                 // Vertical
                 e.Graphics.DrawLine(GridPen, i * CurrentPictureSize, 0, i * CurrentPictureSize, 64 * CurrentPictureSize);
+            }
+            for (int i = 0; i < 64 - drawY; i++) {
                 // Horizontal
                 e.Graphics.DrawLine(GridPen, 0, i * CurrentPictureSize, 64 * CurrentPictureSize, i * CurrentPictureSize);
             }
+
 
         }
 
@@ -172,12 +266,14 @@ namespace LevelEditor {
             panel.Margin = new Padding(0);
             panel.SuspendLayout();
 
-
-            Point pos = new Point(0, 0);
+            //panel.Controls.Clear();
+            Point pos = new Point(63 * pictureSize, 0);
             Size size = new Size(pictureSize, pictureSize);
 
+
+
             //panel.ClientSize = new Size(pictureSize * 64, pictureSize * 64);
-            
+
 
             if (mapGameObjects.Count == 0)
                 AddBasicLevelOutline(panel, pictureSize);
@@ -198,7 +294,7 @@ namespace LevelEditor {
             panel.Controls.Clear();
             for (int i = 0; i <= 63; i += 63) //HORIZONTAL
                 for (int j = 0; j < 64; j++) {
-                    MapGameObject tmp = new MapGameObject(j /* * pictureSize*/, i /** pictureSize*/);
+                    MapGameObject tmp = new MapGameObject(j /* * pictureSize*/, i /* * pictureSize*/);
                     tmp.SetTypeFromImage(Resources.wallBrick);
                     mapGameObjects.Add(tmp);
                 }
@@ -219,50 +315,20 @@ namespace LevelEditor {
         private Image currentPenImage = Resources.wallBrick; //pocetno stanje
 
         private bool drawMode = true;
-        private void DrawOnMap(object sender, MouseEventArgs e) {
-            if (!drawMode)
-                return;
-
-            PictureBox pictureBox = sender as PictureBox;
-
-            if (e.Button == MouseButtons.Left) {
-                //MouseMove radi "Capture" nad misem ako se klikne taster.
-                //Kako bi se bojilo po drugim poljima, mora da se uradi "un-Capture"
-                if (pictureBox.Capture)
-                    pictureBox.Capture = false;
-
-                pictureBox.Image = currentPenImage;
-            }
-            else if (e.Button == MouseButtons.Right) {
-                if (pictureBox.Capture)
-                    pictureBox.Capture = false;
-
-                pictureBox.Image = null;
-            }
-
-        }
+        
 
         private void resizeCellsButton_Click(object sender, EventArgs e) {
-            CurrentPictureSize = (int)numericUpDownCellSize.Value;
-            panel1.Invalidate();
-            panel1.Update();
-            //FillPanelOnLoad(panel1, CurrentPictureSize);
-
-
-
-            //ResizeCells(panel1, new Point((int)numericUpDownCellSize.Value));
+            ResizeCells(panel1,(int)numericUpDownCellSize.Value);
         }
 
-        private void ResizeCells(Panel panel, Point point) {
-            this.UseWaitCursor = true;
+        
 
-            panel.Enabled = false;
-
-            Point pos = new Point(0, 0);
-
-            panel.Enabled = true;
-
-            this.UseWaitCursor = false;
+        private void ResizeCells(Panel panel, int newSize) {
+            drawX = 0;
+            drawY = 0;
+            CurrentPictureSize = newSize;
+            panel.Invalidate();
+            panel.Update();
         }
 
 

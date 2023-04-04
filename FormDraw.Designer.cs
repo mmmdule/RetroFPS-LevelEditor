@@ -31,11 +31,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.resizeCellsButton = new System.Windows.Forms.Button();
+            this.radioButtonSelectMode = new System.Windows.Forms.RadioButton();
             this.numericUpDownCellSize = new System.Windows.Forms.NumericUpDown();
+            this.radioButtonDrawMode = new System.Windows.Forms.RadioButton();
             this.cellSizeLabel = new System.Windows.Forms.Label();
             this.gameObjectsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.button17 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -52,8 +52,8 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
-            this.radioButtonSelectMode = new System.Windows.Forms.RadioButton();
-            this.radioButtonDrawMode = new System.Windows.Forms.RadioButton();
+            this.button17 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCellSize)).BeginInit();
             this.gameObjectsFlowLayoutPanel.SuspendLayout();
@@ -103,6 +103,24 @@
             this.resizeCellsButton.UseVisualStyleBackColor = true;
             this.resizeCellsButton.Click += new System.EventHandler(this.resizeCellsButton_Click);
             // 
+            // radioButtonSelectMode
+            // 
+            this.radioButtonSelectMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonSelectMode.AutoSize = true;
+            this.radioButtonSelectMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonSelectMode.Image = global::LevelEditor.Properties.Resources.cursor32;
+            this.radioButtonSelectMode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.radioButtonSelectMode.Location = new System.Drawing.Point(6, 687);
+            this.radioButtonSelectMode.Name = "radioButtonSelectMode";
+            this.radioButtonSelectMode.Size = new System.Drawing.Size(141, 32);
+            this.radioButtonSelectMode.TabIndex = 1;
+            this.radioButtonSelectMode.Text = "Select Mode";
+            this.radioButtonSelectMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radioButtonSelectMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radioButtonSelectMode.UseVisualStyleBackColor = true;
+            // 
             // numericUpDownCellSize
             // 
             this.numericUpDownCellSize.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -112,11 +130,6 @@
             this.numericUpDownCellSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numericUpDownCellSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numericUpDownCellSize.ForeColor = System.Drawing.Color.White;
-            this.numericUpDownCellSize.Increment = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
             this.numericUpDownCellSize.Location = new System.Drawing.Point(148, 742);
             this.numericUpDownCellSize.Maximum = new decimal(new int[] {
             75,
@@ -124,7 +137,7 @@
             0,
             0});
             this.numericUpDownCellSize.Minimum = new decimal(new int[] {
-            15,
+            13,
             0,
             0,
             0});
@@ -136,6 +149,26 @@
             0,
             0,
             0});
+            // 
+            // radioButtonDrawMode
+            // 
+            this.radioButtonDrawMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonDrawMode.Checked = true;
+            this.radioButtonDrawMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonDrawMode.Image = global::LevelEditor.Properties.Resources.draw;
+            this.radioButtonDrawMode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.radioButtonDrawMode.Location = new System.Drawing.Point(162, 678);
+            this.radioButtonDrawMode.Name = "radioButtonDrawMode";
+            this.radioButtonDrawMode.Size = new System.Drawing.Size(172, 51);
+            this.radioButtonDrawMode.TabIndex = 0;
+            this.radioButtonDrawMode.TabStop = true;
+            this.radioButtonDrawMode.Text = "Draw Mode";
+            this.radioButtonDrawMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radioButtonDrawMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radioButtonDrawMode.UseVisualStyleBackColor = true;
+            this.radioButtonDrawMode.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // cellSizeLabel
             // 
@@ -180,37 +213,6 @@
             this.gameObjectsFlowLayoutPanel.Name = "gameObjectsFlowLayoutPanel";
             this.gameObjectsFlowLayoutPanel.Size = new System.Drawing.Size(1348, 70);
             this.gameObjectsFlowLayoutPanel.TabIndex = 2;
-            // 
-            // button17
-            // 
-            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button17.BackColor = System.Drawing.Color.Black;
-            this.button17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button17.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button17.ForeColor = System.Drawing.Color.White;
-            this.button17.Location = new System.Drawing.Point(1093, 5);
-            this.button17.Margin = new System.Windows.Forms.Padding(5);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(58, 58);
-            this.button17.TabIndex = 20;
-            this.button17.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button17.UseVisualStyleBackColor = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Location = new System.Drawing.Point(17, 37);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1343, 785);
-            this.panel1.TabIndex = 3;
             // 
             // button1
             // 
@@ -515,43 +517,36 @@
             this.button16.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button16.UseVisualStyleBackColor = false;
             // 
-            // radioButtonSelectMode
+            // button17
             // 
-            this.radioButtonSelectMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button17.BackColor = System.Drawing.Color.Black;
+            this.button17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button17.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button17.ForeColor = System.Drawing.Color.White;
+            this.button17.Location = new System.Drawing.Point(1093, 5);
+            this.button17.Margin = new System.Windows.Forms.Padding(5);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(58, 58);
+            this.button17.TabIndex = 20;
+            this.button17.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button17.UseVisualStyleBackColor = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonSelectMode.AutoSize = true;
-            this.radioButtonSelectMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonSelectMode.Image = global::LevelEditor.Properties.Resources.cursor32;
-            this.radioButtonSelectMode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioButtonSelectMode.Location = new System.Drawing.Point(6, 687);
-            this.radioButtonSelectMode.Name = "radioButtonSelectMode";
-            this.radioButtonSelectMode.Size = new System.Drawing.Size(141, 32);
-            this.radioButtonSelectMode.TabIndex = 1;
-            this.radioButtonSelectMode.Text = "Select Mode";
-            this.radioButtonSelectMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radioButtonSelectMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radioButtonSelectMode.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDrawMode
-            // 
-            this.radioButtonDrawMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonDrawMode.Checked = true;
-            this.radioButtonDrawMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonDrawMode.Image = global::LevelEditor.Properties.Resources.draw;
-            this.radioButtonDrawMode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioButtonDrawMode.Location = new System.Drawing.Point(162, 678);
-            this.radioButtonDrawMode.Name = "radioButtonDrawMode";
-            this.radioButtonDrawMode.Size = new System.Drawing.Size(172, 51);
-            this.radioButtonDrawMode.TabIndex = 0;
-            this.radioButtonDrawMode.TabStop = true;
-            this.radioButtonDrawMode.Text = "Draw Mode";
-            this.radioButtonDrawMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radioButtonDrawMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radioButtonDrawMode.UseVisualStyleBackColor = true;
-            this.radioButtonDrawMode.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.panel1.AutoScroll = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Location = new System.Drawing.Point(17, 37);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1343, 785);
+            this.panel1.TabIndex = 3;
             // 
             // FormDraw
             // 
