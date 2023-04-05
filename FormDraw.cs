@@ -14,13 +14,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace LevelEditor {
     public partial class FormDraw : Form {
-        //Image[] editorImages
-        List<Image> editorImages = new List<Image>{Resources.ArchwaySingle, Resources.ArchwaySmall,
-        Resources.ArmorBlink, Resources.Bullets, Resources.Imp, Resources.Cobweb_Wall,
-        Resources.DoorGate, Resources.EnergyBall, Resources.ExitDoor, Resources.Key,
-        Resources.ShotgunAmmo,Resources.SmallMedkit, Resources.Stone, Resources.Torch,
-        Resources.Tri_horn, Resources.wallBrick};
-
+        
         List<MapGameObject> mapGameObjects = new List<MapGameObject>();
 
         int CurrentPictureSize = 30;

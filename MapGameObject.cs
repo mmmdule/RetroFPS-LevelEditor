@@ -25,7 +25,7 @@ namespace LevelEditor
 
         private Point location;
 
-        Dictionary<Image, string> imageDict = new Dictionary<Image, string>
+        public static Dictionary<Image, string> imageDict = new Dictionary<Image, string>
         {
             { Resources.ArchwaySingle, "ArchwaySingle" },
             { Resources.ArchwaySingle, "ArchwaySmall" },
@@ -59,6 +59,7 @@ namespace LevelEditor
             y = 0;
             location = new Point(x, y);
             image = Resources.wallBrick;
+            
         }
 
         public MapGameObject(int x, int y)
