@@ -2,13 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+using System.Drawing.Imaging;
 
 namespace LevelEditor
 {
+    
     internal class MapGameObject //: PictureBox
     {
         private string type; //most important, determines prefab to be spawned
@@ -25,6 +34,7 @@ namespace LevelEditor
 
         private Point location;
 
+        [JsonIgnore]
         public static Dictionary<Image, string> imageDict = new Dictionary<Image, string>
         {
             { Resources.ArchwaySingle, "ArchwaySingle" },
@@ -44,6 +54,21 @@ namespace LevelEditor
             { Resources.Tri_horn , "Tri_horn" },
             { Resources.wallBrick , "wallBrick" }
         };
+
+        public static void WriteCurrentListToJson(string path, string filename, List<MapGameObject> list) {
+            path = Path.Combine(path, filename);
+            if (!File.Exists(path))
+                File.Create(path).Close();
+            Console.Write(JsonSerializer.Serialize(list)); 
+            var options1 = new JsonSerializerOptions {
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+            using (StreamWriter outputFile = new StreamWriter(path)) {
+                
+                outputFile.Write(JsonSerializer.Serialize(list, options1));
+            }
+        }
 
         public MapGameObject()
         {
@@ -88,7 +113,10 @@ namespace LevelEditor
         public bool CanMove { get => canMove; set => canMove = value; }
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
+        [JsonIgnore]
         public Image Image { get => image; set => image = value; }
+
+        [JsonIgnore]
         public Point Location { get {
                                         if (x != location.X || x != location.Y) {
                                             location.X = x;
@@ -105,7 +133,8 @@ namespace LevelEditor
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
 
-            this.type = imageDict.FirstOrDefault(x => x.Key == image).Value;
+            //tag-ovi slika postavljeni su u Resources.Designer.cs
+            this.Type = image.Tag.ToString();
             this.image = image;
         }
 
@@ -114,8 +143,11 @@ namespace LevelEditor
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
 
+            //tag-ovi slika postavljeni su u Resources.Designer.cs
             this.Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
-            this.type = type;
+            //this.type = type;
+
+            this.Type = type;
         }
     }
 }

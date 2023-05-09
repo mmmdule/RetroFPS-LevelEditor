@@ -1,20 +1,12 @@
 ﻿using LevelEditor.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace LevelEditor {
     public partial class FormDraw : Form {
-        
+
         List<MapGameObject> mapGameObjects = new List<MapGameObject>();
 
         int CurrentPictureSize = 30;
@@ -22,7 +14,7 @@ namespace LevelEditor {
         public FormDraw() {
             this.DoubleBuffered = true;
             InitializeComponent();
-            
+
             //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
 
@@ -35,12 +27,13 @@ namespace LevelEditor {
             panel1.MouseClick += Panel_MouseClick;
             panel1.MouseMove += Panel1_MouseMove;
             panel1.PreviewKeyDown += Panel1_KeyDownScroll;
-            
+
             panel1.MouseWheel += Panel1_MouseWheel;
 
             panel1.BackgroundImageLayout = ImageLayout.None;
 
         }
+
 
         private void Panel1_MouseWheel(object sender, MouseEventArgs e) {
             Console.WriteLine("MouseWheel event");
@@ -86,7 +79,7 @@ namespace LevelEditor {
         }
 
         private void Panel1_KeyDownScroll(object sender, PreviewKeyDownEventArgs e) {
-            
+
 
             if (e.KeyCode == Keys.Right) {
                 drawX = drawX > 62 ? drawX : drawX + 1;
@@ -111,7 +104,7 @@ namespace LevelEditor {
                 //(sender as Panel).Refresh();
                 (sender as Panel).Invalidate();
                 (sender as Panel).Update();
-                    
+
             }
             Console.WriteLine($"{e.KeyCode}, drawX: {drawX}, drawY: {drawY}");
         }
@@ -190,12 +183,12 @@ namespace LevelEditor {
 
         bool drawScroll = false;
         private void Panel1_Scroll(object sender, ScrollEventArgs se) {
-            
+
         }
 
         int drawX = 0, drawY = 0;
         Pen GridPen = new Pen(Brushes.White);
-        
+
         private void Panel1_Paint(object sender, PaintEventArgs e) {
 
             base.OnPaint(e);
@@ -206,10 +199,10 @@ namespace LevelEditor {
             //Rectangle r = (sender as Panel).DisplayRectangle;
 
             foreach (MapGameObject gObject in mapGameObjects) {
-                if(gObject.X >= drawX && gObject.Y >= drawY)
+                if (gObject.X >= drawX && gObject.Y >= drawY)
                     e.Graphics.DrawImage(gObject.Image, (gObject.X - drawX) * CurrentPictureSize, (gObject.Y - drawY) * CurrentPictureSize,
                                      CurrentPictureSize, CurrentPictureSize);
-                
+
             }
 
             //GRID
@@ -290,12 +283,14 @@ namespace LevelEditor {
                 for (int j = 0; j < 64; j++) {
                     MapGameObject tmp = new MapGameObject(j /* * pictureSize*/, i /* * pictureSize*/);
                     tmp.SetTypeFromImage(Resources.wallBrick);
+                    tmp.CanMove = false;
                     mapGameObjects.Add(tmp);
                 }
-            for (int i = 1; i <= 62; i ++) //VERTICAL
-                for (int j = 0; j < 64; j+=63) {
+            for (int i = 1; i <= 62; i++) //VERTICAL
+                for (int j = 0; j < 64; j += 63) {
                     MapGameObject tmp = new MapGameObject(j /* * pictureSize*/, i /*  * pictureSize*/);
                     tmp.SetTypeFromImage(Resources.wallBrick);
+                    tmp.CanMove = false;
                     mapGameObjects.Add(tmp);
                 }
 
@@ -309,13 +304,13 @@ namespace LevelEditor {
         private Image currentPenImage = Resources.wallBrick; //pocetno stanje
 
         private bool drawMode = true;
-        
+
 
         private void resizeCellsButton_Click(object sender, EventArgs e) {
-            ResizeCells(panel1,(int)numericUpDownCellSize.Value);
+            ResizeCells(panel1, (int)numericUpDownCellSize.Value);
         }
 
-        
+
 
         private void ResizeCells(Panel panel, int newSize) {
             drawX = 0;
@@ -329,6 +324,12 @@ namespace LevelEditor {
         private void radioButton1_CheckedChanged(object sender, EventArgs e) {
             gameObjectsFlowLayoutPanel.Enabled = radioButtonDrawMode.Checked;
             drawMode = radioButtonDrawMode.Checked;
+            if (!drawMode)
+                SerializeList();
+        }
+
+        private void SerializeList() {
+            MapGameObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", mapGameObjects);
         }
     }
 }

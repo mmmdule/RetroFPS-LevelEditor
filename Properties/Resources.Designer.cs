@@ -10,8 +10,9 @@
 
 namespace LevelEditor.Properties {
     using System;
-    
-    
+    using System.Drawing;
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -66,6 +67,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap ArchwaySingle {
             get {
                 object obj = ResourceManager.GetObject("ArchwaySingle", resourceCulture);
+                (obj as Image).Tag = "ArchwaySingle";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -76,6 +78,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap ArchwaySmall {
             get {
                 object obj = ResourceManager.GetObject("ArchwaySmall", resourceCulture);
+                (obj as Image).Tag = "ArchwaySmall";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,6 +89,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap ArmorBlink {
             get {
                 object obj = ResourceManager.GetObject("ArmorBlink", resourceCulture);
+                (obj as Image).Tag = "ArmorBlink";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,6 +100,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Bullets {
             get {
                 object obj = ResourceManager.GetObject("Bullets", resourceCulture);
+                (obj as Image).Tag = "Bullets";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -106,6 +111,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Cobweb_Wall {
             get {
                 object obj = ResourceManager.GetObject("Cobweb_Wall", resourceCulture);
+                (obj as Image).Tag = "Cobweb_Wall";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +122,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap cursor32 {
             get {
                 object obj = ResourceManager.GetObject("cursor32", resourceCulture);
+                (obj as Image).Tag = "cursor32";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -126,6 +133,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap DoorGate {
             get {
                 object obj = ResourceManager.GetObject("DoorGate", resourceCulture);
+                (obj as Image).Tag = "DoorGate";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -136,6 +144,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap draw {
             get {
                 object obj = ResourceManager.GetObject("draw", resourceCulture);
+                (obj as Image).Tag = "draw";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +155,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap EnergyBall {
             get {
                 object obj = ResourceManager.GetObject("EnergyBall", resourceCulture);
+                (obj as Image).Tag = "EnergyBall";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +166,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap ExitDoor {
             get {
                 object obj = ResourceManager.GetObject("ExitDoor", resourceCulture);
+                (obj as Image).Tag = "ExitDoor";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +177,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Imp {
             get {
                 object obj = ResourceManager.GetObject("Imp", resourceCulture);
+                (obj as Image).Tag = "Imp";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +188,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Key {
             get {
                 object obj = ResourceManager.GetObject("Key", resourceCulture);
+                (obj as Image).Tag = "Key";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -186,6 +199,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap ShotgunAmmo {
             get {
                 object obj = ResourceManager.GetObject("ShotgunAmmo", resourceCulture);
+                (obj as Image).Tag = "ShotgunAmmo";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +210,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap SmallMedkit {
             get {
                 object obj = ResourceManager.GetObject("SmallMedkit", resourceCulture);
+                (obj as Image).Tag = "SmallMedkit";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -206,6 +221,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Stone {
             get {
                 object obj = ResourceManager.GetObject("Stone", resourceCulture);
+                (obj as Image).Tag = "Stone";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -216,6 +232,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Torch {
             get {
                 object obj = ResourceManager.GetObject("Torch", resourceCulture);
+                (obj as Image).Tag = "Torch";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -226,6 +243,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap Tri_horn {
             get {
                 object obj = ResourceManager.GetObject("Tri_horn", resourceCulture);
+                (obj as Image).Tag = "Tri_horn";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,6 +254,7 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap wallBrick {
             get {
                 object obj = ResourceManager.GetObject("wallBrick", resourceCulture);
+                (obj as Image).Tag = "wallBrick";
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
