@@ -17,6 +17,13 @@ namespace LevelEditor {
 
             //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
+            this.BackColor = Color.FromArgb(31, 31, 31);
+            foreach (Control control in this.Controls)
+                control.BackColor = Color.FromArgb(31, 31, 31);
+            foreach (Control control in groupBox1.Controls)
+                control.BackColor = Color.FromArgb(31, 31, 31);
+            button17.BackColor = Color.FromArgb(31, 31, 31);
+
 
 
             typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(panel1, true, null);
@@ -132,7 +139,7 @@ namespace LevelEditor {
             if (y <= 0 || y >= 63 || x <= 0 || x >= 63)
                 return;
 
-            if (e.Button == MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left && !eraseSelected) {
                 //MouseMove radi "Capture" nad misem ako se klikne taster.
                 //Kako bi se bojilo po drugim poljima, mora da se uradi "un-Capture"
                 if (panel.Capture)
@@ -156,7 +163,7 @@ namespace LevelEditor {
                 //ADD GAMEOBJECT TO LIST ON CALCULATED COORDINATES
                 //ONLY CHANGE IT'S IMAGE & TYPE IF IT EXISTS THERE ALREADY
             }
-            else if (e.Button == MouseButtons.Right) {
+            else if (e.Button == MouseButtons.Right || (eraseSelected && e.Button == MouseButtons.Left)) {
                 if (panel.Capture)
                     panel.Capture = false;
 
@@ -238,9 +245,11 @@ namespace LevelEditor {
                 (flowPanel.Controls[i] as Button).Click += PenChoice_Click;
             }
         }
+        private bool eraseSelected = false;
 
         private void PenChoice_Click(object sender, EventArgs e) {
             currentPenImage = (sender as Button).BackgroundImage;
+            eraseSelected = (currentPenImage == null);
         }
 
 

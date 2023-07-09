@@ -17,7 +17,8 @@ using System.Drawing.Imaging;
 
 namespace LevelEditor
 {
-    
+    //TODO: finish the setDefaultPropsForType() method
+
     internal class MapGameObject //: PictureBox
     {
         private string type; //most important, determines prefab to be spawned
@@ -136,6 +137,8 @@ namespace LevelEditor
             //tag-ovi slika postavljeni su u Resources.Designer.cs
             this.Type = image.Tag.ToString();
             this.image = image;
+
+            setDefaultPropsForType(Type);
         }
 
         public void SetImageFromType(string type)
@@ -143,11 +146,51 @@ namespace LevelEditor
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
 
-            //tag-ovi slika postavljeni su u Resources.Designer.cs
+
             this.Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
-            //this.type = type;
 
             this.Type = type;
+            setDefaultPropsForType(type);
+        }
+
+        public void setDefaultPropsForType(string type) {
+            //based on the type, set default values for health, firing rate, canMove etc.
+            switch (type) {
+                case "ArchwaySingle":
+                    break;
+                case "ArchwaySmall":
+                    break;
+                case "ArmorBlink":
+                    break;
+                case "Bullets":
+                    break;
+                case "Cobweb_Wall":
+                    break;
+                case "Imp":
+                    break;
+                case "DoorGate":
+                    break;
+                case "EnergyBall":
+                    break;
+                case "ExitDoor":
+                    break;
+                case "Key":
+                    break;
+                case "ShotgunAmmo":
+                    break;
+                case "SmallMedkit":
+                    break;
+                case "Stone":
+                    break;
+                case "Torch":
+                    break;
+                case "Tri_horn":
+                    break;
+                case "wallBrick":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
