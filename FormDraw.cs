@@ -20,7 +20,9 @@ namespace LevelEditor {
             this.BackColor = Color.FromArgb(31, 31, 31);
             foreach (Control control in this.Controls)
                 control.BackColor = Color.FromArgb(31, 31, 31);
-            foreach (Control control in groupBox1.Controls)
+            foreach (Control control in panel3.Controls)
+                control.BackColor = Color.FromArgb(31, 31, 31);
+            foreach (Control control in panel4.Controls)
                 control.BackColor = Color.FromArgb(31, 31, 31);
             button17.BackColor = Color.FromArgb(31, 31, 31);
 
@@ -39,8 +41,34 @@ namespace LevelEditor {
 
             panel1.BackgroundImageLayout = ImageLayout.None;
 
+            //input eventHandlers
+            attackRangeInput.ValueChanged += PropertyInputs_AnyValueChanged;
+            canMoveCheckboxInput.CheckedChanged += PropertyInputs_AnyValueChanged;
+            sightRangeInput.ValueChanged += PropertyInputs_AnyValueChanged;
+            firingRateInput.ValueChanged += PropertyInputs_AnyValueChanged;
+            healthInput.ValueChanged += PropertyInputs_AnyValueChanged;
+            patrolRangeInput.ValueChanged += PropertyInputs_AnyValueChanged;
+            projectileDamageInput.ValueChanged += PropertyInputs_AnyValueChanged;
+            canMoveCheckboxInput.CheckedChanged += PropertyInputs_AnyValueChanged;
+
         }
 
+        private void PropertyInputs_AnyValueChanged(object sender, EventArgs e) {
+            //apply changes to selected object
+            if (selectedMapGameObject != null && (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn")) {
+                selectedMapGameObject.AttackRange = (float)attackRangeInput.Value;
+                selectedMapGameObject.CanMove = canMoveCheckboxInput.Checked;
+                selectedMapGameObject.ChaseRange = (float)sightRangeInput.Value;
+                selectedMapGameObject.FiringRate = (float)firingRateInput.Value;
+                selectedMapGameObject.Health = (int)healthInput.Value;
+                selectedMapGameObject.PatrolRange = (float)patrolRangeInput.Value;
+                selectedMapGameObject.ProjectileDamage = (int)projectileDamageInput.Value;
+            }
+        }
+
+        private void InputPanel_Resize(object sender, EventArgs e) {
+            Console.WriteLine($"Size: (X,Y) == ({this.Size.Width}{this.Size.Height})");
+        }
 
         private void Panel1_MouseWheel(object sender, MouseEventArgs e) {
             Console.WriteLine("MouseWheel event");
@@ -124,12 +152,8 @@ namespace LevelEditor {
             PanelDrawDirect(sender, e);
         }
 
+        MapGameObject selectedMapGameObject = null;
         private void PanelDrawDirect(object sender, MouseEventArgs e) {
-            if (!drawMode) {
-                (sender as Panel).Focus();
-                return;
-            }
-
             Panel panel = sender as Panel;
             int x, y;
             int itemCount = mapGameObjects.Count;
@@ -138,6 +162,48 @@ namespace LevelEditor {
             y = (panel.PointToClient(Cursor.Position).Y / CurrentPictureSize) + drawY; //* CurrentPictureSize;
             if (y <= 0 || y >= 63 || x <= 0 || x >= 63)
                 return;
+
+            if (!drawMode) {
+                if (panel.Capture)
+                    panel.Capture = false;
+                //(sender as Panel).Focus();
+
+                if (e.Button == MouseButtons.Left) {
+                    //get the item at the X and Y coordinates
+                    selectedMapGameObject = mapGameObjects.Find(item => item.X == x && item.Y == y);
+
+                    changeEnabledPropInputs();
+
+                    //fill the input fields in panel3 and panel4 with the selected item's data
+                    //if the item is not null
+                    if (selectedMapGameObject != null) {
+                        healthInput.Value = selectedMapGameObject.Health;
+                        projectileDamageInput.Value = selectedMapGameObject.ProjectileDamage;
+                        firingRateInput.Value = (decimal)selectedMapGameObject.FiringRate;
+                        patrolRangeInput.Value = (decimal)selectedMapGameObject.PatrolRange;
+                        sightRangeInput.Value = (decimal)selectedMapGameObject.AttackRange;
+                        attackRangeInput.Value = (decimal)selectedMapGameObject.ChaseRange;
+                        canMoveCheckboxInput.Checked = selectedMapGameObject.CanMove;
+                        coordinatesLabel.Text = $"Coordinates:           ({selectedMapGameObject.X}, {selectedMapGameObject.Y})";
+                        typeLabel.Text = $"Type:           {selectedMapGameObject.Type}";
+                    }
+                    else {
+                        healthInput.Value = healthInput.Minimum;
+                        projectileDamageInput.Value = projectileDamageInput.Minimum;
+                        firingRateInput.Value = firingRateInput.Minimum;
+                        patrolRangeInput.Value = patrolRangeInput.Minimum;
+                        sightRangeInput.Value = sightRangeInput.Minimum;
+                        attackRangeInput.Value = attackRangeInput.Minimum;
+                        canMoveCheckboxInput.Checked = false;
+                        coordinatesLabel.Text = "Coordinates:";
+                        typeLabel.Text = "Type:";
+                    }
+                }
+
+
+
+                return;
+            }
 
             if (e.Button == MouseButtons.Left && !eraseSelected) {
                 //MouseMove radi "Capture" nad misem ako se klikne taster.
@@ -180,6 +246,14 @@ namespace LevelEditor {
             }
 
             panel.Focus();
+        }
+
+        private void changeEnabledPropInputs() {
+            bool state = (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn");
+            foreach (Control c in panel3.Controls) {
+                if (c is NumericUpDown || c is CheckBox)
+                    c.Enabled = state;
+            } 
         }
 
         Rectangle panelAreaRect;
@@ -333,12 +407,14 @@ namespace LevelEditor {
         private void radioButton1_CheckedChanged(object sender, EventArgs e) {
             gameObjectsFlowLayoutPanel.Enabled = radioButtonDrawMode.Checked;
             drawMode = radioButtonDrawMode.Checked;
-            if (!drawMode)
-                SerializeList();
+            //if (!drawMode)
+            //    SerializeList();
         }
 
         private void SerializeList() {
             MapGameObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", mapGameObjects);
         }
+
+
     }
 }

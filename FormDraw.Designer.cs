@@ -23,7 +23,21 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            groupBox1 = new System.Windows.Forms.GroupBox();
+            canMoveCheckboxInput = new System.Windows.Forms.CheckBox();
+            attackRangeInput = new System.Windows.Forms.NumericUpDown();
+            sightRangeInput = new System.Windows.Forms.NumericUpDown();
+            patrolRangeInput = new System.Windows.Forms.NumericUpDown();
+            firingRateInput = new System.Windows.Forms.NumericUpDown();
+            projectileDamageInput = new System.Windows.Forms.NumericUpDown();
+            healthInput = new System.Windows.Forms.NumericUpDown();
+            coordinatesLabel = new System.Windows.Forms.Label();
+            canMoveLabel = new System.Windows.Forms.Label();
+            attackRangeLabel = new System.Windows.Forms.Label();
+            sightRangeLabel = new System.Windows.Forms.Label();
+            patrolRangeLabel = new System.Windows.Forms.Label();
+            firingRateLabel = new System.Windows.Forms.Label();
+            projectileDamageLabel = new System.Windows.Forms.Label();
+            healthLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             resizeCellsButton = new System.Windows.Forms.Button();
             radioButtonSelectMode = new System.Windows.Forms.RadioButton();
@@ -49,88 +63,241 @@
             button16 = new System.Windows.Forms.Button();
             button17 = new System.Windows.Forms.Button();
             panel1 = new System.Windows.Forms.Panel();
-            healthLabel = new System.Windows.Forms.Label();
-            projectileDamageLabel = new System.Windows.Forms.Label();
-            firingRateLabel = new System.Windows.Forms.Label();
-            chaseRangeLabel = new System.Windows.Forms.Label();
-            sightRangeLabel = new System.Windows.Forms.Label();
-            patrolRangeLabel = new System.Windows.Forms.Label();
-            coordinatesLabel = new System.Windows.Forms.Label();
-            canMoveLabel = new System.Windows.Forms.Label();
-            healthInput = new System.Windows.Forms.NumericUpDown();
-            projectileDamageInput = new System.Windows.Forms.NumericUpDown();
-            firingRateInput = new System.Windows.Forms.NumericUpDown();
-            patrolRangeInput = new System.Windows.Forms.NumericUpDown();
-            sightRangeInput = new System.Windows.Forms.NumericUpDown();
-            chaseRangeInput = new System.Windows.Forms.NumericUpDown();
-            canMoveCheckboxInput = new System.Windows.Forms.CheckBox();
-            groupBox1.SuspendLayout();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            panel4 = new System.Windows.Forms.Panel();
+            panel3 = new System.Windows.Forms.Panel();
+            resetObjectPropsButton = new System.Windows.Forms.Button();
+            typeLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)attackRangeInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sightRangeInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)patrolRangeInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firingRateInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)projectileDamageInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)healthInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCellSize).BeginInit();
             gameObjectsFlowLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)healthInput).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)projectileDamageInput).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)firingRateInput).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)patrolRangeInput).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)sightRangeInput).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)chaseRangeInput).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
+            panel4.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
-            // groupBox1
+            // canMoveCheckboxInput
             // 
-            groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            groupBox1.BackColor = System.Drawing.Color.Black;
-            groupBox1.Controls.Add(canMoveCheckboxInput);
-            groupBox1.Controls.Add(chaseRangeInput);
-            groupBox1.Controls.Add(sightRangeInput);
-            groupBox1.Controls.Add(patrolRangeInput);
-            groupBox1.Controls.Add(firingRateInput);
-            groupBox1.Controls.Add(projectileDamageInput);
-            groupBox1.Controls.Add(healthInput);
-            groupBox1.Controls.Add(coordinatesLabel);
-            groupBox1.Controls.Add(canMoveLabel);
-            groupBox1.Controls.Add(chaseRangeLabel);
-            groupBox1.Controls.Add(sightRangeLabel);
-            groupBox1.Controls.Add(patrolRangeLabel);
-            groupBox1.Controls.Add(firingRateLabel);
-            groupBox1.Controls.Add(projectileDamageLabel);
-            groupBox1.Controls.Add(healthLabel);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(resizeCellsButton);
-            groupBox1.Controls.Add(radioButtonSelectMode);
-            groupBox1.Controls.Add(numericUpDownCellSize);
-            groupBox1.Controls.Add(radioButtonDrawMode);
-            groupBox1.Controls.Add(cellSizeLabel);
-            groupBox1.Location = new System.Drawing.Point(1482, 34);
-            groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            groupBox1.MaximumSize = new System.Drawing.Size(408, 912);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            groupBox1.Size = new System.Drawing.Size(408, 859);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
+            canMoveCheckboxInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            canMoveCheckboxInput.AutoSize = true;
+            canMoveCheckboxInput.Location = new System.Drawing.Point(208, 288);
+            canMoveCheckboxInput.Name = "canMoveCheckboxInput";
+            canMoveCheckboxInput.Size = new System.Drawing.Size(15, 14);
+            canMoveCheckboxInput.TabIndex = 22;
+            canMoveCheckboxInput.UseVisualStyleBackColor = true;
+            // 
+            // attackRangeInput
+            // 
+            attackRangeInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            attackRangeInput.BackColor = System.Drawing.Color.Black;
+            attackRangeInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            attackRangeInput.DecimalPlaces = 2;
+            attackRangeInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            attackRangeInput.ForeColor = System.Drawing.Color.White;
+            attackRangeInput.Location = new System.Drawing.Point(208, 240);
+            attackRangeInput.Margin = new System.Windows.Forms.Padding(4);
+            attackRangeInput.Maximum = new decimal(new int[] { 64, 0, 0, 0 });
+            attackRangeInput.Name = "attackRangeInput";
+            attackRangeInput.Size = new System.Drawing.Size(116, 25);
+            attackRangeInput.TabIndex = 21;
+            // 
+            // sightRangeInput
+            // 
+            sightRangeInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            sightRangeInput.BackColor = System.Drawing.Color.Black;
+            sightRangeInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            sightRangeInput.DecimalPlaces = 2;
+            sightRangeInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            sightRangeInput.ForeColor = System.Drawing.Color.White;
+            sightRangeInput.Location = new System.Drawing.Point(208, 198);
+            sightRangeInput.Margin = new System.Windows.Forms.Padding(4);
+            sightRangeInput.Maximum = new decimal(new int[] { 64, 0, 0, 0 });
+            sightRangeInput.Name = "sightRangeInput";
+            sightRangeInput.Size = new System.Drawing.Size(116, 25);
+            sightRangeInput.TabIndex = 20;
+            // 
+            // patrolRangeInput
+            // 
+            patrolRangeInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            patrolRangeInput.BackColor = System.Drawing.Color.Black;
+            patrolRangeInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            patrolRangeInput.DecimalPlaces = 2;
+            patrolRangeInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            patrolRangeInput.ForeColor = System.Drawing.Color.White;
+            patrolRangeInput.Location = new System.Drawing.Point(208, 158);
+            patrolRangeInput.Margin = new System.Windows.Forms.Padding(4);
+            patrolRangeInput.Maximum = new decimal(new int[] { 64, 0, 0, 0 });
+            patrolRangeInput.Name = "patrolRangeInput";
+            patrolRangeInput.Size = new System.Drawing.Size(116, 25);
+            patrolRangeInput.TabIndex = 19;
+            // 
+            // firingRateInput
+            // 
+            firingRateInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            firingRateInput.BackColor = System.Drawing.Color.Black;
+            firingRateInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            firingRateInput.DecimalPlaces = 2;
+            firingRateInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            firingRateInput.ForeColor = System.Drawing.Color.White;
+            firingRateInput.Location = new System.Drawing.Point(208, 118);
+            firingRateInput.Margin = new System.Windows.Forms.Padding(4);
+            firingRateInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
+            firingRateInput.Name = "firingRateInput";
+            firingRateInput.Size = new System.Drawing.Size(116, 25);
+            firingRateInput.TabIndex = 18;
+            // 
+            // projectileDamageInput
+            // 
+            projectileDamageInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            projectileDamageInput.BackColor = System.Drawing.Color.Black;
+            projectileDamageInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            projectileDamageInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            projectileDamageInput.ForeColor = System.Drawing.Color.White;
+            projectileDamageInput.Location = new System.Drawing.Point(208, 79);
+            projectileDamageInput.Margin = new System.Windows.Forms.Padding(4);
+            projectileDamageInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
+            projectileDamageInput.Name = "projectileDamageInput";
+            projectileDamageInput.Size = new System.Drawing.Size(116, 25);
+            projectileDamageInput.TabIndex = 17;
+            // 
+            // healthInput
+            // 
+            healthInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            healthInput.BackColor = System.Drawing.Color.Black;
+            healthInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            healthInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            healthInput.ForeColor = System.Drawing.Color.White;
+            healthInput.Location = new System.Drawing.Point(208, 41);
+            healthInput.Margin = new System.Windows.Forms.Padding(4);
+            healthInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            healthInput.Name = "healthInput";
+            healthInput.Size = new System.Drawing.Size(116, 25);
+            healthInput.TabIndex = 16;
+            // 
+            // coordinatesLabel
+            // 
+            coordinatesLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            coordinatesLabel.AutoSize = true;
+            coordinatesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            coordinatesLabel.Location = new System.Drawing.Point(72, 327);
+            coordinatesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            coordinatesLabel.Name = "coordinatesLabel";
+            coordinatesLabel.Size = new System.Drawing.Size(99, 20);
+            coordinatesLabel.TabIndex = 15;
+            coordinatesLabel.Text = "Coordinates:";
+            // 
+            // canMoveLabel
+            // 
+            canMoveLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            canMoveLabel.AutoSize = true;
+            canMoveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            canMoveLabel.Location = new System.Drawing.Point(87, 283);
+            canMoveLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            canMoveLabel.Name = "canMoveLabel";
+            canMoveLabel.Size = new System.Drawing.Size(84, 20);
+            canMoveLabel.TabIndex = 14;
+            canMoveLabel.Text = "Can Move:";
+            // 
+            // attackRangeLabel
+            // 
+            attackRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            attackRangeLabel.AutoSize = true;
+            attackRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            attackRangeLabel.Location = new System.Drawing.Point(60, 242);
+            attackRangeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            attackRangeLabel.Name = "attackRangeLabel";
+            attackRangeLabel.Size = new System.Drawing.Size(111, 20);
+            attackRangeLabel.TabIndex = 13;
+            attackRangeLabel.Text = "Attack Range:";
+            // 
+            // sightRangeLabel
+            // 
+            sightRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            sightRangeLabel.AutoSize = true;
+            sightRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            sightRangeLabel.Location = new System.Drawing.Point(69, 200);
+            sightRangeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            sightRangeLabel.Name = "sightRangeLabel";
+            sightRangeLabel.Size = new System.Drawing.Size(102, 20);
+            sightRangeLabel.TabIndex = 12;
+            sightRangeLabel.Text = "Sight Range:";
+            // 
+            // patrolRangeLabel
+            // 
+            patrolRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            patrolRangeLabel.AutoSize = true;
+            patrolRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            patrolRangeLabel.Location = new System.Drawing.Point(65, 160);
+            patrolRangeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            patrolRangeLabel.Name = "patrolRangeLabel";
+            patrolRangeLabel.Size = new System.Drawing.Size(106, 20);
+            patrolRangeLabel.TabIndex = 11;
+            patrolRangeLabel.Text = "Patrol Range:";
+            // 
+            // firingRateLabel
+            // 
+            firingRateLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            firingRateLabel.AutoSize = true;
+            firingRateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            firingRateLabel.Location = new System.Drawing.Point(11, 120);
+            firingRateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            firingRateLabel.Name = "firingRateLabel";
+            firingRateLabel.Size = new System.Drawing.Size(160, 20);
+            firingRateLabel.TabIndex = 10;
+            firingRateLabel.Text = "Time Between Shots:";
+            // 
+            // projectileDamageLabel
+            // 
+            projectileDamageLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            projectileDamageLabel.AutoSize = true;
+            projectileDamageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            projectileDamageLabel.Location = new System.Drawing.Point(29, 81);
+            projectileDamageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            projectileDamageLabel.Name = "projectileDamageLabel";
+            projectileDamageLabel.Size = new System.Drawing.Size(142, 20);
+            projectileDamageLabel.TabIndex = 9;
+            projectileDamageLabel.Text = "Projectile Damage:";
+            // 
+            // healthLabel
+            // 
+            healthLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            healthLabel.AutoSize = true;
+            healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            healthLabel.Location = new System.Drawing.Point(111, 44);
+            healthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            healthLabel.Name = "healthLabel";
+            healthLabel.Size = new System.Drawing.Size(60, 20);
+            healthLabel.TabIndex = 8;
+            healthLabel.Text = "Health:";
             // 
             // label1
             // 
+            label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label1.Location = new System.Drawing.Point(4, 0);
+            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label1.Location = new System.Drawing.Point(12, 6);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(164, 17);
+            label1.Size = new System.Drawing.Size(183, 20);
             label1.TabIndex = 7;
             label1.Text = "Game Object Properties:";
             // 
             // resizeCellsButton
             // 
-            resizeCellsButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            resizeCellsButton.AutoSize = true;
+            resizeCellsButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             resizeCellsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             resizeCellsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            resizeCellsButton.Location = new System.Drawing.Point(244, 778);
+            resizeCellsButton.Location = new System.Drawing.Point(272, 79);
             resizeCellsButton.Margin = new System.Windows.Forms.Padding(4);
+            resizeCellsButton.MaximumSize = new System.Drawing.Size(91, 33);
+            resizeCellsButton.MinimumSize = new System.Drawing.Size(91, 33);
             resizeCellsButton.Name = "resizeCellsButton";
-            resizeCellsButton.Size = new System.Drawing.Size(93, 35);
+            resizeCellsButton.Size = new System.Drawing.Size(91, 33);
             resizeCellsButton.TabIndex = 6;
             resizeCellsButton.Text = "Confirm";
             resizeCellsButton.UseVisualStyleBackColor = true;
@@ -138,13 +305,15 @@
             // 
             // radioButtonSelectMode
             // 
-            radioButtonSelectMode.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            radioButtonSelectMode.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             radioButtonSelectMode.AutoSize = true;
             radioButtonSelectMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             radioButtonSelectMode.Image = Properties.Resources.cursor32;
             radioButtonSelectMode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            radioButtonSelectMode.Location = new System.Drawing.Point(15, 717);
+            radioButtonSelectMode.Location = new System.Drawing.Point(35, 17);
             radioButtonSelectMode.Margin = new System.Windows.Forms.Padding(4);
+            radioButtonSelectMode.MaximumSize = new System.Drawing.Size(136, 32);
+            radioButtonSelectMode.MinimumSize = new System.Drawing.Size(136, 32);
             radioButtonSelectMode.Name = "radioButtonSelectMode";
             radioButtonSelectMode.Size = new System.Drawing.Size(136, 32);
             radioButtonSelectMode.TabIndex = 1;
@@ -155,31 +324,35 @@
             // 
             // numericUpDownCellSize
             // 
-            numericUpDownCellSize.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            numericUpDownCellSize.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             numericUpDownCellSize.BackColor = System.Drawing.Color.Black;
             numericUpDownCellSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             numericUpDownCellSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             numericUpDownCellSize.ForeColor = System.Drawing.Color.White;
-            numericUpDownCellSize.Location = new System.Drawing.Point(140, 783);
+            numericUpDownCellSize.Location = new System.Drawing.Point(154, 83);
             numericUpDownCellSize.Margin = new System.Windows.Forms.Padding(4);
             numericUpDownCellSize.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
+            numericUpDownCellSize.MaximumSize = new System.Drawing.Size(98, 0);
             numericUpDownCellSize.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
+            numericUpDownCellSize.MinimumSize = new System.Drawing.Size(98, 0);
             numericUpDownCellSize.Name = "numericUpDownCellSize";
-            numericUpDownCellSize.Size = new System.Drawing.Size(84, 25);
+            numericUpDownCellSize.Size = new System.Drawing.Size(98, 25);
             numericUpDownCellSize.TabIndex = 5;
             numericUpDownCellSize.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
             // radioButtonDrawMode
             // 
-            radioButtonDrawMode.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            radioButtonDrawMode.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             radioButtonDrawMode.Checked = true;
             radioButtonDrawMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             radioButtonDrawMode.Image = Properties.Resources.draw;
             radioButtonDrawMode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            radioButtonDrawMode.Location = new System.Drawing.Point(183, 710);
+            radioButtonDrawMode.Location = new System.Drawing.Point(230, 11);
             radioButtonDrawMode.Margin = new System.Windows.Forms.Padding(4);
+            radioButtonDrawMode.MaximumSize = new System.Drawing.Size(133, 44);
+            radioButtonDrawMode.MinimumSize = new System.Drawing.Size(133, 44);
             radioButtonDrawMode.Name = "radioButtonDrawMode";
-            radioButtonDrawMode.Size = new System.Drawing.Size(142, 46);
+            radioButtonDrawMode.Size = new System.Drawing.Size(133, 44);
             radioButtonDrawMode.TabIndex = 0;
             radioButtonDrawMode.TabStop = true;
             radioButtonDrawMode.Text = "Draw Mode";
@@ -190,10 +363,10 @@
             // 
             // cellSizeLabel
             // 
-            cellSizeLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            cellSizeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cellSizeLabel.AutoSize = true;
             cellSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            cellSizeLabel.Location = new System.Drawing.Point(15, 785);
+            cellSizeLabel.Location = new System.Drawing.Point(29, 85);
             cellSizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             cellSizeLabel.Name = "cellSizeLabel";
             cellSizeLabel.Size = new System.Drawing.Size(117, 20);
@@ -563,206 +736,91 @@
             panel1.Size = new System.Drawing.Size(1453, 741);
             panel1.TabIndex = 3;
             // 
-            // healthLabel
+            // tableLayoutPanel1
             // 
-            healthLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            healthLabel.AutoSize = true;
-            healthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            healthLabel.Location = new System.Drawing.Point(15, 80);
-            healthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            healthLabel.Name = "healthLabel";
-            healthLabel.Size = new System.Drawing.Size(60, 20);
-            healthLabel.TabIndex = 8;
-            healthLabel.Text = "Health:";
+            tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(panel4, 0, 1);
+            tableLayoutPanel1.Controls.Add(panel3, 0, 0);
+            tableLayoutPanel1.Location = new System.Drawing.Point(1482, 42);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.29412F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.705883F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(408, 855);
+            tableLayoutPanel1.TabIndex = 4;
             // 
-            // projectileDamageLabel
+            // panel4
             // 
-            projectileDamageLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            projectileDamageLabel.AutoSize = true;
-            projectileDamageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            projectileDamageLabel.Location = new System.Drawing.Point(15, 137);
-            projectileDamageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            projectileDamageLabel.Name = "projectileDamageLabel";
-            projectileDamageLabel.Size = new System.Drawing.Size(142, 20);
-            projectileDamageLabel.TabIndex = 9;
-            projectileDamageLabel.Text = "Projectile Damage:";
+            panel4.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel4.Controls.Add(cellSizeLabel);
+            panel4.Controls.Add(radioButtonSelectMode);
+            panel4.Controls.Add(radioButtonDrawMode);
+            panel4.Controls.Add(resizeCellsButton);
+            panel4.Controls.Add(numericUpDownCellSize);
+            panel4.Location = new System.Drawing.Point(3, 629);
+            panel4.Name = "panel4";
+            panel4.Size = new System.Drawing.Size(402, 223);
+            panel4.TabIndex = 2;
             // 
-            // firingRateLabel
+            // panel3
             // 
-            firingRateLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            firingRateLabel.AutoSize = true;
-            firingRateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            firingRateLabel.Location = new System.Drawing.Point(15, 192);
-            firingRateLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            firingRateLabel.Name = "firingRateLabel";
-            firingRateLabel.Size = new System.Drawing.Size(160, 20);
-            firingRateLabel.TabIndex = 10;
-            firingRateLabel.Text = "Time Between Shots:";
+            panel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel3.Controls.Add(resetObjectPropsButton);
+            panel3.Controls.Add(typeLabel);
+            panel3.Controls.Add(canMoveCheckboxInput);
+            panel3.Controls.Add(label1);
+            panel3.Controls.Add(healthLabel);
+            panel3.Controls.Add(sightRangeLabel);
+            panel3.Controls.Add(attackRangeInput);
+            panel3.Controls.Add(patrolRangeLabel);
+            panel3.Controls.Add(attackRangeLabel);
+            panel3.Controls.Add(sightRangeInput);
+            panel3.Controls.Add(firingRateLabel);
+            panel3.Controls.Add(canMoveLabel);
+            panel3.Controls.Add(patrolRangeInput);
+            panel3.Controls.Add(projectileDamageLabel);
+            panel3.Controls.Add(coordinatesLabel);
+            panel3.Controls.Add(firingRateInput);
+            panel3.Controls.Add(healthInput);
+            panel3.Controls.Add(projectileDamageInput);
+            panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel3.Location = new System.Drawing.Point(3, 3);
+            panel3.Name = "panel3";
+            panel3.Size = new System.Drawing.Size(402, 620);
+            panel3.TabIndex = 1;
             // 
-            // chaseRangeLabel
+            // resetObjectPropsButton
             // 
-            chaseRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            chaseRangeLabel.AutoSize = true;
-            chaseRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            chaseRangeLabel.Location = new System.Drawing.Point(15, 358);
-            chaseRangeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            chaseRangeLabel.Name = "chaseRangeLabel";
-            chaseRangeLabel.Size = new System.Drawing.Size(111, 20);
-            chaseRangeLabel.TabIndex = 13;
-            chaseRangeLabel.Text = "Chase Range:";
+            resetObjectPropsButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            resetObjectPropsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            resetObjectPropsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            resetObjectPropsButton.Location = new System.Drawing.Point(179, 409);
+            resetObjectPropsButton.Margin = new System.Windows.Forms.Padding(4);
+            resetObjectPropsButton.MaximumSize = new System.Drawing.Size(145, 35);
+            resetObjectPropsButton.MinimumSize = new System.Drawing.Size(145, 35);
+            resetObjectPropsButton.Name = "resetObjectPropsButton";
+            resetObjectPropsButton.Size = new System.Drawing.Size(145, 35);
+            resetObjectPropsButton.TabIndex = 24;
+            resetObjectPropsButton.Text = "Reset to Default";
+            resetObjectPropsButton.UseVisualStyleBackColor = true;
             // 
-            // sightRangeLabel
+            // typeLabel
             // 
-            sightRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            sightRangeLabel.AutoSize = true;
-            sightRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            sightRangeLabel.Location = new System.Drawing.Point(15, 303);
-            sightRangeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            sightRangeLabel.Name = "sightRangeLabel";
-            sightRangeLabel.Size = new System.Drawing.Size(102, 20);
-            sightRangeLabel.TabIndex = 12;
-            sightRangeLabel.Text = "Sight Range:";
-            // 
-            // patrolRangeLabel
-            // 
-            patrolRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            patrolRangeLabel.AutoSize = true;
-            patrolRangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            patrolRangeLabel.Location = new System.Drawing.Point(15, 246);
-            patrolRangeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            patrolRangeLabel.Name = "patrolRangeLabel";
-            patrolRangeLabel.Size = new System.Drawing.Size(106, 20);
-            patrolRangeLabel.TabIndex = 11;
-            patrolRangeLabel.Text = "Patrol Range:";
-            // 
-            // coordinatesLabel
-            // 
-            coordinatesLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            coordinatesLabel.AutoSize = true;
-            coordinatesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            coordinatesLabel.Location = new System.Drawing.Point(15, 469);
-            coordinatesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            coordinatesLabel.Name = "coordinatesLabel";
-            coordinatesLabel.Size = new System.Drawing.Size(99, 20);
-            coordinatesLabel.TabIndex = 15;
-            coordinatesLabel.Text = "Coordinates:";
-            // 
-            // canMoveLabel
-            // 
-            canMoveLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            canMoveLabel.AutoSize = true;
-            canMoveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            canMoveLabel.Location = new System.Drawing.Point(15, 412);
-            canMoveLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            canMoveLabel.Name = "canMoveLabel";
-            canMoveLabel.Size = new System.Drawing.Size(84, 20);
-            canMoveLabel.TabIndex = 14;
-            canMoveLabel.Text = "Can Move:";
-            // 
-            // healthInput
-            // 
-            healthInput.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            healthInput.BackColor = System.Drawing.Color.Black;
-            healthInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            healthInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            healthInput.ForeColor = System.Drawing.Color.White;
-            healthInput.Location = new System.Drawing.Point(208, 78);
-            healthInput.Margin = new System.Windows.Forms.Padding(4);
-            healthInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
-            healthInput.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
-            healthInput.Name = "healthInput";
-            healthInput.Size = new System.Drawing.Size(129, 25);
-            healthInput.TabIndex = 16;
-            healthInput.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // projectileDamageInput
-            // 
-            projectileDamageInput.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            projectileDamageInput.BackColor = System.Drawing.Color.Black;
-            projectileDamageInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            projectileDamageInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            projectileDamageInput.ForeColor = System.Drawing.Color.White;
-            projectileDamageInput.Location = new System.Drawing.Point(208, 135);
-            projectileDamageInput.Margin = new System.Windows.Forms.Padding(4);
-            projectileDamageInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
-            projectileDamageInput.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
-            projectileDamageInput.Name = "projectileDamageInput";
-            projectileDamageInput.Size = new System.Drawing.Size(129, 25);
-            projectileDamageInput.TabIndex = 17;
-            projectileDamageInput.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // firingRateInput
-            // 
-            firingRateInput.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            firingRateInput.BackColor = System.Drawing.Color.Black;
-            firingRateInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            firingRateInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            firingRateInput.ForeColor = System.Drawing.Color.White;
-            firingRateInput.Location = new System.Drawing.Point(208, 190);
-            firingRateInput.Margin = new System.Windows.Forms.Padding(4);
-            firingRateInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
-            firingRateInput.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
-            firingRateInput.Name = "firingRateInput";
-            firingRateInput.Size = new System.Drawing.Size(129, 25);
-            firingRateInput.TabIndex = 18;
-            firingRateInput.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // patrolRangeInput
-            // 
-            patrolRangeInput.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            patrolRangeInput.BackColor = System.Drawing.Color.Black;
-            patrolRangeInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            patrolRangeInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            patrolRangeInput.ForeColor = System.Drawing.Color.White;
-            patrolRangeInput.Location = new System.Drawing.Point(208, 244);
-            patrolRangeInput.Margin = new System.Windows.Forms.Padding(4);
-            patrolRangeInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
-            patrolRangeInput.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
-            patrolRangeInput.Name = "patrolRangeInput";
-            patrolRangeInput.Size = new System.Drawing.Size(129, 25);
-            patrolRangeInput.TabIndex = 19;
-            patrolRangeInput.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // sightRangeInput
-            // 
-            sightRangeInput.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            sightRangeInput.BackColor = System.Drawing.Color.Black;
-            sightRangeInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            sightRangeInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            sightRangeInput.ForeColor = System.Drawing.Color.White;
-            sightRangeInput.Location = new System.Drawing.Point(208, 301);
-            sightRangeInput.Margin = new System.Windows.Forms.Padding(4);
-            sightRangeInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
-            sightRangeInput.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
-            sightRangeInput.Name = "sightRangeInput";
-            sightRangeInput.Size = new System.Drawing.Size(129, 25);
-            sightRangeInput.TabIndex = 20;
-            sightRangeInput.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // chaseRangeInput
-            // 
-            chaseRangeInput.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            chaseRangeInput.BackColor = System.Drawing.Color.Black;
-            chaseRangeInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            chaseRangeInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            chaseRangeInput.ForeColor = System.Drawing.Color.White;
-            chaseRangeInput.Location = new System.Drawing.Point(208, 356);
-            chaseRangeInput.Margin = new System.Windows.Forms.Padding(4);
-            chaseRangeInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
-            chaseRangeInput.Minimum = new decimal(new int[] { 13, 0, 0, 0 });
-            chaseRangeInput.Name = "chaseRangeInput";
-            chaseRangeInput.Size = new System.Drawing.Size(129, 25);
-            chaseRangeInput.TabIndex = 21;
-            chaseRangeInput.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // canMoveCheckboxInput
-            // 
-            canMoveCheckboxInput.AutoSize = true;
-            canMoveCheckboxInput.Location = new System.Drawing.Point(208, 417);
-            canMoveCheckboxInput.Name = "canMoveCheckboxInput";
-            canMoveCheckboxInput.Size = new System.Drawing.Size(15, 14);
-            canMoveCheckboxInput.TabIndex = 22;
-            canMoveCheckboxInput.UseVisualStyleBackColor = true;
+            typeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            typeLabel.AutoSize = true;
+            typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            typeLabel.Location = new System.Drawing.Point(124, 369);
+            typeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            typeLabel.Name = "typeLabel";
+            typeLabel.Size = new System.Drawing.Size(47, 20);
+            typeLabel.TabIndex = 23;
+            typeLabel.Text = "Type:";
             // 
             // FormDraw
             // 
@@ -771,33 +829,36 @@
             BackColor = System.Drawing.Color.Black;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             ClientSize = new System.Drawing.Size(1902, 914);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
             Controls.Add(gameObjectsFlowLayoutPanel);
-            Controls.Add(groupBox1);
             DoubleBuffered = true;
             ForeColor = System.Drawing.Color.White;
             KeyPreview = true;
             Margin = new System.Windows.Forms.Padding(4);
+            MinimumSize = new System.Drawing.Size(965, 730);
             Name = "FormDraw";
             ShowIcon = false;
             Text = "Level Editor - Grid Mode (FLOW)";
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
             Load += Form1_Load;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)attackRangeInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sightRangeInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)patrolRangeInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firingRateInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)projectileDamageInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)healthInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCellSize).EndInit();
             gameObjectsFlowLayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)healthInput).EndInit();
-            ((System.ComponentModel.ISupportInitialize)projectileDamageInput).EndInit();
-            ((System.ComponentModel.ISupportInitialize)firingRateInput).EndInit();
-            ((System.ComponentModel.ISupportInitialize)patrolRangeInput).EndInit();
-            ((System.ComponentModel.ISupportInitialize)sightRangeInput).EndInit();
-            ((System.ComponentModel.ISupportInitialize)chaseRangeInput).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButtonSelectMode;
         private System.Windows.Forms.RadioButton radioButtonDrawMode;
         private System.Windows.Forms.FlowLayoutPanel gameObjectsFlowLayoutPanel;
@@ -825,7 +886,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label coordinatesLabel;
         private System.Windows.Forms.Label canMoveLabel;
-        private System.Windows.Forms.Label chaseRangeLabel;
+        private System.Windows.Forms.Label attackRangeLabel;
         private System.Windows.Forms.Label sightRangeLabel;
         private System.Windows.Forms.Label patrolRangeLabel;
         private System.Windows.Forms.Label firingRateLabel;
@@ -834,9 +895,14 @@
         private System.Windows.Forms.NumericUpDown healthInput;
         private System.Windows.Forms.NumericUpDown projectileDamageInput;
         private System.Windows.Forms.CheckBox canMoveCheckboxInput;
-        private System.Windows.Forms.NumericUpDown chaseRangeInput;
+        private System.Windows.Forms.NumericUpDown attackRangeInput;
         private System.Windows.Forms.NumericUpDown sightRangeInput;
         private System.Windows.Forms.NumericUpDown patrolRangeInput;
         private System.Windows.Forms.NumericUpDown firingRateInput;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button resetObjectPropsButton;
+        private System.Windows.Forms.Label typeLabel;
     }
 }

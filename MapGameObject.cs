@@ -26,7 +26,7 @@ namespace LevelEditor
         private int projectileDamage;
         private float firingRate; //pause between shots
         private float patrolRange;
-        private float sightRange;
+        private float attackRange;
         private float chaseRange;
         private bool canMove;
         private int x; //X coordinate (column in table)
@@ -75,10 +75,10 @@ namespace LevelEditor
         {
             type = "";
             health = 0;
-            projectileDamage = 0;
+            //projectileDamage = 0;
             firingRate = 0;
             patrolRange = 0;
-            sightRange = 0;
+            attackRange = 0;
             chaseRange = 0;
             canMove = true;
             x = 0;
@@ -92,10 +92,10 @@ namespace LevelEditor
         {
             type = "";
             health = 0;
-            projectileDamage = 0;
+            //projectileDamage = 0;
             firingRate = 0;
             patrolRange = 0;
-            sightRange = 0;
+            attackRange = 0;
             chaseRange = 0;
             canMove = true;
             this.x = x;
@@ -109,7 +109,7 @@ namespace LevelEditor
         public int ProjectileDamage { get => projectileDamage; set => projectileDamage = value; }
         public float FiringRate { get => firingRate; set => firingRate = value; }
         public float PatrolRange { get => patrolRange; set => patrolRange = value; }
-        public float SightRange { get => sightRange; set => sightRange = value; }
+        public float AttackRange { get => attackRange; set => attackRange = value; }
         public float ChaseRange { get => chaseRange; set => chaseRange = value; }
         public bool CanMove { get => canMove; set => canMove = value; }
         public int X { get => x; set => x = value; }
@@ -150,43 +150,55 @@ namespace LevelEditor
             this.Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
 
             this.Type = type;
-            setDefaultPropsForType(type);
+            this.setDefaultPropsForType(type);
         }
 
         public void setDefaultPropsForType(string type) {
             //based on the type, set default values for health, firing rate, canMove etc.
             switch (type) {
                 case "ArchwaySingle":
-                    break;
                 case "ArchwaySmall":
-                    break;
                 case "ArmorBlink":
-                    break;
                 case "Bullets":
-                    break;
                 case "Cobweb_Wall":
+                case "DoorGate":
+                case "ExitDoor":
+                case "Key":
+                case "ShotgunAmmo":
+                case "SmallMedkit":
+                case "Stone":
+                case "Torch":
+                case "wallBrick":
+                    this.canMove = false;
+                    this.projectileDamage = 0;
+                    this.firingRate = 0;
+                    this.patrolRange = 0;
+                    this.attackRange = 0;
+                    this.chaseRange = 0;
                     break;
                 case "Imp":
-                    break;
-                case "DoorGate":
+                    this.canMove = true;
+                    this.health = 50;
+                    this.firingRate = 2.25f; //pause between attacks
+                    this.patrolRange = 10;
+                    this.attackRange = 18;
+                    this.chaseRange = 18;
+                    this.attackRange = 13.5f;
+                    this.projectileDamage = 16; //damage of fireball prefab
                     break;
                 case "EnergyBall":
-                    break;
-                case "ExitDoor":
-                    break;
-                case "Key":
-                    break;
-                case "ShotgunAmmo":
-                    break;
-                case "SmallMedkit":
-                    break;
-                case "Stone":
-                    break;
-                case "Torch":
+                    this.canMove = false;
+                    //maybe make damage dynamic
                     break;
                 case "Tri_horn":
-                    break;
-                case "wallBrick":
+                    this.canMove = true;
+                    this.health = 100;
+                    this.firingRate = 1.87f; //pause between attacks
+                    this.patrolRange = 15;
+                    this.attackRange = 20;
+                    this.chaseRange = 25;
+                    this.attackRange = 13.5f;
+                    this.projectileDamage = 3 * 12; //damage of 3 EnergyBall prefabs
                     break;
                 default:
                     break;
