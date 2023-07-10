@@ -8,8 +8,11 @@ namespace LevelEditor {
     public partial class FormDraw : Form {
 
         List<MapGameObject> mapGameObjects = new List<MapGameObject>();
-
+        bool doorAdded = false;
+        bool gateAdded = false;
         int CurrentPictureSize = 30;
+
+        private bool unsavedChanges = false;
 
         public FormDraw() {
             this.DoubleBuffered = true;
@@ -26,7 +29,18 @@ namespace LevelEditor {
                 control.BackColor = Color.FromArgb(31, 31, 31);
             button17.BackColor = Color.FromArgb(31, 31, 31);
 
+            //adjust menuStrip1 to dark theme
 
+            menuStrip1.Renderer = new CustomToolStripRenderer(Color.FromArgb(31, 31, 31));
+            menuStrip1.ForeColor = Color.White;
+
+            foreach (ToolStripMenuItem item in menuStrip1.Items) {
+                item.BackColor = Color.FromArgb(31, 31, 31);
+                item.ForeColor = Color.White;
+                item.DropDown.BackColor = Color.FromArgb(31, 31, 31);
+                item.DropDown.ForeColor = Color.White;
+                item.DropDown.RenderMode = ToolStripRenderMode.System;
+            }
 
             typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(panel1, true, null);
 
@@ -51,18 +65,49 @@ namespace LevelEditor {
             projectileDamageInput.ValueChanged += PropertyInputs_AnyValueChanged;
             canMoveCheckboxInput.CheckedChanged += PropertyInputs_AnyValueChanged;
 
+            //valueInput will be used for health, shotgun and bullet pickups.
+            //their health value will be set to the value of valueInput
+            //and it will represent how much health/ammo they give to the player
+            valueInput.ValueChanged += ValueInput_ValueChanged;
+
+
+        }
+
+        private void ValueInput_ValueChanged(object sender, EventArgs e) {
+            if (selectedMapGameObject != null && (selectedMapGameObject.Type == "Bullets" || selectedMapGameObject.Type == "ShotgunAmmo" || selectedMapGameObject.Type == "SmallMedkit")) {
+                selectedMapGameObject.Health = (int)valueInput.Value;
+            }
         }
 
         private void PropertyInputs_AnyValueChanged(object sender, EventArgs e) {
             //apply changes to selected object
             if (selectedMapGameObject != null && (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn")) {
-                selectedMapGameObject.AttackRange = (float)attackRangeInput.Value;
-                selectedMapGameObject.CanMove = canMoveCheckboxInput.Checked;
-                selectedMapGameObject.ChaseRange = (float)sightRangeInput.Value;
-                selectedMapGameObject.FiringRate = (float)firingRateInput.Value;
-                selectedMapGameObject.Health = (int)healthInput.Value;
-                selectedMapGameObject.PatrolRange = (float)patrolRangeInput.Value;
-                selectedMapGameObject.ProjectileDamage = (int)projectileDamageInput.Value;
+                switch ((sender as Control).Name) {
+                    case "attackRangeInput":
+                        selectedMapGameObject.AttackRange = (float)attackRangeInput.Value;
+                        break;
+                    case "canMoveCheckboxInput":
+                        selectedMapGameObject.CanMove = canMoveCheckboxInput.Checked;
+                        break;
+                    case "sightRangeInput":
+                        selectedMapGameObject.ChaseRange = (float)sightRangeInput.Value;
+                        break;
+                    case "firingRateInput":
+                        selectedMapGameObject.FiringRate = (float)firingRateInput.Value;
+                        break;
+                    case "healthInput":
+                        selectedMapGameObject.Health = (int)healthInput.Value;
+                        break;
+                    case "patrolRangeInput":
+                        selectedMapGameObject.PatrolRange = (float)patrolRangeInput.Value;
+                        break;
+                    case "projectileDamageInput":
+                        selectedMapGameObject.ProjectileDamage = (int)projectileDamageInput.Value;
+                        break;
+                    default:
+                        break;
+
+                }
             }
         }
 
@@ -172,31 +217,14 @@ namespace LevelEditor {
                     //get the item at the X and Y coordinates
                     selectedMapGameObject = mapGameObjects.Find(item => item.X == x && item.Y == y);
 
-                    changeEnabledPropInputs();
-
                     //fill the input fields in panel3 and panel4 with the selected item's data
                     //if the item is not null
                     if (selectedMapGameObject != null) {
-                        healthInput.Value = selectedMapGameObject.Health;
-                        projectileDamageInput.Value = selectedMapGameObject.ProjectileDamage;
-                        firingRateInput.Value = (decimal)selectedMapGameObject.FiringRate;
-                        patrolRangeInput.Value = (decimal)selectedMapGameObject.PatrolRange;
-                        sightRangeInput.Value = (decimal)selectedMapGameObject.AttackRange;
-                        attackRangeInput.Value = (decimal)selectedMapGameObject.ChaseRange;
-                        canMoveCheckboxInput.Checked = selectedMapGameObject.CanMove;
-                        coordinatesLabel.Text = $"Coordinates:           ({selectedMapGameObject.X}, {selectedMapGameObject.Y})";
-                        typeLabel.Text = $"Type:           {selectedMapGameObject.Type}";
+                        changeEnabledPropInputs();
+                        fillInputsWithSelectedProps();
                     }
                     else {
-                        healthInput.Value = healthInput.Minimum;
-                        projectileDamageInput.Value = projectileDamageInput.Minimum;
-                        firingRateInput.Value = firingRateInput.Minimum;
-                        patrolRangeInput.Value = patrolRangeInput.Minimum;
-                        sightRangeInput.Value = sightRangeInput.Minimum;
-                        attackRangeInput.Value = attackRangeInput.Minimum;
-                        canMoveCheckboxInput.Checked = false;
-                        coordinatesLabel.Text = "Coordinates:";
-                        typeLabel.Text = "Type:";
+                        clearInputs();
                     }
                 }
 
@@ -213,16 +241,35 @@ namespace LevelEditor {
 
                 Console.WriteLine($"Drawing Click, X: {x}, Y: {y}");
 
-                for (int i = 0; i < itemCount; i++)
-                    if (mapGameObjects[i].X == x && mapGameObjects[i].Y == y) {
-                        mapGameObjects[i].SetTypeFromImage(currentPenImage);
-                        panel.Invalidate();
-                        panel.Update();
+                MapGameObject existingObj = mapGameObjects.Find(go => go.X == x && go.Y == y);
+                if (existingObj != null) {
+                    if (currentPenImage.Tag == "ExitDoor" && doorAdded)
                         return;
-                    }
+                    if (currentPenImage.Tag == "DoorGate" && gateAdded)
+                        return;
+
+                    existingObj.SetTypeFromImage(currentPenImage);
+                    unsavedChanges = true;
+                    panel.Invalidate();
+                    panel.Update();
+                    return;
+                }
+
+                if (currentPenImage.Tag == "ExitDoor" && doorAdded)
+                    return;
+                else if (currentPenImage.Tag == "ExitDoor" && !doorAdded)
+                    doorAdded = true;
+
+                if (currentPenImage.Tag == "DoorGate" && gateAdded)
+                    return;
+                else if (currentPenImage.Tag == "DoorGate" && !gateAdded)
+                    gateAdded = true;
+
+
                 MapGameObject tmpGameObj = new MapGameObject(x, y);
                 tmpGameObj.SetTypeFromImage(currentPenImage);
                 mapGameObjects.Add(tmpGameObj);
+                unsavedChanges = true;
                 panel.Invalidate();
                 panel.Update();
 
@@ -233,15 +280,18 @@ namespace LevelEditor {
                 if (panel.Capture)
                     panel.Capture = false;
 
+                int removeIndex = mapGameObjects.FindIndex(obj => obj.X == x && obj.Y == y);
+                if (removeIndex != -1) {
+                    if (mapGameObjects[removeIndex].Type == "ExitDoor")
+                        doorAdded = false;
+                    if (mapGameObjects[removeIndex].Type == "DoorGate")
+                        gateAdded = false;
 
-                for (int i = 0; i < itemCount; i++)
-                    if (mapGameObjects[i].X == x && mapGameObjects[i].Y == y) {
-                        mapGameObjects.RemoveAt(i);
-
-                        panel.Invalidate();
-                        panel.Update();
-                        break;
-                    }
+                    mapGameObjects.RemoveAt(removeIndex);
+                    unsavedChanges = true;
+                    panel.Invalidate();
+                    panel.Update();
+                }
                 //REMOVE GAMEOBJECT FROM LIST ON CALCULATED COORDINATES
             }
 
@@ -249,11 +299,43 @@ namespace LevelEditor {
         }
 
         private void changeEnabledPropInputs() {
+            groupBox1.Visible = (selectedMapGameObject.Type == "Bullets" || selectedMapGameObject.Type == "ShotgunAmmo" || selectedMapGameObject.Type == "SmallMedkit");
+            groupBox1.Enabled = groupBox1.Visible;
+
+
             bool state = (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn");
             foreach (Control c in panel3.Controls) {
                 if (c is NumericUpDown || c is CheckBox)
                     c.Enabled = state;
-            } 
+            }
+        }
+
+        private void fillInputsWithSelectedProps() {
+            valueInput.Value = selectedMapGameObject.Health; //for bullets, shotgun ammo, small medkit
+
+            healthInput.Value = selectedMapGameObject.Health;
+            projectileDamageInput.Value = selectedMapGameObject.ProjectileDamage;
+            firingRateInput.Value = (decimal)selectedMapGameObject.FiringRate;
+            patrolRangeInput.Value = (decimal)selectedMapGameObject.PatrolRange;
+            sightRangeInput.Value = (decimal)selectedMapGameObject.AttackRange;
+            attackRangeInput.Value = (decimal)selectedMapGameObject.ChaseRange;
+            canMoveCheckboxInput.Checked = selectedMapGameObject.CanMove;
+            coordinatesLabel.Text = $"Coordinates:           ({selectedMapGameObject.X}, {selectedMapGameObject.Y})";
+            typeLabel.Text = $"Type:           {selectedMapGameObject.Type}";
+        }
+
+        private void clearInputs() {
+            valueInput.Value = valueInput.Minimum; //for bullets, shotgun ammo, small medkit
+
+            healthInput.Value = healthInput.Minimum;
+            projectileDamageInput.Value = projectileDamageInput.Minimum;
+            firingRateInput.Value = firingRateInput.Minimum;
+            patrolRangeInput.Value = patrolRangeInput.Minimum;
+            sightRangeInput.Value = sightRangeInput.Minimum;
+            attackRangeInput.Value = attackRangeInput.Minimum;
+            canMoveCheckboxInput.Checked = false;
+            coordinatesLabel.Text = "Coordinates:";
+            typeLabel.Text = "Type:";
         }
 
         Rectangle panelAreaRect;
@@ -415,6 +497,32 @@ namespace LevelEditor {
             MapGameObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", mapGameObjects);
         }
 
+        private void resetObjectPropsButton_Click(object sender, EventArgs e) {
+            if (selectedMapGameObject != null) {
+                selectedMapGameObject.setDefaultPropsForType(selectedMapGameObject.Type);
+                fillInputsWithSelectedProps(); //set input values to default props of selected object
+            }
+        }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
+            //show dialog if unsaved changes
+            if (!unsavedChanges)
+                this.Close();
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to save changes?", "Save changes", MessageBoxButtons.YesNoCancel);
+            if (dialogResult == DialogResult.Yes) {
+                SerializeList();
+                this.Close();
+            } else if (dialogResult == DialogResult.No) {
+                this.Close();
+            } else if (dialogResult == DialogResult.Cancel) {
+                //do nothing
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
+            unsavedChanges = false;
+            SerializeList();
+        }
     }
 }

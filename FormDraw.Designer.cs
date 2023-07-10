@@ -66,8 +66,15 @@
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             panel4 = new System.Windows.Forms.Panel();
             panel3 = new System.Windows.Forms.Panel();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            valueInput = new System.Windows.Forms.NumericUpDown();
+            valueLabel = new System.Windows.Forms.Label();
             resetObjectPropsButton = new System.Windows.Forms.Button();
             typeLabel = new System.Windows.Forms.Label();
+            menuStrip1 = new System.Windows.Forms.MenuStrip();
+            fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)patrolRangeInput).BeginInit();
@@ -79,6 +86,9 @@
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)valueInput).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // canMoveCheckboxInput
@@ -771,6 +781,7 @@
             // 
             panel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel3.Controls.Add(groupBox1);
             panel3.Controls.Add(resetObjectPropsButton);
             panel3.Controls.Add(typeLabel);
             panel3.Controls.Add(canMoveCheckboxInput);
@@ -795,6 +806,45 @@
             panel3.Size = new System.Drawing.Size(402, 620);
             panel3.TabIndex = 1;
             // 
+            // groupBox1
+            // 
+            groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(valueInput);
+            groupBox1.Controls.Add(valueLabel);
+            groupBox1.Enabled = false;
+            groupBox1.Location = new System.Drawing.Point(10, 41);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(387, 348);
+            groupBox1.TabIndex = 25;
+            groupBox1.TabStop = false;
+            groupBox1.Visible = false;
+            // 
+            // valueInput
+            // 
+            valueInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            valueInput.BackColor = System.Drawing.Color.Black;
+            valueInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            valueInput.DecimalPlaces = 2;
+            valueInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            valueInput.ForeColor = System.Drawing.Color.White;
+            valueInput.Location = new System.Drawing.Point(198, 38);
+            valueInput.Margin = new System.Windows.Forms.Padding(4);
+            valueInput.Name = "valueInput";
+            valueInput.Size = new System.Drawing.Size(116, 25);
+            valueInput.TabIndex = 23;
+            // 
+            // valueLabel
+            // 
+            valueLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            valueLabel.AutoSize = true;
+            valueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            valueLabel.Location = new System.Drawing.Point(114, 40);
+            valueLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            valueLabel.Name = "valueLabel";
+            valueLabel.Size = new System.Drawing.Size(54, 20);
+            valueLabel.TabIndex = 22;
+            valueLabel.Text = "Value:";
+            // 
             // resetObjectPropsButton
             // 
             resetObjectPropsButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -809,6 +859,7 @@
             resetObjectPropsButton.TabIndex = 24;
             resetObjectPropsButton.Text = "Reset to Default";
             resetObjectPropsButton.UseVisualStyleBackColor = true;
+            resetObjectPropsButton.Click += resetObjectPropsButton_Click;
             // 
             // typeLabel
             // 
@@ -822,6 +873,38 @@
             typeLabel.TabIndex = 23;
             typeLabel.Text = "Type:";
             // 
+            // menuStrip1
+            // 
+            menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem });
+            menuStrip1.Location = new System.Drawing.Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            menuStrip1.Size = new System.Drawing.Size(1902, 25);
+            menuStrip1.TabIndex = 5;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { saveToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
+            fileToolStripMenuItem.Text = "File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            saveToolStripMenuItem.Text = "Save";
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
             // FormDraw
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -829,18 +912,20 @@
             BackColor = System.Drawing.Color.Black;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             ClientSize = new System.Drawing.Size(1902, 914);
+            ControlBox = false;
+            Controls.Add(menuStrip1);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
             Controls.Add(gameObjectsFlowLayoutPanel);
             DoubleBuffered = true;
             ForeColor = System.Drawing.Color.White;
             KeyPreview = true;
+            MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4);
             MinimumSize = new System.Drawing.Size(965, 730);
             Name = "FormDraw";
             ShowIcon = false;
             Text = "Level Editor - Grid Mode (FLOW)";
-            WindowState = System.Windows.Forms.FormWindowState.Maximized;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).EndInit();
@@ -855,7 +940,13 @@
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)valueInput).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -904,5 +995,12 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button resetObjectPropsButton;
         private System.Windows.Forms.Label typeLabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NumericUpDown valueInput;
+        private System.Windows.Forms.Label valueLabel;
     }
 }

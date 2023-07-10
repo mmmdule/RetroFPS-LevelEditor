@@ -159,15 +159,23 @@ namespace LevelEditor
                 case "ArchwaySingle":
                 case "ArchwaySmall":
                 case "ArmorBlink":
-                case "Bullets":
                 case "Cobweb_Wall":
                 case "DoorGate":
                 case "ExitDoor":
                 case "Key":
-                case "ShotgunAmmo":
-                case "SmallMedkit":
                 case "Stone":
                 case "Torch":
+                    this.canMove = false;
+                    break;
+                case "Bullets":
+                    this.health = 15;
+                    break;
+                case "ShotgunAmmo":
+                    this.health = 7;
+                    break;
+                case "SmallMedkit":
+                    this.health = 10;
+                    break;
                 case "wallBrick":
                     this.canMove = false;
                     this.projectileDamage = 0;
