@@ -75,6 +75,11 @@
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            wallTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            brickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            stoneWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            mossWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            blueTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)patrolRangeInput).BeginInit();
@@ -876,7 +881,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, wallTextureToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -894,16 +899,72 @@
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            saveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
+            saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W;
+            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
+            // wallTextureToolStripMenuItem
+            // 
+            wallTextureToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { brickToolStripMenuItem, stoneWallToolStripMenuItem, mossWallToolStripMenuItem, blueTileToolStripMenuItem });
+            wallTextureToolStripMenuItem.Name = "wallTextureToolStripMenuItem";
+            wallTextureToolStripMenuItem.Size = new System.Drawing.Size(90, 21);
+            wallTextureToolStripMenuItem.Text = "Wall Texture";
+            // 
+            // brickToolStripMenuItem
+            // 
+            brickToolStripMenuItem.Checked = true;
+            brickToolStripMenuItem.CheckOnClick = true;
+            brickToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            brickToolStripMenuItem.Image = Properties.Resources.wallBrick;
+            brickToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            brickToolStripMenuItem.Name = "brickToolStripMenuItem";
+            brickToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            brickToolStripMenuItem.Text = "Brown Brick";
+            brickToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            brickToolStripMenuItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            brickToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // stoneWallToolStripMenuItem
+            // 
+            stoneWallToolStripMenuItem.CheckOnClick = true;
+            stoneWallToolStripMenuItem.Image = Properties.Resources.wallStone;
+            stoneWallToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            stoneWallToolStripMenuItem.Name = "stoneWallToolStripMenuItem";
+            stoneWallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            stoneWallToolStripMenuItem.Text = "Stone Brick";
+            stoneWallToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            stoneWallToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // mossWallToolStripMenuItem
+            // 
+            mossWallToolStripMenuItem.CheckOnClick = true;
+            mossWallToolStripMenuItem.Image = Properties.Resources.wallMoss;
+            mossWallToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            mossWallToolStripMenuItem.Name = "mossWallToolStripMenuItem";
+            mossWallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            mossWallToolStripMenuItem.Text = "Moss Wall";
+            mossWallToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            mossWallToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // blueTileToolStripMenuItem
+            // 
+            blueTileToolStripMenuItem.CheckOnClick = true;
+            blueTileToolStripMenuItem.Image = Properties.Resources.tileWall;
+            blueTileToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            blueTileToolStripMenuItem.Name = "blueTileToolStripMenuItem";
+            blueTileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            blueTileToolStripMenuItem.Text = "Blue Tile";
+            blueTileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            blueTileToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
             // FormDraw
             // 
@@ -927,6 +988,7 @@
             ShowIcon = false;
             Text = "Level Editor - Grid Mode (FLOW)";
             Load += Form1_Load;
+            KeyDown += FormDraw_KeyDown;
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)patrolRangeInput).EndInit();
@@ -1002,5 +1064,10 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown valueInput;
         private System.Windows.Forms.Label valueLabel;
+        private System.Windows.Forms.ToolStripMenuItem wallTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem brickToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stoneWallToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mossWallToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blueTileToolStripMenuItem;
     }
 }

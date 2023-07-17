@@ -258,5 +258,44 @@ namespace LevelEditor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wallMoss
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("wallMoss", resourceCulture);
+                (obj as Image).Tag = "wallMoss";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wallStone
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("wallStone", resourceCulture);
+                (obj as Image).Tag = "wallStone";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tileWall
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("tileWall", resourceCulture);
+                (obj as Image).Tag = "tileWall";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

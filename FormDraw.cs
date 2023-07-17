@@ -28,6 +28,9 @@ namespace LevelEditor {
             foreach (Control control in panel4.Controls)
                 control.BackColor = Color.FromArgb(31, 31, 31);
             button17.BackColor = Color.FromArgb(31, 31, 31);
+            foreach (Control c in groupBox1.Controls) 
+                c.BackColor = Color.FromArgb(31, 31, 31);
+            
 
             //adjust menuStrip1 to dark theme
 
@@ -65,12 +68,24 @@ namespace LevelEditor {
             projectileDamageInput.ValueChanged += PropertyInputs_AnyValueChanged;
             canMoveCheckboxInput.CheckedChanged += PropertyInputs_AnyValueChanged;
 
+            //brick menu toolstrip eventHandlers
+            brickToolStripMenuItem.Click += wallTextureChangeClick;
+            stoneWallToolStripMenuItem.Click += wallTextureChangeClick;
+            mossWallToolStripMenuItem.Click += wallTextureChangeClick;
+            blueTileToolStripMenuItem.Click += wallTextureChangeClick;
+
             //valueInput will be used for health, shotgun and bullet pickups.
             //their health value will be set to the value of valueInput
             //and it will represent how much health/ammo they give to the player
             valueInput.ValueChanged += ValueInput_ValueChanged;
 
 
+        }
+
+        private void wallTextureChangeClick(object sender, EventArgs e) {
+            wallTexture = wallTextureToolStripMenuItem.DropDownItems.IndexOf(sender as ToolStripMenuItem);
+
+            MessageBox.Show($"Wall texture changed to {wallTexture}");
         }
 
         private void ValueInput_ValueChanged(object sender, EventArgs e) {
@@ -493,8 +508,11 @@ namespace LevelEditor {
             //    SerializeList();
         }
 
+        private int wallTexture = 0;
+
         private void SerializeList() {
-            MapGameObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", mapGameObjects);
+            (new Map(mapGameObjects, "map1", false, "", wallTexture)).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
+            //MapGameObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", mapGameObjects);
         }
 
         private void resetObjectPropsButton_Click(object sender, EventArgs e) {
@@ -513,9 +531,11 @@ namespace LevelEditor {
             if (dialogResult == DialogResult.Yes) {
                 SerializeList();
                 this.Close();
-            } else if (dialogResult == DialogResult.No) {
+            }
+            else if (dialogResult == DialogResult.No) {
                 this.Close();
-            } else if (dialogResult == DialogResult.Cancel) {
+            }
+            else if (dialogResult == DialogResult.Cancel) {
                 //do nothing
             }
         }
@@ -524,5 +544,21 @@ namespace LevelEditor {
             unsavedChanges = false;
             SerializeList();
         }
+
+        private void FormDraw_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.D) {
+                radioButtonDrawMode.Checked = true;
+                radioButtonSelectMode.Checked = false;
+                gameObjectsFlowLayoutPanel.Enabled = true;
+                drawMode = true;
+            }
+            else if (e.KeyCode == Keys.S) {
+                radioButtonDrawMode.Checked = false;
+                radioButtonSelectMode.Checked = true;
+                gameObjectsFlowLayoutPanel.Enabled = false;
+                drawMode = false;
+            }
+        }
+
     }
 }

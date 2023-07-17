@@ -4,19 +4,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.LinkLabel;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
-using System.Drawing.Imaging;
 
-namespace LevelEditor
-{
+namespace LevelEditor {
     //TODO: finish the setDefaultPropsForType() method
 
     internal class MapGameObject //: PictureBox
@@ -53,7 +44,10 @@ namespace LevelEditor
             { Resources.Stone, "Stone" },   
             { Resources.Torch , "Torch" },   
             { Resources.Tri_horn , "Tri_horn" },
-            { Resources.wallBrick , "wallBrick" }
+            { Resources.wallBrick , "wallBrick" },
+            { Resources.wallStone , "wallStone" },
+            { Resources.wallMoss , "wallMoss" },
+            { Resources.tileWall, "tileWall" }
         };
 
         public static void WriteCurrentListToJson(string path, string filename, List<MapGameObject> list) {
@@ -177,6 +171,9 @@ namespace LevelEditor
                     this.health = 10;
                     break;
                 case "wallBrick":
+                case "wallStone":
+                case "wallMoss":
+                case "tileWall":
                     this.canMove = false;
                     this.projectileDamage = 0;
                     this.firingRate = 0;
