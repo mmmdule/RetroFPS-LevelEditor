@@ -45,6 +45,7 @@
             radioButtonDrawMode = new System.Windows.Forms.RadioButton();
             cellSizeLabel = new System.Windows.Forms.Label();
             gameObjectsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            btnWallBrush = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
@@ -66,7 +67,19 @@
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             panel4 = new System.Windows.Forms.Panel();
             panel3 = new System.Windows.Forms.Panel();
-            groupBox1 = new System.Windows.Forms.GroupBox();
+            groupBoxPlayer = new System.Windows.Forms.GroupBox();
+            playerShotgunAmmoInput = new System.Windows.Forms.NumericUpDown();
+            playerHasShotgunCheckBox = new System.Windows.Forms.CheckBox();
+            playerRevolverAmmoInput = new System.Windows.Forms.NumericUpDown();
+            playerHasRevolverCheckBox = new System.Windows.Forms.CheckBox();
+            playerHealthLabel = new System.Windows.Forms.Label();
+            playerShotgunAmmoLabel = new System.Windows.Forms.Label();
+            playerHasShotgunLabel = new System.Windows.Forms.Label();
+            playerRevovlerAmmoLabel = new System.Windows.Forms.Label();
+            playerHasRevolverLabel = new System.Windows.Forms.Label();
+            playerCoordinatesLabel = new System.Windows.Forms.Label();
+            playerHealthInput = new System.Windows.Forms.NumericUpDown();
+            groupBoxPickup = new System.Windows.Forms.GroupBox();
             valueInput = new System.Windows.Forms.NumericUpDown();
             valueLabel = new System.Windows.Forms.Label();
             resetObjectPropsButton = new System.Windows.Forms.Button();
@@ -75,7 +88,13 @@
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            wallTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            mapSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            wallTextureToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            wallBrushToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             brickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             stoneWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mossWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,7 +110,11 @@
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            groupBox1.SuspendLayout();
+            groupBoxPlayer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)playerShotgunAmmoInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)playerRevolverAmmoInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)playerHealthInput).BeginInit();
+            groupBoxPickup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)valueInput).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -175,7 +198,7 @@
             projectileDamageInput.ForeColor = System.Drawing.Color.White;
             projectileDamageInput.Location = new System.Drawing.Point(208, 79);
             projectileDamageInput.Margin = new System.Windows.Forms.Padding(4);
-            projectileDamageInput.Maximum = new decimal(new int[] { 75, 0, 0, 0 });
+            projectileDamageInput.Maximum = new decimal(new int[] { 750, 0, 0, 0 });
             projectileDamageInput.Name = "projectileDamageInput";
             projectileDamageInput.Size = new System.Drawing.Size(116, 25);
             projectileDamageInput.TabIndex = 17;
@@ -189,7 +212,7 @@
             healthInput.ForeColor = System.Drawing.Color.White;
             healthInput.Location = new System.Drawing.Point(208, 41);
             healthInput.Margin = new System.Windows.Forms.Padding(4);
-            healthInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            healthInput.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             healthInput.Name = "healthInput";
             healthInput.Size = new System.Drawing.Size(116, 25);
             healthInput.TabIndex = 16;
@@ -394,6 +417,7 @@
             gameObjectsFlowLayoutPanel.AutoScroll = true;
             gameObjectsFlowLayoutPanel.BackColor = System.Drawing.Color.Black;
             gameObjectsFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            gameObjectsFlowLayoutPanel.Controls.Add(btnWallBrush);
             gameObjectsFlowLayoutPanel.Controls.Add(button1);
             gameObjectsFlowLayoutPanel.Controls.Add(button2);
             gameObjectsFlowLayoutPanel.Controls.Add(button3);
@@ -418,23 +442,42 @@
             gameObjectsFlowLayoutPanel.Size = new System.Drawing.Size(1459, 81);
             gameObjectsFlowLayoutPanel.TabIndex = 2;
             // 
+            // btnWallBrush
+            // 
+            btnWallBrush.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            btnWallBrush.BackgroundImage = Properties.Resources.wallBrick;
+            btnWallBrush.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            btnWallBrush.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            btnWallBrush.FlatAppearance.BorderSize = 2;
+            btnWallBrush.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnWallBrush.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            btnWallBrush.ForeColor = System.Drawing.Color.White;
+            btnWallBrush.Location = new System.Drawing.Point(6, 6);
+            btnWallBrush.Margin = new System.Windows.Forms.Padding(6);
+            btnWallBrush.Name = "btnWallBrush";
+            btnWallBrush.Size = new System.Drawing.Size(68, 67);
+            btnWallBrush.TabIndex = 4;
+            btnWallBrush.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            btnWallBrush.UseVisualStyleBackColor = true;
+            // 
             // button1
             // 
             button1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button1.BackgroundImage = Properties.Resources.wallBrick;
-            button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button1.BackColor = System.Drawing.Color.Transparent;
+            button1.BackgroundImage = Properties.Resources.player;
+            button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             button1.FlatAppearance.BorderSize = 2;
-            button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button1.ForeColor = System.Drawing.Color.White;
-            button1.Location = new System.Drawing.Point(6, 6);
+            button1.Location = new System.Drawing.Point(86, 6);
             button1.Margin = new System.Windows.Forms.Padding(6);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(68, 67);
-            button1.TabIndex = 4;
+            button1.TabIndex = 21;
             button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             // 
             // button2
             // 
@@ -447,7 +490,7 @@
             button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button2.ForeColor = System.Drawing.Color.White;
-            button2.Location = new System.Drawing.Point(86, 6);
+            button2.Location = new System.Drawing.Point(166, 6);
             button2.Margin = new System.Windows.Forms.Padding(6);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(68, 67);
@@ -466,7 +509,7 @@
             button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button3.ForeColor = System.Drawing.Color.White;
-            button3.Location = new System.Drawing.Point(166, 6);
+            button3.Location = new System.Drawing.Point(246, 6);
             button3.Margin = new System.Windows.Forms.Padding(6);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(68, 67);
@@ -485,7 +528,7 @@
             button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button4.ForeColor = System.Drawing.Color.White;
-            button4.Location = new System.Drawing.Point(246, 6);
+            button4.Location = new System.Drawing.Point(326, 6);
             button4.Margin = new System.Windows.Forms.Padding(6);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(68, 67);
@@ -504,7 +547,7 @@
             button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button5.ForeColor = System.Drawing.Color.White;
-            button5.Location = new System.Drawing.Point(326, 6);
+            button5.Location = new System.Drawing.Point(406, 6);
             button5.Margin = new System.Windows.Forms.Padding(6);
             button5.Name = "button5";
             button5.Size = new System.Drawing.Size(68, 67);
@@ -523,7 +566,7 @@
             button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button6.ForeColor = System.Drawing.Color.White;
-            button6.Location = new System.Drawing.Point(406, 6);
+            button6.Location = new System.Drawing.Point(486, 6);
             button6.Margin = new System.Windows.Forms.Padding(6);
             button6.Name = "button6";
             button6.Size = new System.Drawing.Size(68, 67);
@@ -542,7 +585,7 @@
             button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button7.ForeColor = System.Drawing.Color.White;
-            button7.Location = new System.Drawing.Point(486, 6);
+            button7.Location = new System.Drawing.Point(566, 6);
             button7.Margin = new System.Windows.Forms.Padding(6);
             button7.Name = "button7";
             button7.Size = new System.Drawing.Size(68, 67);
@@ -561,7 +604,7 @@
             button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button8.ForeColor = System.Drawing.Color.White;
-            button8.Location = new System.Drawing.Point(566, 6);
+            button8.Location = new System.Drawing.Point(646, 6);
             button8.Margin = new System.Windows.Forms.Padding(6);
             button8.Name = "button8";
             button8.Size = new System.Drawing.Size(68, 67);
@@ -580,7 +623,7 @@
             button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button9.ForeColor = System.Drawing.Color.White;
-            button9.Location = new System.Drawing.Point(646, 6);
+            button9.Location = new System.Drawing.Point(726, 6);
             button9.Margin = new System.Windows.Forms.Padding(6);
             button9.Name = "button9";
             button9.Size = new System.Drawing.Size(68, 67);
@@ -599,7 +642,7 @@
             button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button10.ForeColor = System.Drawing.Color.White;
-            button10.Location = new System.Drawing.Point(726, 6);
+            button10.Location = new System.Drawing.Point(806, 6);
             button10.Margin = new System.Windows.Forms.Padding(6);
             button10.Name = "button10";
             button10.Size = new System.Drawing.Size(68, 67);
@@ -618,7 +661,7 @@
             button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button11.ForeColor = System.Drawing.Color.White;
-            button11.Location = new System.Drawing.Point(806, 6);
+            button11.Location = new System.Drawing.Point(886, 6);
             button11.Margin = new System.Windows.Forms.Padding(6);
             button11.Name = "button11";
             button11.Size = new System.Drawing.Size(68, 67);
@@ -637,7 +680,7 @@
             button12.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button12.ForeColor = System.Drawing.Color.White;
-            button12.Location = new System.Drawing.Point(886, 6);
+            button12.Location = new System.Drawing.Point(966, 6);
             button12.Margin = new System.Windows.Forms.Padding(6);
             button12.Name = "button12";
             button12.Size = new System.Drawing.Size(68, 67);
@@ -656,7 +699,7 @@
             button13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button13.ForeColor = System.Drawing.Color.White;
-            button13.Location = new System.Drawing.Point(966, 6);
+            button13.Location = new System.Drawing.Point(1046, 6);
             button13.Margin = new System.Windows.Forms.Padding(6);
             button13.Name = "button13";
             button13.Size = new System.Drawing.Size(68, 67);
@@ -675,7 +718,7 @@
             button14.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button14.ForeColor = System.Drawing.Color.White;
-            button14.Location = new System.Drawing.Point(1046, 6);
+            button14.Location = new System.Drawing.Point(1126, 6);
             button14.Margin = new System.Windows.Forms.Padding(6);
             button14.Name = "button14";
             button14.Size = new System.Drawing.Size(68, 67);
@@ -694,7 +737,7 @@
             button15.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button15.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button15.ForeColor = System.Drawing.Color.White;
-            button15.Location = new System.Drawing.Point(1126, 6);
+            button15.Location = new System.Drawing.Point(1206, 6);
             button15.Margin = new System.Windows.Forms.Padding(6);
             button15.Name = "button15";
             button15.Size = new System.Drawing.Size(68, 67);
@@ -713,7 +756,7 @@
             button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button16.ForeColor = System.Drawing.Color.White;
-            button16.Location = new System.Drawing.Point(1206, 6);
+            button16.Location = new System.Drawing.Point(1286, 6);
             button16.Margin = new System.Windows.Forms.Padding(6);
             button16.Name = "button16";
             button16.Size = new System.Drawing.Size(68, 67);
@@ -730,7 +773,7 @@
             button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button17.ForeColor = System.Drawing.Color.White;
-            button17.Location = new System.Drawing.Point(1286, 6);
+            button17.Location = new System.Drawing.Point(1366, 6);
             button17.Margin = new System.Windows.Forms.Padding(6);
             button17.Name = "button17";
             button17.Size = new System.Drawing.Size(68, 67);
@@ -786,7 +829,8 @@
             // 
             panel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panel3.Controls.Add(groupBox1);
+            panel3.Controls.Add(groupBoxPlayer);
+            panel3.Controls.Add(groupBoxPickup);
             panel3.Controls.Add(resetObjectPropsButton);
             panel3.Controls.Add(typeLabel);
             panel3.Controls.Add(canMoveCheckboxInput);
@@ -811,32 +855,190 @@
             panel3.Size = new System.Drawing.Size(402, 620);
             panel3.TabIndex = 1;
             // 
-            // groupBox1
+            // groupBoxPlayer
             // 
-            groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            groupBox1.Controls.Add(valueInput);
-            groupBox1.Controls.Add(valueLabel);
-            groupBox1.Enabled = false;
-            groupBox1.Location = new System.Drawing.Point(10, 41);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(387, 348);
-            groupBox1.TabIndex = 25;
-            groupBox1.TabStop = false;
-            groupBox1.Visible = false;
+            groupBoxPlayer.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBoxPlayer.Controls.Add(playerShotgunAmmoInput);
+            groupBoxPlayer.Controls.Add(playerHasShotgunCheckBox);
+            groupBoxPlayer.Controls.Add(playerRevolverAmmoInput);
+            groupBoxPlayer.Controls.Add(playerHasRevolverCheckBox);
+            groupBoxPlayer.Controls.Add(playerHealthLabel);
+            groupBoxPlayer.Controls.Add(playerShotgunAmmoLabel);
+            groupBoxPlayer.Controls.Add(playerHasShotgunLabel);
+            groupBoxPlayer.Controls.Add(playerRevovlerAmmoLabel);
+            groupBoxPlayer.Controls.Add(playerHasRevolverLabel);
+            groupBoxPlayer.Controls.Add(playerCoordinatesLabel);
+            groupBoxPlayer.Controls.Add(playerHealthInput);
+            groupBoxPlayer.Enabled = false;
+            groupBoxPlayer.Location = new System.Drawing.Point(3, 26);
+            groupBoxPlayer.Name = "groupBoxPlayer";
+            groupBoxPlayer.Size = new System.Drawing.Size(387, 337);
+            groupBoxPlayer.TabIndex = 26;
+            groupBoxPlayer.TabStop = false;
+            groupBoxPlayer.Visible = false;
+            // 
+            // playerShotgunAmmoInput
+            // 
+            playerShotgunAmmoInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerShotgunAmmoInput.BackColor = System.Drawing.Color.Black;
+            playerShotgunAmmoInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            playerShotgunAmmoInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerShotgunAmmoInput.ForeColor = System.Drawing.Color.White;
+            playerShotgunAmmoInput.Location = new System.Drawing.Point(234, 178);
+            playerShotgunAmmoInput.Margin = new System.Windows.Forms.Padding(4);
+            playerShotgunAmmoInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            playerShotgunAmmoInput.Name = "playerShotgunAmmoInput";
+            playerShotgunAmmoInput.Size = new System.Drawing.Size(116, 25);
+            playerShotgunAmmoInput.TabIndex = 42;
+            // 
+            // playerHasShotgunCheckBox
+            // 
+            playerHasShotgunCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerHasShotgunCheckBox.AutoSize = true;
+            playerHasShotgunCheckBox.Location = new System.Drawing.Point(234, 141);
+            playerHasShotgunCheckBox.Name = "playerHasShotgunCheckBox";
+            playerHasShotgunCheckBox.Size = new System.Drawing.Size(15, 14);
+            playerHasShotgunCheckBox.TabIndex = 41;
+            playerHasShotgunCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // playerRevolverAmmoInput
+            // 
+            playerRevolverAmmoInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerRevolverAmmoInput.BackColor = System.Drawing.Color.Black;
+            playerRevolverAmmoInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            playerRevolverAmmoInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerRevolverAmmoInput.ForeColor = System.Drawing.Color.White;
+            playerRevolverAmmoInput.Location = new System.Drawing.Point(234, 94);
+            playerRevolverAmmoInput.Margin = new System.Windows.Forms.Padding(4);
+            playerRevolverAmmoInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            playerRevolverAmmoInput.Name = "playerRevolverAmmoInput";
+            playerRevolverAmmoInput.Size = new System.Drawing.Size(116, 25);
+            playerRevolverAmmoInput.TabIndex = 40;
+            // 
+            // playerHasRevolverCheckBox
+            // 
+            playerHasRevolverCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerHasRevolverCheckBox.AutoSize = true;
+            playerHasRevolverCheckBox.Location = new System.Drawing.Point(234, 61);
+            playerHasRevolverCheckBox.Name = "playerHasRevolverCheckBox";
+            playerHasRevolverCheckBox.Size = new System.Drawing.Size(15, 14);
+            playerHasRevolverCheckBox.TabIndex = 38;
+            playerHasRevolverCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // playerHealthLabel
+            // 
+            playerHealthLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerHealthLabel.AutoSize = true;
+            playerHealthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerHealthLabel.Location = new System.Drawing.Point(137, 20);
+            playerHealthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            playerHealthLabel.Name = "playerHealthLabel";
+            playerHealthLabel.Size = new System.Drawing.Size(60, 20);
+            playerHealthLabel.TabIndex = 24;
+            playerHealthLabel.Text = "Health:";
+            // 
+            // playerShotgunAmmoLabel
+            // 
+            playerShotgunAmmoLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerShotgunAmmoLabel.AutoSize = true;
+            playerShotgunAmmoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerShotgunAmmoLabel.Location = new System.Drawing.Point(73, 180);
+            playerShotgunAmmoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            playerShotgunAmmoLabel.Name = "playerShotgunAmmoLabel";
+            playerShotgunAmmoLabel.Size = new System.Drawing.Size(124, 20);
+            playerShotgunAmmoLabel.TabIndex = 28;
+            playerShotgunAmmoLabel.Text = "Shotgun Ammo:";
+            // 
+            // playerHasShotgunLabel
+            // 
+            playerHasShotgunLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerHasShotgunLabel.AutoSize = true;
+            playerHasShotgunLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerHasShotgunLabel.Location = new System.Drawing.Point(91, 136);
+            playerHasShotgunLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            playerHasShotgunLabel.Name = "playerHasShotgunLabel";
+            playerHasShotgunLabel.Size = new System.Drawing.Size(107, 20);
+            playerHasShotgunLabel.TabIndex = 27;
+            playerHasShotgunLabel.Text = "Has Shotgun:";
+            // 
+            // playerRevovlerAmmoLabel
+            // 
+            playerRevovlerAmmoLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerRevovlerAmmoLabel.AutoSize = true;
+            playerRevovlerAmmoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerRevovlerAmmoLabel.Location = new System.Drawing.Point(73, 96);
+            playerRevovlerAmmoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            playerRevovlerAmmoLabel.Name = "playerRevovlerAmmoLabel";
+            playerRevovlerAmmoLabel.Size = new System.Drawing.Size(124, 20);
+            playerRevovlerAmmoLabel.TabIndex = 26;
+            playerRevovlerAmmoLabel.Text = "Revolver Ammo:";
+            // 
+            // playerHasRevolverLabel
+            // 
+            playerHasRevolverLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerHasRevolverLabel.AutoSize = true;
+            playerHasRevolverLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerHasRevolverLabel.Location = new System.Drawing.Point(90, 56);
+            playerHasRevolverLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            playerHasRevolverLabel.Name = "playerHasRevolverLabel";
+            playerHasRevolverLabel.Size = new System.Drawing.Size(107, 20);
+            playerHasRevolverLabel.TabIndex = 30;
+            playerHasRevolverLabel.Text = "Has Revolver:";
+            // 
+            // playerCoordinatesLabel
+            // 
+            playerCoordinatesLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerCoordinatesLabel.AutoSize = true;
+            playerCoordinatesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerCoordinatesLabel.Location = new System.Drawing.Point(99, 227);
+            playerCoordinatesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            playerCoordinatesLabel.Name = "playerCoordinatesLabel";
+            playerCoordinatesLabel.Size = new System.Drawing.Size(99, 20);
+            playerCoordinatesLabel.TabIndex = 31;
+            playerCoordinatesLabel.Text = "Coordinates:";
+            // 
+            // playerHealthInput
+            // 
+            playerHealthInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            playerHealthInput.BackColor = System.Drawing.Color.Black;
+            playerHealthInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            playerHealthInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            playerHealthInput.ForeColor = System.Drawing.Color.White;
+            playerHealthInput.Location = new System.Drawing.Point(234, 17);
+            playerHealthInput.Margin = new System.Windows.Forms.Padding(4);
+            playerHealthInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            playerHealthInput.Name = "playerHealthInput";
+            playerHealthInput.Size = new System.Drawing.Size(116, 25);
+            playerHealthInput.TabIndex = 32;
+            // 
+            // groupBoxPickup
+            // 
+            groupBoxPickup.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBoxPickup.Controls.Add(valueInput);
+            groupBoxPickup.Controls.Add(valueLabel);
+            groupBoxPickup.Enabled = false;
+            groupBoxPickup.Location = new System.Drawing.Point(3, 26);
+            groupBoxPickup.Name = "groupBoxPickup";
+            groupBoxPickup.Size = new System.Drawing.Size(387, 337);
+            groupBoxPickup.TabIndex = 25;
+            groupBoxPickup.TabStop = false;
+            groupBoxPickup.Visible = false;
             // 
             // valueInput
             // 
             valueInput.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             valueInput.BackColor = System.Drawing.Color.Black;
             valueInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            valueInput.DecimalPlaces = 2;
             valueInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             valueInput.ForeColor = System.Drawing.Color.White;
             valueInput.Location = new System.Drawing.Point(198, 38);
             valueInput.Margin = new System.Windows.Forms.Padding(4);
+            valueInput.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
+            valueInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             valueInput.Name = "valueInput";
             valueInput.Size = new System.Drawing.Size(116, 25);
             valueInput.TabIndex = 23;
+            valueInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // valueLabel
             // 
@@ -871,7 +1073,7 @@
             typeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             typeLabel.AutoSize = true;
             typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            typeLabel.Location = new System.Drawing.Point(124, 369);
+            typeLabel.Location = new System.Drawing.Point(124, 370);
             typeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             typeLabel.Name = "typeLabel";
             typeLabel.Size = new System.Drawing.Size(47, 20);
@@ -881,7 +1083,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, wallTextureToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, mapSettingsToolStripMenuItem, wallBrushToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -900,7 +1102,7 @@
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
-            saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            saveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -908,16 +1110,77 @@
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W;
-            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
-            // wallTextureToolStripMenuItem
+            // mapSettingsToolStripMenuItem
             // 
-            wallTextureToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { brickToolStripMenuItem, stoneWallToolStripMenuItem, mossWallToolStripMenuItem, blueTileToolStripMenuItem });
-            wallTextureToolStripMenuItem.Name = "wallTextureToolStripMenuItem";
-            wallTextureToolStripMenuItem.Size = new System.Drawing.Size(90, 21);
-            wallTextureToolStripMenuItem.Text = "Wall Texture";
+            mapSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { wallTextureToolStripMenu });
+            mapSettingsToolStripMenuItem.Name = "mapSettingsToolStripMenuItem";
+            mapSettingsToolStripMenuItem.Size = new System.Drawing.Size(97, 21);
+            mapSettingsToolStripMenuItem.Text = "Map Settings";
+            // 
+            // wallTextureToolStripMenu
+            // 
+            wallTextureToolStripMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4, toolStripMenuItem5 });
+            wallTextureToolStripMenu.Name = "wallTextureToolStripMenu";
+            wallTextureToolStripMenu.Size = new System.Drawing.Size(190, 22);
+            wallTextureToolStripMenu.Text = "Border Wall Texture";
+            // 
+            // toolStripMenuItem2
+            // 
+            toolStripMenuItem2.Checked = true;
+            toolStripMenuItem2.CheckOnClick = true;
+            toolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
+            toolStripMenuItem2.Image = Properties.Resources.wallBrick;
+            toolStripMenuItem2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new System.Drawing.Size(143, 22);
+            toolStripMenuItem2.Text = "Brown Brick";
+            toolStripMenuItem2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripMenuItem2.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            toolStripMenuItem2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // toolStripMenuItem3
+            // 
+            toolStripMenuItem3.CheckOnClick = true;
+            toolStripMenuItem3.Image = Properties.Resources.wallStone;
+            toolStripMenuItem3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new System.Drawing.Size(143, 22);
+            toolStripMenuItem3.Text = "Stone Brick";
+            toolStripMenuItem3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripMenuItem3.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // toolStripMenuItem4
+            // 
+            toolStripMenuItem4.CheckOnClick = true;
+            toolStripMenuItem4.Image = Properties.Resources.wallMoss;
+            toolStripMenuItem4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new System.Drawing.Size(143, 22);
+            toolStripMenuItem4.Text = "Moss Wall";
+            toolStripMenuItem4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripMenuItem4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // toolStripMenuItem5
+            // 
+            toolStripMenuItem5.CheckOnClick = true;
+            toolStripMenuItem5.Image = Properties.Resources.tileWall;
+            toolStripMenuItem5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            toolStripMenuItem5.Name = "toolStripMenuItem5";
+            toolStripMenuItem5.Size = new System.Drawing.Size(143, 22);
+            toolStripMenuItem5.Text = "Blue Tile";
+            toolStripMenuItem5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripMenuItem5.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // wallBrushToolStripMenuItem
+            // 
+            wallBrushToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { brickToolStripMenuItem, stoneWallToolStripMenuItem, mossWallToolStripMenuItem, blueTileToolStripMenuItem });
+            wallBrushToolStripMenuItem.Name = "wallBrushToolStripMenuItem";
+            wallBrushToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            wallBrushToolStripMenuItem.Text = "Wall Brush";
             // 
             // brickToolStripMenuItem
             // 
@@ -927,7 +1190,7 @@
             brickToolStripMenuItem.Image = Properties.Resources.wallBrick;
             brickToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             brickToolStripMenuItem.Name = "brickToolStripMenuItem";
-            brickToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            brickToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             brickToolStripMenuItem.Text = "Brown Brick";
             brickToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             brickToolStripMenuItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -939,7 +1202,7 @@
             stoneWallToolStripMenuItem.Image = Properties.Resources.wallStone;
             stoneWallToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             stoneWallToolStripMenuItem.Name = "stoneWallToolStripMenuItem";
-            stoneWallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            stoneWallToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             stoneWallToolStripMenuItem.Text = "Stone Brick";
             stoneWallToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             stoneWallToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -950,7 +1213,7 @@
             mossWallToolStripMenuItem.Image = Properties.Resources.wallMoss;
             mossWallToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             mossWallToolStripMenuItem.Name = "mossWallToolStripMenuItem";
-            mossWallToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            mossWallToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             mossWallToolStripMenuItem.Text = "Moss Wall";
             mossWallToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             mossWallToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -961,7 +1224,7 @@
             blueTileToolStripMenuItem.Image = Properties.Resources.tileWall;
             blueTileToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             blueTileToolStripMenuItem.Name = "blueTileToolStripMenuItem";
-            blueTileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            blueTileToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             blueTileToolStripMenuItem.Text = "Blue Tile";
             blueTileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             blueTileToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -987,7 +1250,7 @@
             Name = "FormDraw";
             ShowIcon = false;
             Text = "Level Editor - Grid Mode (FLOW)";
-            Load += Form1_Load;
+            Load += FormDraw_Load;
             KeyDown += FormDraw_KeyDown;
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).EndInit();
@@ -1002,8 +1265,13 @@
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            groupBoxPlayer.ResumeLayout(false);
+            groupBoxPlayer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)playerShotgunAmmoInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)playerRevolverAmmoInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)playerHealthInput).EndInit();
+            groupBoxPickup.ResumeLayout(false);
+            groupBoxPickup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)valueInput).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -1015,7 +1283,7 @@
         private System.Windows.Forms.RadioButton radioButtonSelectMode;
         private System.Windows.Forms.RadioButton radioButtonDrawMode;
         private System.Windows.Forms.FlowLayoutPanel gameObjectsFlowLayoutPanel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnWallBrush;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
@@ -1061,13 +1329,32 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxPickup;
         private System.Windows.Forms.NumericUpDown valueInput;
         private System.Windows.Forms.Label valueLabel;
-        private System.Windows.Forms.ToolStripMenuItem wallTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wallBrushToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem brickToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stoneWallToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mossWallToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blueTileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mapSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wallTextureToolStripMenu;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.GroupBox groupBoxPlayer;
+        private System.Windows.Forms.CheckBox playerHasRevolverCheckBox;
+        private System.Windows.Forms.Label playerHealthLabel;
+        private System.Windows.Forms.Label playerShotgunAmmoLabel;
+        private System.Windows.Forms.Label playerHasShotgunLabel;
+        private System.Windows.Forms.Label playerRevovlerAmmoLabel;
+        private System.Windows.Forms.Label playerHasRevolverLabel;
+        private System.Windows.Forms.Label playerCoordinatesLabel;
+        private System.Windows.Forms.NumericUpDown playerHealthInput;
+        private System.Windows.Forms.NumericUpDown playerShotgunAmmoInput;
+        private System.Windows.Forms.CheckBox playerHasShotgunCheckBox;
+        private System.Windows.Forms.NumericUpDown playerRevolverAmmoInput;
+        private System.Windows.Forms.Button button1;
     }
 }

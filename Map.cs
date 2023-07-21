@@ -16,6 +16,7 @@ namespace LevelEditor {
         private int wallTexture;
         private int startX;
         private int startY;
+        private PlayerGameObject playerGameObject;
 
         public Map(List<MapGameObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, int startX, int startY) {
             this.mapGameObjects = mapGameObjects;
@@ -27,6 +28,17 @@ namespace LevelEditor {
             this.startY = startY;
         }
 
+        public Map(List<MapGameObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, PlayerGameObject playerGameObject) {
+            this.mapGameObjects = mapGameObjects;
+            this.name = name;
+            this.storyTextSegment = storyTextSegment;
+            this.storyText = storyText;
+            this.wallTexture = wallTexture;
+            this.playerGameObject = playerGameObject;
+            this.startX = playerGameObject.X;
+            this.startY = playerGameObject.Y;
+        }
+
         public List<MapGameObject> MapGameObjects { get => mapGameObjects; set => mapGameObjects = value; }
         public string Name { get => name; set => name = value; }
         public bool StoryTextSegment { get => storyTextSegment; set => storyTextSegment = value; }
@@ -34,6 +46,7 @@ namespace LevelEditor {
         public int WallTexture { get => wallTexture; set => wallTexture = value; }
         public int StartX { get => startX; set => startX = value; }
         public int StartY { get => startY; set => startY = value; }
+        public PlayerGameObject PlayerGameObject { get => playerGameObject; set => playerGameObject = value; }
 
 
         //json serialize map object
