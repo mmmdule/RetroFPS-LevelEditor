@@ -870,9 +870,9 @@
             groupBoxPlayer.Controls.Add(playerCoordinatesLabel);
             groupBoxPlayer.Controls.Add(playerHealthInput);
             groupBoxPlayer.Enabled = false;
-            groupBoxPlayer.Location = new System.Drawing.Point(3, 26);
+            groupBoxPlayer.Location = new System.Drawing.Point(1, 27);
             groupBoxPlayer.Name = "groupBoxPlayer";
-            groupBoxPlayer.Size = new System.Drawing.Size(387, 337);
+            groupBoxPlayer.Size = new System.Drawing.Size(407, 337);
             groupBoxPlayer.TabIndex = 26;
             groupBoxPlayer.TabStop = false;
             groupBoxPlayer.Visible = false;
@@ -888,7 +888,7 @@
             playerShotgunAmmoInput.Margin = new System.Windows.Forms.Padding(4);
             playerShotgunAmmoInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
             playerShotgunAmmoInput.Name = "playerShotgunAmmoInput";
-            playerShotgunAmmoInput.Size = new System.Drawing.Size(116, 25);
+            playerShotgunAmmoInput.Size = new System.Drawing.Size(136, 25);
             playerShotgunAmmoInput.TabIndex = 42;
             // 
             // playerHasShotgunCheckBox
@@ -912,7 +912,7 @@
             playerRevolverAmmoInput.Margin = new System.Windows.Forms.Padding(4);
             playerRevolverAmmoInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
             playerRevolverAmmoInput.Name = "playerRevolverAmmoInput";
-            playerRevolverAmmoInput.Size = new System.Drawing.Size(116, 25);
+            playerRevolverAmmoInput.Size = new System.Drawing.Size(136, 25);
             playerRevolverAmmoInput.TabIndex = 40;
             // 
             // playerHasRevolverCheckBox
@@ -1006,10 +1006,12 @@
             playerHealthInput.ForeColor = System.Drawing.Color.White;
             playerHealthInput.Location = new System.Drawing.Point(234, 17);
             playerHealthInput.Margin = new System.Windows.Forms.Padding(4);
-            playerHealthInput.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
+            playerHealthInput.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
+            playerHealthInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             playerHealthInput.Name = "playerHealthInput";
-            playerHealthInput.Size = new System.Drawing.Size(116, 25);
+            playerHealthInput.Size = new System.Drawing.Size(136, 25);
             playerHealthInput.TabIndex = 32;
+            playerHealthInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // groupBoxPickup
             // 
@@ -1017,9 +1019,9 @@
             groupBoxPickup.Controls.Add(valueInput);
             groupBoxPickup.Controls.Add(valueLabel);
             groupBoxPickup.Enabled = false;
-            groupBoxPickup.Location = new System.Drawing.Point(3, 26);
+            groupBoxPickup.Location = new System.Drawing.Point(3, 30);
             groupBoxPickup.Name = "groupBoxPickup";
-            groupBoxPickup.Size = new System.Drawing.Size(387, 337);
+            groupBoxPickup.Size = new System.Drawing.Size(387, 291);
             groupBoxPickup.TabIndex = 25;
             groupBoxPickup.TabStop = false;
             groupBoxPickup.Visible = false;

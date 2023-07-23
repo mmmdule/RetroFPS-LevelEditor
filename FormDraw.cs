@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace LevelEditor {
     public partial class FormDraw : Form {
@@ -35,8 +36,6 @@ namespace LevelEditor {
             this.DoubleBuffered = true;
             InitializeComponent();
 
-            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
-
             this.BackColor = Color.FromArgb(31, 31, 31);
             foreach (Control control in this.Controls)
                 control.BackColor = Color.FromArgb(31, 31, 31);
@@ -49,6 +48,14 @@ namespace LevelEditor {
                 c.BackColor = Color.FromArgb(31, 31, 31);
             foreach (Control c in groupBoxPlayer.Controls)
                 c.BackColor = Color.FromArgb(31, 31, 31);
+
+            //remove groupBox border
+            groupBoxPickup.Paint += (sender, e) => {
+                e.Graphics.Clear(Color.FromArgb(31, 31, 31)); //fills the entire control with the specified color
+            };
+            groupBoxPlayer.Paint += (sender, e) => {
+                e.Graphics.Clear(Color.FromArgb(31, 31, 31));
+            };
 
 
             //adjust menuStrip1 to dark theme
@@ -92,6 +99,13 @@ namespace LevelEditor {
             projectileDamageInput.ValueChanged += PropertyInputs_AnyValueChanged;
             canMoveCheckboxInput.CheckedChanged += PropertyInputs_AnyValueChanged;
 
+            //player input eventHandlers
+            playerHealthInput.ValueChanged += PlayerInputs_AnyValueChanged;
+            playerHasRevolverCheckBox.CheckedChanged += PlayerInputs_AnyValueChanged;
+            playerRevolverAmmoInput.ValueChanged += PlayerInputs_AnyValueChanged;
+            playerHasShotgunCheckBox.CheckedChanged += PlayerInputs_AnyValueChanged;
+            playerShotgunAmmoInput.ValueChanged += PlayerInputs_AnyValueChanged;
+
             //wall brush menu toolstrip eventHandlers
             foreach (ToolStripMenuItem item in wallBrushToolStripMenuItem.DropDownItems)
                 item.Click += wallBrushChange;
@@ -104,8 +118,6 @@ namespace LevelEditor {
             //their health value will be set to the value of valueInput
             //and it will represent how much health/ammo they give to the player
             valueInput.ValueChanged += ValueInput_ValueChanged;
-
-
         }
 
         private void wallTextureChange(object sender, EventArgs e) {
@@ -172,6 +184,35 @@ namespace LevelEditor {
                 }
             }
         }
+
+        private void PlayerInputs_AnyValueChanged(object sender, EventArgs e) {
+            if (player == null || !playerSelected)
+                return;
+
+            //apply changes to player object
+            switch ((sender as Control).Name) {
+                case "playerHealthInput":
+                    player.Health = (int)playerHealthInput.Value;
+                    break;
+                case "playerHasRevolverCheckBox":
+                    player.HasRevolver = playerHasRevolverCheckBox.Checked;
+                    break;
+                case "playerRevolverAmmoInput":
+                    player.RevolverAmmo = (int)playerRevolverAmmoInput.Value;
+                    break;
+                case "playerHasShotgunCheckBox":
+                    player.HasShotgun = playerHasShotgunCheckBox.Checked;
+                    break;
+                case "playerShotgunAmmoInput":
+                    player.ShotgunAmmo = (int)playerShotgunAmmoInput.Value;
+                    break;
+                default:
+                    break;
+
+
+            }
+        }
+
 
         private void InputPanel_Resize(object sender, EventArgs e) {
             Console.WriteLine($"Size: (X,Y) == ({this.Size.Width}{this.Size.Height})");
@@ -310,8 +351,6 @@ namespace LevelEditor {
                 if (panel.Capture)
                     panel.Capture = false;
 
-                Console.WriteLine($"Drawing Click, X: {x}, Y: {y}");
-
                 //check if objects that must be only one on map are already added
                 if (currentPenImage.Tag == "ExitDoor" && doorAdded)
                     return;
@@ -327,17 +366,12 @@ namespace LevelEditor {
                     return;
                 else if (currentPenImage.Tag == "player" && !playerAdded) {
                     playerAdded = true;
-                    player = player == null ?
-                                                new PlayerGameObject(x, y) :
-                                                new PlayerGameObject(player.Health, player.HasRevolver,
-                                                player.RevolverAmmo, player.HasShotgun, player.ShotgunAmmo, x, y);
+                    player = new PlayerGameObject(x, y);
                     unsavedChanges = true;
                     panel.Invalidate();
                     panel.Update();
                     return;
                 }
-                //check if objects that must be only one on map are already added
-
 
                 MapGameObject existingObj = mapGameObjects.Find(go => go.X == x && go.Y == y);
 
@@ -345,16 +379,13 @@ namespace LevelEditor {
                     if (currentPenImage.Tag == "player" && playerAdded)
                         return;
                     else if (currentPenImage.Tag == "player") {
-                        player = player == null ?
-                                                new PlayerGameObject(x, y) :
-                                                new PlayerGameObject(player.Health, player.HasRevolver,
-                                                player.RevolverAmmo, player.HasShotgun, player.ShotgunAmmo, x, y);
+                        playerAdded = true;
+                        player = new PlayerGameObject(x, y);
                         unsavedChanges = true;
                         panel.Invalidate();
                         panel.Update();
                         return;
                     }
-
 
                     existingObj.SetTypeFromImage(currentPenImage);
                     unsavedChanges = true;
@@ -369,7 +400,6 @@ namespace LevelEditor {
                 unsavedChanges = true;
                 panel.Invalidate();
                 panel.Update();
-
                 //ADD GAMEOBJECT TO LIST ON CALCULATED COORDINATES
                 //ONLY CHANGE IT'S IMAGE & TYPE IF IT EXISTS THERE ALREADY
             }
@@ -394,11 +424,13 @@ namespace LevelEditor {
                 unsavedChanges = true;
                 panel.Invalidate();
                 panel.Update();
+                return;
             }
             //REMOVE GAMEOBJECT FROM LIST ON CALCULATED COORDINATES
 
             if (player != null && player.X == x && player.Y == y) {
                 playerAdded = false;
+                playerSelected = false;
                 player = null;
                 unsavedChanges = true;
                 panel.Invalidate();
@@ -419,13 +451,15 @@ namespace LevelEditor {
                 //fill the input fields in panel3 and panel4 with the selected item's data
                 //if the item is not null
                 if (selectedMapGameObject != null) {
+                    playerSelected = false;
                     changeEnabledPropInputs();
                     fillInputsWithSelectedProps();
                 }
-                else if (player != null) {
-                    playerSelected = (player.X == x && player.Y == y); //true if player coords are x and y
+                else if (player != null && player.X == x && player.Y == y) {
+                    //playerSelected = (player.X == x && player.Y == y)
+                    playerSelected = true; //true if player coords are x and y
                     changeEnabledPropInputs();
-                    fillInputsWithSelectedProps(true);
+                    fillInputsWithSelectedProps();
                 }
                 else {
                     clearInputs();
@@ -434,30 +468,43 @@ namespace LevelEditor {
         }
 
         private void changeEnabledPropInputs() {
-            if(selectedMapGameObject != null) {
+            if (selectedMapGameObject != null) {
                 groupBoxPickup.Visible = (selectedMapGameObject.Type == "Bullets" || selectedMapGameObject.Type == "ShotgunAmmo" || selectedMapGameObject.Type == "SmallMedkit");
                 groupBoxPickup.Enabled = groupBoxPickup.Visible;
+
+                groupBoxPlayer.Enabled = false;
+                groupBoxPlayer.Visible = false;
 
                 bool state = (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn");
                 foreach (Control c in panel3.Controls) {
                     if (c is NumericUpDown || c is CheckBox)
                         c.Enabled = state;
                 }
+                return;
             }
 
-            if(player != null) {
-                groupBoxPlayer.Visible = playerSelected;
-                groupBoxPlayer.Enabled = playerSelected;
+            if (player != null && playerSelected) {
+                groupBoxPickup.Visible = false;
+                groupBoxPickup.Enabled = false;
+                foreach (Control c in panel3.Controls) {
+                    if (c is NumericUpDown || c is CheckBox)
+                        c.Enabled = false;
+                }
+                groupBoxPlayer.Visible = true;
+                groupBoxPlayer.Enabled = true;
+                return;
             }
 
         }
 
-        private void fillInputsWithSelectedProps(bool playerSelected = false) {
+
+
+        private void fillInputsWithSelectedProps(/*bool playerSelected = false*/) {
             if (playerSelected) {
-                playerHealthInput.Value = player.Health;
-                playerRevolverAmmoInput.Value = player.RevolverAmmo;
+                playerHealthInput.Value = (decimal)player.Health;
+                playerRevolverAmmoInput.Value = (decimal)player.RevolverAmmo;
                 playerHasRevolverCheckBox.Checked = player.HasRevolver;
-                playerShotgunAmmoInput.Value = player.ShotgunAmmo;
+                playerShotgunAmmoInput.Value = (decimal)player.ShotgunAmmo;
                 playerHasShotgunCheckBox.Checked = player.HasShotgun;
                 playerCoordinatesLabel.Text = $"Coordinates:           ({player.X}, {player.Y})";
                 typeLabel.Text = $"Type:           Player";
@@ -483,23 +530,28 @@ namespace LevelEditor {
         private void clearInputs() {
             valueInput.Value = valueInput.Minimum; //for bullets, shotgun ammo, small medkit
 
-            foreach(NumericUpDown numeric in panel3.Controls) {
-                numeric.Value = numeric.Minimum;
-            }
-            foreach(CheckBox checkBox in panel3.Controls) {
-                checkBox.Checked = false;
-            }
-
-            foreach(NumericUpDown numeric in groupBoxPickup.Controls) {
-                numeric.Value = numeric.Minimum;
+            foreach (Control control in panel3.Controls) {
+                if (control is NumericUpDown)
+                    (control as NumericUpDown).Value = (control as NumericUpDown).Minimum;
+                else if (control is CheckBox)
+                    (control as CheckBox).Checked = false;
             }
 
-            foreach(NumericUpDown numeric in groupBoxPlayer.Controls) {
-                numeric.Value = numeric.Minimum;
+            foreach (Control control in groupBoxPickup.Controls) {
+                if (control is NumericUpDown)
+                    (control as NumericUpDown).Value = (control as NumericUpDown).Minimum;
+                else if (control is CheckBox)
+                    (control as CheckBox).Checked = false;
             }
-            foreach(CheckBox checkBox in groupBoxPlayer.Controls) {
-                checkBox.Checked = false;
-            }
+
+            groupBoxPlayer.Visible = false;
+            groupBoxPlayer.Enabled = false;
+            //foreach (Control control in groupBoxPlayer.Controls) {
+            //    if (control is NumericUpDown)
+            //        (control as NumericUpDown).Value = (control as NumericUpDown).Minimum;
+            //    else if (control is CheckBox)
+            //        (control as CheckBox).Checked = false;
+            //}
 
             //healthInput.Value = healthInput.Minimum;
             //projectileDamageInput.Value = projectileDamageInput.Minimum;
@@ -517,7 +569,7 @@ namespace LevelEditor {
             //playerShotgunAmmoInput.Value = playerShotgunAmmoInput.Minimum;
             //playerHasShotgunCheckBox.Checked = false;
             playerCoordinatesLabel.Text = "Coordinates:";
-            
+
         }
 
 
@@ -594,6 +646,7 @@ namespace LevelEditor {
                 btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 48, 48);
                 btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(56, 56, 56);
             }
+
             (flowPanel.Controls[0] as Button).FlatAppearance.BorderColor = Color.Red;
             (flowPanel.Controls[1] as Button).Click -= PenChoice_Click; //remove event from player button
             (flowPanel.Controls[1] as Button).Click += PlayerChoice_Click; //add new event to player button
@@ -608,7 +661,7 @@ namespace LevelEditor {
                 b.FlatAppearance.BorderColor = Color.White;
             }
             btn.FlatAppearance.BorderColor = Color.Red;
-            playerSelected = true;
+            //playerSelected = true;
             currentPenImage = btn.BackgroundImage;
         }
 
@@ -620,7 +673,7 @@ namespace LevelEditor {
                 b.FlatAppearance.BorderColor = Color.White;
             }
             btn.FlatAppearance.BorderColor = Color.Red;
-            playerSelected = false; //this event is only for pen buttons which are not the player button
+            //this event is only for pen buttons which are not the player button
         }
 
 
@@ -702,7 +755,7 @@ namespace LevelEditor {
 
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e) {
-            gameObjectsFlowLayoutPanel.Enabled = radioButtonDrawMode.Checked;
+            //gameObjectsFlowLayoutPanel.Enabled = radioButtonDrawMode.Checked;
             drawMode = radioButtonDrawMode.Checked;
             //if (!drawMode)
             //    SerializeList();
@@ -722,6 +775,10 @@ namespace LevelEditor {
         private void resetObjectPropsButton_Click(object sender, EventArgs e) {
             if (selectedMapGameObject != null) {
                 selectedMapGameObject.setDefaultPropsForType(selectedMapGameObject.Type);
+                fillInputsWithSelectedProps(); //set input values to default props of selected object
+            }
+            else if (playerSelected) {
+                player = new PlayerGameObject(player.X, player.Y);
                 fillInputsWithSelectedProps(); //set input values to default props of selected object
             }
         }
@@ -759,7 +816,7 @@ namespace LevelEditor {
             else if (e.KeyCode == Keys.S) {
                 radioButtonDrawMode.Checked = false;
                 radioButtonSelectMode.Checked = true;
-                gameObjectsFlowLayoutPanel.Enabled = false;
+                //gameObjectsFlowLayoutPanel.Enabled = false;
                 drawMode = false;
             }
         }
