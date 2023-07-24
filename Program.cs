@@ -15,8 +15,11 @@ namespace LevelEditor
         static void Main()
         {
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.Run(new Form1());
+            //Application.Run(new FormCopy());
+            Application.Run(new FormDraw());
         }
     }
 }

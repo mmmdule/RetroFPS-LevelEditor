@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LevelEditor": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Dule Fakultet Stuff Acer\\Treca godina\\Zavrsni rad\\LevelEditor\\bin\\Debug\\net7.0-windows"
+    }
+  }
+}
