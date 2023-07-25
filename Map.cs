@@ -11,7 +11,7 @@ namespace LevelEditor {
     internal class Map {
         [JsonIgnore]
         private List<MapObject> mapGameObjects;
-        private List<MapObject> mapObjects = new List<MapObject>();
+        private List<MapObject> mapObjectsForJson = new List<MapObject>();
         private List<MapNpcObject> mapNpcObjects = new List<MapNpcObject>();
         private List<Pickup> pickups = new List<Pickup>();
 
@@ -57,7 +57,7 @@ namespace LevelEditor {
                     Pickups.Add(MapGameObjects[i] as Pickup);
                 else if (MapGameObjects[i] is MapNpcObject)
                     MapNpcObjects.Add(MapGameObjects[i] as MapNpcObject);
-                else
+                else if ( !(MapGameObjects[i] is PlayerGameObject) )
                     MapObjects.Add(MapGameObjects[i]);
             }
 
@@ -66,7 +66,7 @@ namespace LevelEditor {
         [JsonIgnore]
         public List<MapObject> MapGameObjects { get => mapGameObjects; set => mapGameObjects = value; }
         [JsonInclude]
-        public List<MapObject> MapObjects { get => mapObjects; set => mapObjects = value; }
+        public List<MapObject> MapObjects { get => mapObjectsForJson; set => mapObjectsForJson = value; }
         [JsonInclude]
         public List<MapNpcObject> MapNpcObjects { get => mapNpcObjects; set => mapNpcObjects = value; }
         [JsonInclude]
