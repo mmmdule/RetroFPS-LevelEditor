@@ -419,21 +419,21 @@
             gameObjectsFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             gameObjectsFlowLayoutPanel.Controls.Add(btnWallBrush);
             gameObjectsFlowLayoutPanel.Controls.Add(button1);
-            gameObjectsFlowLayoutPanel.Controls.Add(button2);
-            gameObjectsFlowLayoutPanel.Controls.Add(button3);
-            gameObjectsFlowLayoutPanel.Controls.Add(button4);
-            gameObjectsFlowLayoutPanel.Controls.Add(button5);
-            gameObjectsFlowLayoutPanel.Controls.Add(button6);
             gameObjectsFlowLayoutPanel.Controls.Add(button7);
             gameObjectsFlowLayoutPanel.Controls.Add(button8);
             gameObjectsFlowLayoutPanel.Controls.Add(button9);
+            gameObjectsFlowLayoutPanel.Controls.Add(button4);
+            gameObjectsFlowLayoutPanel.Controls.Add(button5);
+            gameObjectsFlowLayoutPanel.Controls.Add(button6);
+            gameObjectsFlowLayoutPanel.Controls.Add(button2);
+            gameObjectsFlowLayoutPanel.Controls.Add(button3);
+            gameObjectsFlowLayoutPanel.Controls.Add(button16);
             gameObjectsFlowLayoutPanel.Controls.Add(button10);
-            gameObjectsFlowLayoutPanel.Controls.Add(button11);
             gameObjectsFlowLayoutPanel.Controls.Add(button12);
+            gameObjectsFlowLayoutPanel.Controls.Add(button11);
             gameObjectsFlowLayoutPanel.Controls.Add(button13);
             gameObjectsFlowLayoutPanel.Controls.Add(button14);
             gameObjectsFlowLayoutPanel.Controls.Add(button15);
-            gameObjectsFlowLayoutPanel.Controls.Add(button16);
             gameObjectsFlowLayoutPanel.Controls.Add(button17);
             gameObjectsFlowLayoutPanel.Location = new System.Drawing.Point(14, 812);
             gameObjectsFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
@@ -490,7 +490,7 @@
             button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button2.ForeColor = System.Drawing.Color.White;
-            button2.Location = new System.Drawing.Point(166, 6);
+            button2.Location = new System.Drawing.Point(646, 6);
             button2.Margin = new System.Windows.Forms.Padding(6);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(68, 67);
@@ -509,7 +509,7 @@
             button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button3.ForeColor = System.Drawing.Color.White;
-            button3.Location = new System.Drawing.Point(246, 6);
+            button3.Location = new System.Drawing.Point(726, 6);
             button3.Margin = new System.Windows.Forms.Padding(6);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(68, 67);
@@ -528,7 +528,7 @@
             button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button4.ForeColor = System.Drawing.Color.White;
-            button4.Location = new System.Drawing.Point(326, 6);
+            button4.Location = new System.Drawing.Point(406, 6);
             button4.Margin = new System.Windows.Forms.Padding(6);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(68, 67);
@@ -547,7 +547,7 @@
             button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button5.ForeColor = System.Drawing.Color.White;
-            button5.Location = new System.Drawing.Point(406, 6);
+            button5.Location = new System.Drawing.Point(486, 6);
             button5.Margin = new System.Windows.Forms.Padding(6);
             button5.Name = "button5";
             button5.Size = new System.Drawing.Size(68, 67);
@@ -566,7 +566,7 @@
             button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button6.ForeColor = System.Drawing.Color.White;
-            button6.Location = new System.Drawing.Point(486, 6);
+            button6.Location = new System.Drawing.Point(566, 6);
             button6.Margin = new System.Windows.Forms.Padding(6);
             button6.Name = "button6";
             button6.Size = new System.Drawing.Size(68, 67);
@@ -585,7 +585,7 @@
             button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button7.ForeColor = System.Drawing.Color.White;
-            button7.Location = new System.Drawing.Point(566, 6);
+            button7.Location = new System.Drawing.Point(166, 6);
             button7.Margin = new System.Windows.Forms.Padding(6);
             button7.Name = "button7";
             button7.Size = new System.Drawing.Size(68, 67);
@@ -604,7 +604,7 @@
             button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button8.ForeColor = System.Drawing.Color.White;
-            button8.Location = new System.Drawing.Point(646, 6);
+            button8.Location = new System.Drawing.Point(246, 6);
             button8.Margin = new System.Windows.Forms.Padding(6);
             button8.Name = "button8";
             button8.Size = new System.Drawing.Size(68, 67);
@@ -623,7 +623,7 @@
             button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button9.ForeColor = System.Drawing.Color.White;
-            button9.Location = new System.Drawing.Point(726, 6);
+            button9.Location = new System.Drawing.Point(326, 6);
             button9.Margin = new System.Windows.Forms.Padding(6);
             button9.Name = "button9";
             button9.Size = new System.Drawing.Size(68, 67);
@@ -642,7 +642,7 @@
             button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button10.ForeColor = System.Drawing.Color.White;
-            button10.Location = new System.Drawing.Point(806, 6);
+            button10.Location = new System.Drawing.Point(886, 6);
             button10.Margin = new System.Windows.Forms.Padding(6);
             button10.Name = "button10";
             button10.Size = new System.Drawing.Size(68, 67);
@@ -661,7 +661,7 @@
             button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button11.ForeColor = System.Drawing.Color.White;
-            button11.Location = new System.Drawing.Point(886, 6);
+            button11.Location = new System.Drawing.Point(1046, 6);
             button11.Margin = new System.Windows.Forms.Padding(6);
             button11.Name = "button11";
             button11.Size = new System.Drawing.Size(68, 67);
@@ -699,7 +699,7 @@
             button13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button13.ForeColor = System.Drawing.Color.White;
-            button13.Location = new System.Drawing.Point(1046, 6);
+            button13.Location = new System.Drawing.Point(1126, 6);
             button13.Margin = new System.Windows.Forms.Padding(6);
             button13.Name = "button13";
             button13.Size = new System.Drawing.Size(68, 67);
@@ -718,7 +718,7 @@
             button14.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button14.ForeColor = System.Drawing.Color.White;
-            button14.Location = new System.Drawing.Point(1126, 6);
+            button14.Location = new System.Drawing.Point(1206, 6);
             button14.Margin = new System.Windows.Forms.Padding(6);
             button14.Name = "button14";
             button14.Size = new System.Drawing.Size(68, 67);
@@ -737,7 +737,7 @@
             button15.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button15.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button15.ForeColor = System.Drawing.Color.White;
-            button15.Location = new System.Drawing.Point(1206, 6);
+            button15.Location = new System.Drawing.Point(1286, 6);
             button15.Margin = new System.Windows.Forms.Padding(6);
             button15.Name = "button15";
             button15.Size = new System.Drawing.Size(68, 67);
@@ -756,7 +756,7 @@
             button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button16.ForeColor = System.Drawing.Color.White;
-            button16.Location = new System.Drawing.Point(1286, 6);
+            button16.Location = new System.Drawing.Point(806, 6);
             button16.Margin = new System.Windows.Forms.Padding(6);
             button16.Name = "button16";
             button16.Size = new System.Drawing.Size(68, 67);

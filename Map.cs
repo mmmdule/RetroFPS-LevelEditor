@@ -9,7 +9,12 @@ using System.Text.Json.Serialization;
 
 namespace LevelEditor {
     internal class Map {
-        private List<MapGameObject> mapGameObjects;
+        [JsonIgnore]
+        private List<MapObject> mapGameObjects;
+        private List<MapObject> mapObjects = new List<MapObject>();
+        private List<MapNpcObject> mapNpcObjects = new List<MapNpcObject>();
+        private List<Pickup> pickups = new List<Pickup>();
+
         private string name;
         private bool storyTextSegment;
         private string storyText;
@@ -18,7 +23,7 @@ namespace LevelEditor {
         private int startY;
         private PlayerGameObject playerGameObject;
 
-        public Map(List<MapGameObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, int startX, int startY) {
+        public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, int startX, int startY) {
             this.mapGameObjects = mapGameObjects;
             this.name = name;
             this.storyTextSegment = storyTextSegment;
@@ -26,9 +31,16 @@ namespace LevelEditor {
             this.wallTexture = wallTexture;
             this.startX = startX;
             this.startY = startY;
+
+            foreach(MapObject obj in mapGameObjects) {
+                if (obj is Pickup) 
+                    Pickups.Add(obj as Pickup);
+                else if (obj is MapNpcObject)
+                    MapNpcObjects.Add(obj as MapNpcObject);
+            }
         }
 
-        public Map(List<MapGameObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, PlayerGameObject playerGameObject) {
+        public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, PlayerGameObject playerGameObject) {
             this.mapGameObjects = mapGameObjects;
             this.name = name;
             this.storyTextSegment = storyTextSegment;
@@ -37,16 +49,35 @@ namespace LevelEditor {
             this.playerGameObject = playerGameObject;
             this.startX = playerGameObject.X;
             this.startY = playerGameObject.Y;
+
+            //turn that foreach into for
+
+            for(int i = 0; i < MapGameObjects.Count; i++) {
+                if (MapGameObjects[i] is Pickup)
+                    Pickups.Add(MapGameObjects[i] as Pickup);
+                else if (MapGameObjects[i] is MapNpcObject)
+                    MapNpcObjects.Add(MapGameObjects[i] as MapNpcObject);
+                else
+                    MapObjects.Add(MapGameObjects[i]);
+            }
+
         }
 
-        public List<MapGameObject> MapGameObjects { get => mapGameObjects; set => mapGameObjects = value; }
+        [JsonIgnore]
+        public List<MapObject> MapGameObjects { get => mapGameObjects; set => mapGameObjects = value; }
+        [JsonInclude]
+        public List<MapObject> MapObjects { get => mapObjects; set => mapObjects = value; }
+        [JsonInclude]
+        public List<MapNpcObject> MapNpcObjects { get => mapNpcObjects; set => mapNpcObjects = value; }
+        [JsonInclude]
+        public List<Pickup> Pickups { get => pickups; set => pickups = value; }
+        public PlayerGameObject PlayerGameObject { get => playerGameObject; set => playerGameObject = value; }
         public string Name { get => name; set => name = value; }
         public bool StoryTextSegment { get => storyTextSegment; set => storyTextSegment = value; }
         public string StoryText { get => storyText; set => storyText = value; }
         public int WallTexture { get => wallTexture; set => wallTexture = value; }
         public int StartX { get => startX; set => startX = value; }
         public int StartY { get => startY; set => startY = value; }
-        public PlayerGameObject PlayerGameObject { get => playerGameObject; set => playerGameObject = value; }
 
 
         //json serialize map object

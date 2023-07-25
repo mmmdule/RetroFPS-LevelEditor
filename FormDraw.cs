@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Windows.Forms.AxHost;
 
 namespace LevelEditor {
     public partial class FormDraw : Form {
-
-        private List<MapGameObject> mapGameObjects = new List<MapGameObject>();
+        private List<MapObject> MapObjectList = new List<MapObject>();
         private bool doorAdded = false;
         private bool gateAdded = false;
         private int CurrentPictureSize = 30;
@@ -18,7 +16,7 @@ namespace LevelEditor {
         private PlayerGameObject player = null;
 
         private bool middleClickMove = false;
-        private MapGameObject selectedMapGameObject = null;
+        private MapObject selectedMapObject = null;
         private Rectangle panelAreaRect;
         private bool drawScroll = false;
         private int drawX = 0, drawY = 0;
@@ -122,7 +120,7 @@ namespace LevelEditor {
 
         private void wallTextureChange(object sender, EventArgs e) {
             //change texture of border walls
-            foreach (MapGameObject mapGameObject in mapGameObjects) {
+            foreach (MapObject mapGameObject in MapObjectList) {
                 if (mapGameObject.X == 0 || mapGameObject.X == 63 || mapGameObject.Y == 0 || mapGameObject.Y == 63) {
                     mapGameObject.Image = (sender as ToolStripMenuItem).Image;
                     mapGameObject.SetTypeFromImage((sender as ToolStripMenuItem).Image);
@@ -148,14 +146,16 @@ namespace LevelEditor {
         }
 
         private void ValueInput_ValueChanged(object sender, EventArgs e) {
-            if (selectedMapGameObject != null && (selectedMapGameObject.Type == "Bullets" || selectedMapGameObject.Type == "ShotgunAmmo" || selectedMapGameObject.Type == "SmallMedkit")) {
-                selectedMapGameObject.Health = (int)valueInput.Value;
+            //if (selectedBaseMapObject != null && (selectedBaseMapObject.Type == "Bullets" || selectedBaseMapObject.Type == "ShotgunAmmo" || selectedBaseMapObject.Type == "SmallMedkit")) {
+            if (selectedMapObject != null && selectedMapObject is Pickup) {
+                (selectedMapObject as Pickup).Value = (int)valueInput.Value;
             }
         }
 
         private void PropertyInputs_AnyValueChanged(object sender, EventArgs e) {
             //apply changes to selected object
-            if (selectedMapGameObject != null && (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn")) {
+            if (selectedMapObject != null && (selectedMapObject.Type == "Imp" || selectedMapObject.Type == "Tri_horn")) {
+                MapNpcObject selectedMapGameObject = selectedMapObject as MapNpcObject;
                 switch ((sender as Control).Name) {
                     case "attackRangeInput":
                         selectedMapGameObject.AttackRange = (float)attackRangeInput.Value;
@@ -333,7 +333,7 @@ namespace LevelEditor {
         private void PanelDrawDirect(object sender, MouseEventArgs e) {
             Panel panel = sender as Panel;
             int x, y;
-            int itemCount = mapGameObjects.Count;
+            int itemCount = MapObjectList.Count;
 
             x = (panel.PointToClient(Cursor.Position).X / CurrentPictureSize) + drawX; //* CurrentPictureSize;
             y = (panel.PointToClient(Cursor.Position).Y / CurrentPictureSize) + drawY; //* CurrentPictureSize;
@@ -352,19 +352,19 @@ namespace LevelEditor {
                     panel.Capture = false;
 
                 //check if objects that must be only one on map are already added
-                if (currentPenImage.Tag == "ExitDoor" && doorAdded)
+                if (currentPenImage.Tag.Equals("ExitDoor") && doorAdded)
                     return;
-                else if (currentPenImage.Tag == "ExitDoor" && !doorAdded)
+                else if (currentPenImage.Tag.Equals("ExitDoor") && !doorAdded)
                     doorAdded = true;
 
-                if (currentPenImage.Tag == "DoorGate" && gateAdded)
+                if (currentPenImage.Tag.Equals("DoorGate") && gateAdded)
                     return;
-                else if (currentPenImage.Tag == "DoorGate" && !gateAdded)
+                else if (currentPenImage.Tag.Equals("DoorGate") && !gateAdded)
                     gateAdded = true;
 
-                if (currentPenImage.Tag == "player" && playerAdded)
+                if (currentPenImage.Tag.Equals("player") && playerAdded)
                     return;
-                else if (currentPenImage.Tag == "player" && !playerAdded) {
+                else if (currentPenImage.Tag.Equals("player")) {
                     playerAdded = true;
                     player = new PlayerGameObject(x, y);
                     unsavedChanges = true;
@@ -373,30 +373,22 @@ namespace LevelEditor {
                     return;
                 }
 
-                MapGameObject existingObj = mapGameObjects.Find(go => go.X == x && go.Y == y);
+                //MapObject existingObj = MapObjectList.Find(go => go.X == x && go.Y == y);
+                handleExistingMapObject(panel, x, y); //erases game object if it's on (X,Y). Works for NPC, Pickup & Player
+                
 
-                if (existingObj != null) {
-                    if (currentPenImage.Tag == "player" && playerAdded)
-                        return;
-                    else if (currentPenImage.Tag == "player") {
-                        playerAdded = true;
-                        player = new PlayerGameObject(x, y);
-                        unsavedChanges = true;
-                        panel.Invalidate();
-                        panel.Update();
-                        return;
-                    }
-
-                    existingObj.SetTypeFromImage(currentPenImage);
-                    unsavedChanges = true;
-                    panel.Invalidate();
-                    panel.Update();
-                    return;
+                MapObject tmpGameObj;
+                if ((currentPenImage.Tag.Equals("Bullets") || currentPenImage.Tag.Equals("ShotgunAmmo") || currentPenImage.Tag.Equals("SmallMedkit"))) {
+                    tmpGameObj = new Pickup(currentPenImage.Tag.ToString(), x, y, currentPenImage);
                 }
-
-                MapGameObject tmpGameObj = new MapGameObject(x, y);
+                else if (currentPenImage.Tag.Equals("Imp") || currentPenImage.Tag.Equals("Tri_horn")) {
+                    tmpGameObj = new MapNpcObject(x, y, currentPenImage);
+                }
+                else {
+                    tmpGameObj = new MapObject(x, y, currentPenImage);
+                }
                 tmpGameObj.SetTypeFromImage(currentPenImage);
-                mapGameObjects.Add(tmpGameObj);
+                MapObjectList.Add(tmpGameObj);
                 unsavedChanges = true;
                 panel.Invalidate();
                 panel.Update();
@@ -404,23 +396,23 @@ namespace LevelEditor {
                 //ONLY CHANGE IT'S IMAGE & TYPE IF IT EXISTS THERE ALREADY
             }
             else if (e.Button == MouseButtons.Right || (eraseSelected && e.Button == MouseButtons.Left)) {
-                eraseMapGameObject(panel, x, y);
+                handleExistingMapObject(panel, x, y);
             }
             panel.Focus();
         }
 
-        private void eraseMapGameObject(Panel panel, int x, int y) {
+        private void handleExistingMapObject(Panel panel, int x, int y) {
             if (panel.Capture)
                 panel.Capture = false;
 
-            int removeIndex = mapGameObjects.FindIndex(obj => obj.X == x && obj.Y == y);
+            int removeIndex = MapObjectList.FindIndex(obj => obj.X == x && obj.Y == y);
             if (removeIndex != -1) {
-                if (mapGameObjects[removeIndex].Type == "ExitDoor")
+                if (MapObjectList[removeIndex].Type == "ExitDoor")
                     doorAdded = false;
-                if (mapGameObjects[removeIndex].Type == "DoorGate")
+                if (MapObjectList[removeIndex].Type == "DoorGate")
                     gateAdded = false;
 
-                mapGameObjects.RemoveAt(removeIndex);
+                MapObjectList.RemoveAt(removeIndex);
                 unsavedChanges = true;
                 panel.Invalidate();
                 panel.Update();
@@ -446,11 +438,11 @@ namespace LevelEditor {
 
             if (e.Button == MouseButtons.Left) {
                 //get the item at the X and Y coordinates
-                selectedMapGameObject = mapGameObjects.Find(item => item.X == x && item.Y == y);
+                selectedMapObject = MapObjectList.Find(item => item.X == x && item.Y == y);
 
                 //fill the input fields in panel3 and panel4 with the selected item's data
                 //if the item is not null
-                if (selectedMapGameObject != null) {
+                if (selectedMapObject != null) {
                     playerSelected = false;
                     changeEnabledPropInputs();
                     fillInputsWithSelectedProps();
@@ -468,14 +460,17 @@ namespace LevelEditor {
         }
 
         private void changeEnabledPropInputs() {
-            if (selectedMapGameObject != null) {
-                groupBoxPickup.Visible = (selectedMapGameObject.Type == "Bullets" || selectedMapGameObject.Type == "ShotgunAmmo" || selectedMapGameObject.Type == "SmallMedkit");
+            if (!(selectedMapObject is MapNpcObject or Pickup) && !playerSelected) {
+                return;
+            }
+            if (selectedMapObject != null) {
+                groupBoxPickup.Visible = (selectedMapObject is Pickup);//(selectedMapObject.Type == "Bullets" || selectedMapObject.Type == "ShotgunAmmo" || selectedMapObject.Type == "SmallMedkit");
                 groupBoxPickup.Enabled = groupBoxPickup.Visible;
 
                 groupBoxPlayer.Enabled = false;
                 groupBoxPlayer.Visible = false;
 
-                bool state = (selectedMapGameObject.Type == "Imp" || selectedMapGameObject.Type == "Tri_horn");
+                bool state = (selectedMapObject.Type == "Imp" || selectedMapObject.Type == "Tri_horn");
                 foreach (Control c in panel3.Controls) {
                     if (c is NumericUpDown || c is CheckBox)
                         c.Enabled = state;
@@ -511,23 +506,31 @@ namespace LevelEditor {
                 return;
             }
 
-            if (selectedMapGameObject.Type == "Bullets" || selectedMapGameObject.Type == "ShotgunAmmo" || selectedMapGameObject.Type == "SmallMedkit") {
-                valueInput.Value = selectedMapGameObject.Health; //for bullets, shotgun ammo, small medkit
-                return;
+            if (selectedMapObject != null) {
+                coordinatesLabel.Text = $"Coordinates:           ({selectedMapObject.X}, {selectedMapObject.Y})";
+                typeLabel.Text = $"Type:           {selectedMapObject.Type}";
             }
 
-            healthInput.Value = selectedMapGameObject.Health;
-            projectileDamageInput.Value = selectedMapGameObject.ProjectileDamage;
-            firingRateInput.Value = (decimal)selectedMapGameObject.FiringRate;
-            patrolRangeInput.Value = (decimal)selectedMapGameObject.PatrolRange;
-            sightRangeInput.Value = (decimal)selectedMapGameObject.AttackRange;
-            attackRangeInput.Value = (decimal)selectedMapGameObject.ChaseRange;
-            canMoveCheckboxInput.Checked = selectedMapGameObject.CanMove;
-            coordinatesLabel.Text = $"Coordinates:           ({selectedMapGameObject.X}, {selectedMapGameObject.Y})";
-            typeLabel.Text = $"Type:           {selectedMapGameObject.Type}";
+            if (selectedMapObject != null && selectedMapObject is Pickup) {
+                //valueInput.Value = selectedBaseMapObject.Health; //for bullets, shotgun ammo, small medkit
+                valueInput.Value = (selectedMapObject as Pickup).Value;
+                return;
+            }
+            if (selectedMapObject != null && selectedMapObject is MapNpcObject) {
+                MapNpcObject selectedMapGameObject = selectedMapObject as MapNpcObject;
+                healthInput.Value = selectedMapGameObject.Health;
+                projectileDamageInput.Value = selectedMapGameObject.ProjectileDamage;
+                firingRateInput.Value = (decimal)selectedMapGameObject.FiringRate;
+                patrolRangeInput.Value = (decimal)selectedMapGameObject.PatrolRange;
+                sightRangeInput.Value = (decimal)selectedMapGameObject.AttackRange;
+                attackRangeInput.Value = (decimal)selectedMapGameObject.ChaseRange;
+                canMoveCheckboxInput.Checked = selectedMapGameObject.CanMove;
+            }
         }
 
         private void clearInputs() {
+            groupBoxPickup.Visible = false;
+            groupBoxPickup.Enabled = false;
             valueInput.Value = valueInput.Minimum; //for bullets, shotgun ammo, small medkit
 
             foreach (Control control in panel3.Controls) {
@@ -589,13 +592,14 @@ namespace LevelEditor {
         private void Panel1_Paint(object sender, PaintEventArgs e) {
 
             base.OnPaint(e);
+            e.Graphics.Clear(Color.FromArgb(31, 31, 31)); //clear the panel
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
             //Rectangle r = (sender as Panel).DisplayRectangle;
 
-            foreach (MapGameObject gObject in mapGameObjects) {
+            foreach (MapObject gObject in MapObjectList) {
                 if (gObject.X >= drawX && gObject.Y >= drawY)
                     e.Graphics.DrawImage(gObject.Image, (gObject.X - drawX) * CurrentPictureSize, (gObject.Y - drawY) * CurrentPictureSize,
                                      CurrentPictureSize, CurrentPictureSize);
@@ -689,13 +693,9 @@ namespace LevelEditor {
             //panel.Controls.Clear();
             Point pos = new Point(63 * pictureSize, 0);
             Size size = new Size(pictureSize, pictureSize);
-
-
-
             //panel.ClientSize = new Size(pictureSize * 64, pictureSize * 64);
 
-
-            if (mapGameObjects.Count == 0)
+            if (MapObjectList.Count == 0)
                 AddBasicLevelOutline(panel, pictureSize);
 
             panel.ResumeLayout(true);
@@ -714,17 +714,15 @@ namespace LevelEditor {
             panel.Controls.Clear();
             for (int i = 0; i <= 63; i += 63) //HORIZONTAL
                 for (int j = 0; j < 64; j++) {
-                    MapGameObject tmp = new MapGameObject(j /* * pictureSize*/, i /* * pictureSize*/);
+                    MapObject tmp = new MapObject(j /* * pictureSize*/, i /* * pictureSize*/);
                     tmp.SetTypeFromImage(Resources.wallBrick);
-                    tmp.CanMove = false;
-                    mapGameObjects.Add(tmp);
+                    MapObjectList.Add(tmp);
                 }
             for (int i = 1; i <= 62; i++) //VERTICAL
                 for (int j = 0; j < 64; j += 63) {
-                    MapGameObject tmp = new MapGameObject(j /* * pictureSize*/, i /*  * pictureSize*/);
+                    MapObject tmp = new MapObject(j /* * pictureSize*/, i /*  * pictureSize*/);
                     tmp.SetTypeFromImage(Resources.wallBrick);
-                    tmp.CanMove = false;
-                    mapGameObjects.Add(tmp);
+                    MapObjectList.Add(tmp);
                 }
 
             panel.Invalidate();
@@ -765,16 +763,19 @@ namespace LevelEditor {
 
         private void SerializeList() {
             if (player != null)
-                new Map(mapGameObjects, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
+                new Map(MapObjectList, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
             else
-                new Map(mapGameObjects, "map1", false, "", wallTextureIndex, -1, -1).WriteMapToJson("C:\\FPS_editor_json", "level1.json"); //start X and Y -1 means no player
+                new Map(MapObjectList, "map1", false, "", wallTextureIndex, -1, -1).WriteMapToJson("C:\\FPS_editor_json", "level1.json"); //start X and Y -1 means no player
 
-            //MapGameObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", mapGameObjects);
+            //BaseMapObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", BaseMapObjects);
         }
 
         private void resetObjectPropsButton_Click(object sender, EventArgs e) {
-            if (selectedMapGameObject != null) {
-                selectedMapGameObject.setDefaultPropsForType(selectedMapGameObject.Type);
+            if (selectedMapObject != null) {
+                if (selectedMapObject is Pickup)
+                    (selectedMapObject as Pickup).SetDefaultValues();
+                else if (selectedMapObject is MapNpcObject)
+                    (selectedMapObject as MapNpcObject).setDefaultPropsForType(selectedMapObject.Type);
                 fillInputsWithSelectedProps(); //set input values to default props of selected object
             }
             else if (playerSelected) {
