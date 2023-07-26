@@ -1,10 +1,12 @@
-﻿using LevelEditor.Properties;
+﻿//using LevelEditor.MapObjectClasses;
+using LevelEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace LevelEditor {
+namespace LevelEditor
+{
     public partial class FormDraw : Form {
         private List<MapObject> MapObjectList = new List<MapObject>();
         private MapObject selectedMapObject = null;

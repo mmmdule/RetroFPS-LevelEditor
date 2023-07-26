@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace LevelEditor
 {
-    internal class CustomPanel : System.Windows.Forms.Panel
+    internal class CustomPanel : Panel
     {
         //public ChildClass(ParentClass ch)
         //{
@@ -26,7 +26,7 @@ namespace LevelEditor
             foreach (PropertyInfo p in properties)
                 if (p.CanRead && p.CanWrite)
                     p.SetMethod.Invoke(this, new object[] { p.GetMethod.Invoke(parent, null) });
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
         }
     }
 }

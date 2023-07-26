@@ -310,5 +310,31 @@ namespace LevelEditor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap create225
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("create225", resourceCulture);
+                (obj as Image).Tag = "create225";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap open
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("open", resourceCulture);
+                (obj as Image).Tag = "open";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

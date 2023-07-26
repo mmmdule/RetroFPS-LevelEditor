@@ -3,13 +3,15 @@ using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace LevelEditor {
-    internal class PlayerGameObject : MapObject{
+namespace LevelEditor
+{
+    internal class PlayerGameObject : MapObject
+    {
         private int health;
 
         private bool hasRevolver;
         private int revolverAmmo;
-        
+
         private bool hasShotgun;
         private int shotgunAmmo;
 
@@ -22,9 +24,10 @@ namespace LevelEditor {
         //private readonly Image image = Resources.player;
         ////A readonly field can't be assigned after the constructor exits
 
-        public PlayerGameObject(int health, bool hasRevolver, int revolverAmmo, bool hasShotgun, int shotgunAmmo, int x, int y) : base(x, y) {
-            this.type = "player";
-            this.image = Resources.player;
+        public PlayerGameObject(int health, bool hasRevolver, int revolverAmmo, bool hasShotgun, int shotgunAmmo, int x, int y) : base(x, y)
+        {
+            type = "player";
+            image = Resources.player;
 
             this.health = health;
             this.hasRevolver = hasRevolver;
@@ -33,15 +36,16 @@ namespace LevelEditor {
             this.shotgunAmmo = shotgunAmmo;
         }
 
-        public PlayerGameObject(int x, int y) : base(x, y) {
-            this.type = "player";
-            this.image = Resources.player;
+        public PlayerGameObject(int x, int y) : base(x, y)
+        {
+            type = "player";
+            image = Resources.player;
 
-            this.health = 100;
-            this.hasRevolver = true;
-            this.revolverAmmo = 75;
-            this.hasShotgun = true;
-            this.shotgunAmmo = 50;
+            health = 100;
+            hasRevolver = true;
+            revolverAmmo = 75;
+            hasShotgun = true;
+            shotgunAmmo = 50;
         }
 
         public int Health { get => health; set => health = value; }
@@ -50,7 +54,8 @@ namespace LevelEditor {
         public bool HasShotgun { get => hasShotgun; set => hasShotgun = value; }
         public int ShotgunAmmo { get => shotgunAmmo; set => shotgunAmmo = value; }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return "PlayerGameObject{" + "health=" + health + ", hasRevolver=" + hasRevolver + ", revolverAmmo=" + revolverAmmo + ", hasShotgun=" + hasShotgun + ", shotgunAmmo=" + shotgunAmmo + ", x=" + X + ", y=" + Y + '}';
         }
     }

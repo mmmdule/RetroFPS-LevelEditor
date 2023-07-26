@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace LevelEditor {
-    internal class Map {
+namespace LevelEditor
+{
+    internal class Map
+    {
         [JsonIgnore]
         private List<MapObject> mapGameObjects;
         private List<MapObject> mapObjectsForJson = new List<MapObject>();
@@ -23,7 +25,8 @@ namespace LevelEditor {
         private int startY;
         private PlayerGameObject playerGameObject;
 
-        public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, int startX, int startY) {
+        public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, int startX, int startY)
+        {
             this.mapGameObjects = mapGameObjects;
             this.name = name;
             this.storyTextSegment = storyTextSegment;
@@ -32,32 +35,35 @@ namespace LevelEditor {
             this.startX = startX;
             this.startY = startY;
 
-            foreach(MapObject obj in mapGameObjects) {
-                if (obj is Pickup) 
+            foreach (MapObject obj in mapGameObjects)
+            {
+                if (obj is Pickup)
                     Pickups.Add(obj as Pickup);
                 else if (obj is MapNpcObject)
                     MapNpcObjects.Add(obj as MapNpcObject);
             }
         }
 
-        public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, PlayerGameObject playerGameObject) {
+        public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, PlayerGameObject playerGameObject)
+        {
             this.mapGameObjects = mapGameObjects;
             this.name = name;
             this.storyTextSegment = storyTextSegment;
             this.storyText = storyText;
             this.wallTexture = wallTexture;
             this.playerGameObject = playerGameObject;
-            this.startX = playerGameObject.X;
-            this.startY = playerGameObject.Y;
+            startX = playerGameObject.X;
+            startY = playerGameObject.Y;
 
             //turn that foreach into for
 
-            for(int i = 0; i < MapGameObjects.Count; i++) {
+            for (int i = 0; i < MapGameObjects.Count; i++)
+            {
                 if (MapGameObjects[i] is Pickup)
                     Pickups.Add(MapGameObjects[i] as Pickup);
                 else if (MapGameObjects[i] is MapNpcObject)
                     MapNpcObjects.Add(MapGameObjects[i] as MapNpcObject);
-                else if ( !(MapGameObjects[i] is PlayerGameObject) )
+                else if (!(MapGameObjects[i] is PlayerGameObject))
                     MapObjects.Add(MapGameObjects[i]);
             }
 
@@ -81,16 +87,19 @@ namespace LevelEditor {
 
 
         //json serialize map object
-        public void WriteMapToJson(string path, string filename) { //, Map map) {
+        public void WriteMapToJson(string path, string filename)
+        { //, Map map) {
             path = Path.Combine(path, filename);
             if (!File.Exists(path))
                 File.Create(path).Close();
             Console.Write(JsonSerializer.Serialize(this));
-            var options1 = new JsonSerializerOptions {
+            var options1 = new JsonSerializerOptions
+            {
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
-            using (StreamWriter outputFile = new StreamWriter(path)) {
+            using (StreamWriter outputFile = new StreamWriter(path))
+            {
                 outputFile.Write(JsonSerializer.Serialize(this, options1));
             }
         }
