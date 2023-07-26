@@ -10,9 +10,9 @@ using System.Text.Json.Serialization;
 namespace LevelEditor {
     //TODO: finish the setDefaultPropsForType() method
 
-    internal class MapGameObject //: PictureBox
+    internal class MapNpcObject : MapObject
     {
-        private string type; //most important, determines prefab to be spawned
+        //private string type; //most important, determines prefab to be spawned
         private int health;
         private int projectileDamage;
         private float firingRate; //pause between shots
@@ -20,37 +20,14 @@ namespace LevelEditor {
         private float attackRange;
         private float chaseRange;
         private bool canMove;
-        private int x; //X coordinate (column in table)
-        private int y; //Y coordinate (row in table)
-        private Image image;
+        //private int x; //X coordinate (column in table)
+        //private int y; //Y coordinate (row in table)
 
         private Point location;
 
-        [JsonIgnore]
-        public static Dictionary<Image, string> imageDict = new Dictionary<Image, string>
-        {
-            { Resources.ArchwaySingle, "ArchwaySingle" },
-            { Resources.ArchwaySingle, "ArchwaySmall" },
-            { Resources.ArmorBlink, "ArmorBlink" },
-            { Resources.Bullets , "Bullets" },
-            { Resources.Cobweb_Wall , "Cobweb_Wall" },
-            { Resources.Imp , "Imp" },
-            { Resources.DoorGate , "DoorGate" },
-            { Resources.EnergyBall , "EnergyBall" },
-            { Resources.ExitDoor , "ExitDoor" },
-            { Resources.Key , "Key" },
-            { Resources.ShotgunAmmo , "ShotgunAmmo" },
-            { Resources.SmallMedkit , "SmallMedkit" },
-            { Resources.Stone, "Stone" },   
-            { Resources.Torch , "Torch" },   
-            { Resources.Tri_horn , "Tri_horn" },
-            { Resources.wallBrick , "wallBrick" },
-            { Resources.wallStone , "wallStone" },
-            { Resources.wallMoss , "wallMoss" },
-            { Resources.tileWall, "tileWall" }
-        };
+        
 
-        public static void WriteCurrentListToJson(string path, string filename, List<MapGameObject> list) {
+        public static void WriteCurrentListToJson(string path, string filename, List<MapNpcObject> list) {
             path = Path.Combine(path, filename);
             if (!File.Exists(path))
                 File.Create(path).Close();
@@ -65,9 +42,9 @@ namespace LevelEditor {
             }
         }
 
-        public MapGameObject()
+        public MapNpcObject() : base(0, 0)
         {
-            type = "";
+            Type = "";
             health = 0;
             //projectileDamage = 0;
             firingRate = 0;
@@ -75,16 +52,15 @@ namespace LevelEditor {
             attackRange = 0;
             chaseRange = 0;
             canMove = true;
-            x = 0;
-            y = 0;
-            location = new Point(x, y);
+            X = 0;
+            Y = 0;
+            location = new Point(X, Y);
             image = Resources.wallBrick;
-            
         }
 
-        public MapGameObject(int x, int y)
+        public MapNpcObject(int x, int y) : base(x, y)
         {
-            type = "";
+            Type = "";
             health = 0;
             //projectileDamage = 0;
             firingRate = 0;
@@ -92,13 +68,28 @@ namespace LevelEditor {
             attackRange = 0;
             chaseRange = 0;
             canMove = true;
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
             location = new Point(x, y);
             image = Resources.wallBrick;
         }
 
-        public string Type { get => type; set => type = value; }
+        public MapNpcObject(int x, int y, Image image) : base(x, y, image) {
+            Type = image.Tag.ToString();
+            health = 0;
+            //projectileDamage = 0;
+            firingRate = 0;
+            patrolRange = 0;
+            attackRange = 0;
+            chaseRange = 0;
+            canMove = true;
+            this.X = x;
+            this.Y = y;
+            location = new Point(x, y);
+            this.image = image;
+            setDefaultPropsForType(image.Tag.ToString());
+        }
+
         public int Health { get => health; set => health = value; }
         public int ProjectileDamage { get => projectileDamage; set => projectileDamage = value; }
         public float FiringRate { get => firingRate; set => firingRate = value; }
@@ -106,16 +97,12 @@ namespace LevelEditor {
         public float AttackRange { get => attackRange; set => attackRange = value; }
         public float ChaseRange { get => chaseRange; set => chaseRange = value; }
         public bool CanMove { get => canMove; set => canMove = value; }
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
-        [JsonIgnore]
-        public Image Image { get => image; set => image = value; }
 
         [JsonIgnore]
         public Point Location { get {
-                                        if (x != location.X || x != location.Y) {
-                                            location.X = x;
-                                            location.Y = y;
+                                        if (X != location.X || X != location.Y) {
+                                            location.X = X;
+                                            location.Y = Y;
                                             return location;
                                         }   
                                         else
@@ -123,23 +110,9 @@ namespace LevelEditor {
                                       }
                                 set => location = value; }
 
-        public void SetTypeFromImage(Image image)
-        {
+        public override void SetImageFromType(string type) {
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
-
-            //tag-ovi slika postavljeni su u Resources.Designer.cs
-            this.Type = image.Tag.ToString();
-            this.image = image;
-
-            setDefaultPropsForType(Type);
-        }
-
-        public void SetImageFromType(string type)
-        {
-            //See which of the images from Resources the param "image" matches
-            //And set the Type property of this object based on it
-
 
             this.Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
 
@@ -150,37 +123,6 @@ namespace LevelEditor {
         public void setDefaultPropsForType(string type) {
             //based on the type, set default values for health, firing rate, canMove etc.
             switch (type) {
-                case "ArchwaySingle":
-                case "ArchwaySmall":
-                case "ArmorBlink":
-                case "Cobweb_Wall":
-                case "DoorGate":
-                case "ExitDoor":
-                case "Key":
-                case "Stone":
-                case "Torch":
-                    this.canMove = false;
-                    break;
-                case "Bullets":
-                    this.health = 15;
-                    break;
-                case "ShotgunAmmo":
-                    this.health = 7;
-                    break;
-                case "SmallMedkit":
-                    this.health = 10;
-                    break;
-                case "wallBrick":
-                case "wallStone":
-                case "wallMoss":
-                case "tileWall":
-                    this.canMove = false;
-                    this.projectileDamage = 0;
-                    this.firingRate = 0;
-                    this.patrolRange = 0;
-                    this.attackRange = 0;
-                    this.chaseRange = 0;
-                    break;
                 case "Imp":
                     this.canMove = true;
                     this.health = 50;
@@ -191,10 +133,10 @@ namespace LevelEditor {
                     this.attackRange = 13.5f;
                     this.projectileDamage = 16; //damage of fireball prefab
                     break;
-                case "EnergyBall":
-                    this.canMove = false;
-                    //maybe make damage dynamic
-                    break;
+                //case "EnergyBall":
+                //    this.canMove = false;
+                //    //maybe make damage dynamic
+                //    break;
                 case "Tri_horn":
                     this.canMove = true;
                     this.health = 100;
