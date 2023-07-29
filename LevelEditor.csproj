@@ -18,7 +18,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-  <ItemGroup>
+<PropertyGroup>
+	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+</PropertyGroup>
+	<ItemGroup>
     <Compile Update="FormDrawFolder\CustomPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -45,4 +48,5 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+
 </Project>

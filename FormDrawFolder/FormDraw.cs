@@ -90,44 +90,44 @@ namespace LevelEditor
         }
 
         private void SetControlsToDarkTheme() {
-            this.BackColor = Color.FromArgb(31, 31, 31);
+            this.BackColor = DarkTheme.BackgroundColor;
             foreach (Control control in this.Controls)
-                control.BackColor = Color.FromArgb(31, 31, 31);
+                control.BackColor = DarkTheme.BackgroundColor;
             foreach (Control control in panel3.Controls)
-                control.BackColor = Color.FromArgb(31, 31, 31);
+                control.BackColor = DarkTheme.BackgroundColor;
             foreach (Control control in panel4.Controls)
-                control.BackColor = Color.FromArgb(31, 31, 31);
-            button17.BackColor = Color.FromArgb(31, 31, 31);
+                control.BackColor = DarkTheme.BackgroundColor;
+            button17.BackColor = DarkTheme.BackgroundColor;
             foreach (Control c in groupBoxPickup.Controls)
-                c.BackColor = Color.FromArgb(31, 31, 31);
+                c.BackColor = DarkTheme.BackgroundColor;
             foreach (Control c in groupBoxPlayer.Controls)
-                c.BackColor = Color.FromArgb(31, 31, 31);
+                c.BackColor = DarkTheme.BackgroundColor;
 
             //remove groupBox border
             groupBoxPickup.Paint += (sender, e) => {
-                e.Graphics.Clear(Color.FromArgb(31, 31, 31)); //fills the entire control with the specified color
+                e.Graphics.Clear(DarkTheme.BackgroundColor); //fills the entire control with the specified color
             };
             groupBoxPlayer.Paint += (sender, e) => {
-                e.Graphics.Clear(Color.FromArgb(31, 31, 31));
+                e.Graphics.Clear(DarkTheme.BackgroundColor);
             };
 
 
             //adjust menuStrip1 to dark theme
 
-            menuStrip1.Renderer = new CustomToolStripRenderer(Color.FromArgb(31, 31, 31));
+            menuStrip1.Renderer = new CustomToolStripRenderer(DarkTheme.BackgroundColor);
             menuStrip1.ForeColor = Color.White;
 
             foreach (ToolStripMenuItem item in menuStrip1.Items) {
-                item.BackColor = Color.FromArgb(31, 31, 31);
+                item.BackColor = DarkTheme.BackgroundColor;
                 item.ForeColor = Color.White;
-                item.DropDown.BackColor = Color.FromArgb(31, 31, 31);
+                item.DropDown.BackColor = DarkTheme.BackgroundColor;
                 item.DropDown.ForeColor = Color.White;
                 item.DropDown.RenderMode = ToolStripRenderMode.System;
             }
 
             //make wallTextureToolStripMenuItem dropdown menu dark
             wallTextureToolStripMenu.DropDown.ForeColor = Color.White;
-            wallTextureToolStripMenu.DropDown.BackColor = Color.FromArgb(31, 31, 31);
+            wallTextureToolStripMenu.DropDown.BackColor = DarkTheme.BackgroundColor;
         }
 
         private void FormDraw_Load(object sender, EventArgs e) {
@@ -674,7 +674,7 @@ namespace LevelEditor
         private void Panel1_Paint(object sender, PaintEventArgs e) {
 
             base.OnPaint(e);
-            e.Graphics.Clear(Color.FromArgb(31, 31, 31)); //clear the panel
+            e.Graphics.Clear(DarkTheme.BackgroundColor); //clear the panel
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
