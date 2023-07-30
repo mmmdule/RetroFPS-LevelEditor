@@ -95,16 +95,16 @@ namespace LevelEditor {
 
         private void PanelBackground_MouseMove(object sender, EventArgs e) {
             if (sender is Panel)
-                (sender as Control).BackColor = Color.FromArgb(48, 48, 48);
+                (sender as Control).BackColor = DarkTheme.ButtonHoverColor;
             else
-                (sender as Control).Parent.BackColor = Color.FromArgb(48, 48, 48);
+                (sender as Control).Parent.BackColor = DarkTheme.ButtonHoverColor;
         }
 
         private void PanelBackground_MouseLeave(object sender, EventArgs e) {
             if (sender is Panel)
-                (sender as Control).BackColor = Color.FromArgb(31, 31, 31);
+                (sender as Control).BackColor = DarkTheme.BackgroundColor;
             else
-                (sender as Control).Parent.BackColor = Color.FromArgb(31, 31, 31);
+                (sender as Control).Parent.BackColor = DarkTheme.BackgroundColor;
         }
 
         private void OpenProjectDialog(object sender, EventArgs e) {

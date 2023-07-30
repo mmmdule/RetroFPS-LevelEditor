@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace LevelEditor {
-    internal class Project {
+    public partial class Project {
         //maps will be stored in "./maps/<MapName>.json" inside the project directory
         //that way we don't store the maps in the project file
         private List<String> mapNameList; 
@@ -19,6 +20,42 @@ namespace LevelEditor {
         private DateTime dateCreated;
         private DateTime lastOpened;
 
+        public Project() {
+            mapNameList = new List<string>();
+            name = "";
+            gameTitle = "";
+            gameSubtitle = "";
+            path = "";
+            author = "";
+            dateCreated = DateTime.Now;
+            lastOpened = DateTime.Now;
+        }
+
+        public Project(string name, string gameTitle, string gameSubtitle, string path, string author) {
+            mapNameList = new List<string>();
+            this.name = name;
+            this.gameTitle = gameTitle;
+            this.gameSubtitle = gameSubtitle;
+            this.path = path;
+            this.author = author;
+            dateCreated = DateTime.Now;
+            lastOpened = DateTime.Now;
+        }
+
+        public void CreateProjectDirectory(string path, string name) {
+            if(!Directory.Exists($"{path}\\{name}"))
+                Directory.CreateDirectory($"{path}\\{name}");
+            Directory.CreateDirectory($"{path}\\{name}\\maps");
+        }
+
+        public void JsonSerializeProject(string path, string name) {
+            var jsonOptions = new JsonSerializerOptions {
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+            string jsonString = JsonSerializer.Serialize<Project>(this, jsonOptions);
+            File.WriteAllText($"{path}\\{name}\\{name}.json", jsonString);
+        }
 
         public List<string> MapNameList { get => mapNameList; set => mapNameList = value; }
         public string Name { get => name; set => name = value; }

@@ -148,8 +148,8 @@ namespace LevelEditor
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderColor = Color.White;
                 btn.FlatAppearance.BorderSize = 2;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 48, 48);
-                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(56, 56, 56);
+                btn.FlatAppearance.MouseOverBackColor = DarkTheme.ButtonHoverColor;
+                btn.FlatAppearance.MouseDownBackColor = DarkTheme.ButtonMouseDownColor;
             }
 
             (flowPanel.Controls[0] as Button).FlatAppearance.BorderColor = Color.Red;

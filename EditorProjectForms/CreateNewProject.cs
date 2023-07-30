@@ -1,14 +1,7 @@
-﻿using LevelEditor.LevelEditorHome;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LevelEditor {
     public partial class CreateNewProject : Form {
@@ -17,9 +10,17 @@ namespace LevelEditor {
         public CreateNewProject() {
             InitializeComponent();
             SetDarkTheme();
-            AddEventsToControls();
 
             AddDefaultValuesTextBoxes();
+            UpdatePathLabel(validInputs);
+            AddEventsToControls();
+
+            //create projects directory in Documents if it doesn't exist
+            if (!Directory.Exists(textBoxPath.Text)) {
+                Directory.CreateDirectory(textBoxPath.Text);
+            }
+
+            buttonCreateProject.Enabled = validInputs;
         }
 
         private void SetDarkTheme() {
@@ -32,28 +33,53 @@ namespace LevelEditor {
             this.MouseMove += NewProjectForm_MouseMove;
 
             exitButton.Click += ExitButton_Click;
-            buttonBrowse.Click += ButtonBrowse_Click; ;
+            buttonBrowse.Click += ButtonBrowse_Click;
 
+            buttonCreateProject.Click += ButtonCreateProject_Click;
 
             textBoxProjectName.TextChanged += TextBoxNameOrPath_TextChanged;
             textBoxPath.TextChanged += TextBoxNameOrPath_TextChanged;
+        }
+
+        private void ButtonCreateProject_Click(object sender, EventArgs e) {
+            if (!validInputs)
+                return;
+
+            Project project = new Project(textBoxProjectName.Text.Trim(), textBoxGameTitle.Text.Trim(), textBoxSubtitle.Text.Trim(), textBoxPath.Text.Trim(), textBoxAuthor.Text.Trim());
+
+            //create directory for project
+
+            try {
+                project.CreateProjectDirectory(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
+                project.JsonSerializeProject(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
+                ProjectViewForm projectViewForm = new ProjectViewForm(project);
+                projectViewForm.Show();
+                this.Hide();
+            }
+            catch (Exception ex) {
+                string errorMsg = "Error creating project directory or project file.";
+                MessageBox.Show(errorMsg,"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void ButtonBrowse_Click(object sender, EventArgs e) {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.ShowDialog();
             folderBrowserDialog.SelectedPath = textBoxPath.Text;
-            UpdatePathLabel();
+            UpdatePathLabel(ProjectInfoIsValid());
         }
 
         private void TextBoxNameOrPath_TextChanged(object sender, EventArgs e) {
-            bool textIsValid = ProjectInfoIsValid();
+            validInputs = ProjectInfoIsValid();
             TextBox textBox = sender as TextBox;
-            SetTextBoxWarningColors(ref textBox, textIsValid);
+            SetTextBoxWarningColors(ref textBox, validInputs);
 
-            UpdatePathLabel();
+            UpdatePathLabel(validInputs);
 
-            buttonCreateProject.Enabled = textIsValid;
+
+            buttonCreateProject.Enabled = validInputs;
         }
 
 
@@ -87,8 +113,8 @@ namespace LevelEditor {
             //if they do, add a number to the end of the name
             //if they don't, use the name LevelPack1
             int i = 1;
-            if (System.IO.Directory.Exists(path + "\\" + name + i)) {
-                while (System.IO.Directory.Exists(path + "\\" + name + i)) {
+            if (Directory.Exists(path + "\\" + name + i)) {
+                while (Directory.Exists(path + "\\" + name + i)) {
                     i++;
                 }
             }
@@ -96,16 +122,13 @@ namespace LevelEditor {
         }
 
         private bool ProjectInfoIsValid() {
-            if (textBoxProjectName.Text.Trim().Length == 0)
+            if (textBoxProjectName.Text.Trim().Length == 0 || textBoxPath.Text.Trim().Length == 0)
                 return false;
 
             //check if project directory name is valid
-            if (textBoxProjectName.Text.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) >= 0)
+            if (textBoxProjectName.Text.Trim().IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
                 return false;
 
-            //check if path name is valid
-            if (textBoxPath.Text.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) >= 0)
-                return false;
 
             //check if directory already exists so we don't overwrite it
             //if (System.IO.Directory.Exists(textBoxPath.Text + "\\" + textBoxProjectName.Text))
@@ -114,13 +137,20 @@ namespace LevelEditor {
             return true;
         }
 
-        private void UpdatePathLabel() {
-            labelFullProjectPath.Text = $"'{textBoxPath.Text}\\{textBoxProjectName.Text}'";
+        private void UpdatePathLabel(bool valid) {
+            if (valid) {
+                labelFullProjectPath.ForeColor = DarkTheme.TextColor;
+                labelFullProjectPath.Text = $"'{textBoxPath.Text}\\{textBoxProjectName.Text}'";
+                return;
+            }
+            
+            labelFullProjectPath.Text = "Invalid path or name input!";
+            labelFullProjectPath.ForeColor = Color.Red;
         }
 
         private void SetTextBoxWarningColors(ref TextBox textBox, bool textIsValid) {
             if (textIsValid) {
-                textBox.BackColor = Color.FromArgb(31, 31, 31);
+                textBox.BackColor = DarkTheme.BackgroundColor;
                 textBox.ForeColor = Color.White;
                 return;
             }
@@ -128,7 +158,6 @@ namespace LevelEditor {
             //TODO: add red boder to textbox (?) instead of changing the background color
             textBox.BackColor = Color.Red;
             textBox.ForeColor = Color.Black;
-            labelFullProjectPath.Text = "";
         }
     }
 }
