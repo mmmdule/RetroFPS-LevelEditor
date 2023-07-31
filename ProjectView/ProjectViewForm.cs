@@ -18,12 +18,31 @@ namespace LevelEditor {
             SetDarkTheme();
             AddEventsToControls();
             currentProject = project;
+            AddProjectInfoToForm();
+            currentProject.LastOpened = DateTime.Now;
+            currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
         }
 
         //TODO: constructor that takes a project as a parameter
 
         private void SetDarkTheme() {
             exitButton.FlatAppearance.MouseOverBackColor = DarkTheme.ButtonHoverColor;
+            exitButton.FlatAppearance.MouseDownBackColor = DarkTheme.ButtonMouseDownColor;
+
+            foreach (Control control in this.Controls)
+                control.BackColor = DarkTheme.BackgroundColor;
+
+            //menuStrip styles
+            menuStrip1.Renderer = new CustomToolStripRenderer(DarkTheme.BackgroundColor);
+            menuStrip1.ForeColor = Color.White;
+
+            foreach (ToolStripMenuItem item in menuStrip1.Items) {
+                item.BackColor = DarkTheme.BackgroundColor;
+                item.ForeColor = Color.White;
+                item.DropDown.BackColor = DarkTheme.BackgroundColor;
+                item.DropDown.ForeColor = Color.White;
+                item.DropDown.RenderMode = ToolStripRenderMode.System;
+            }
         }
 
         private void AddEventsToControls() {
@@ -49,6 +68,18 @@ namespace LevelEditor {
         private void ExitButton_Click(object sender, EventArgs e) {
             //this.Close();
             Application.Exit();
+        }
+
+        private void AddProjectInfoToForm() {
+            projectNameLabel.Text = currentProject.Name;
+
+            textBoxProjectName.Text = currentProject.Name;
+            textBoxAuthor.Text = currentProject.Author;
+            textBoxGameTitle.Text = currentProject.GameTitle;
+            textBoxSubtitle.Text = currentProject.GameSubtitle;
+            textBoxPath.Text = $"{currentProject.Path}";
+
+            //if maps exist, add them to the panel
         }
     }
 }

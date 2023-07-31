@@ -1,13 +1,10 @@
 ﻿using LevelEditor.LevelEditorHome;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LevelEditor {
     public partial class FormHome : Form {
@@ -18,9 +15,9 @@ namespace LevelEditor {
         public FormHome() {
             InitializeComponent();
             SetDarkTheme();
-            AddEventsToControls();
             recentProjectsManager = new RecentProjectsManager();
             AddRecentProjectsToPanel();
+            AddEventsToControls();
         }
 
         private void SetDarkTheme() {
@@ -47,33 +44,44 @@ namespace LevelEditor {
             //for changing the background color of the open panel
             panelOpenProject.MouseMove += PanelBackground_MouseMove;
             panelOpenProject.MouseLeave += PanelBackground_MouseLeave;
+            panelOpenProject.Click += OpenProjectDialog;
             foreach (Control control in panelOpenProject.Controls) {
                 control.MouseMove += PanelBackground_MouseMove;
                 control.MouseLeave += PanelBackground_MouseLeave;
                 control.Click += OpenProjectDialog;
             }
-            panelOpenProject.Click += OpenProjectDialog;
         }
 
         private void AddRecentProjectsToPanel() {
             if (recentProjectsManager.RecentProjects.Count > 0)
-                flowLayoutPanel.Controls.RemoveByKey("noRecentProjectsLabel");
+                recentProjectsPanel.Controls.RemoveByKey("noRecentProjectsLabel");
 
             foreach (Project P in recentProjectsManager.RecentProjects) {
                 RecentProjectButton rpb = new RecentProjectButton();
-                flowLayoutPanel.Controls.Add(rpb);
+                rpb.Project = P;
+                recentProjectsPanel.Controls.Add(rpb);
+                rpb.Dock = DockStyle.Top;
                 rpb.Controls["projectName"].Text = P.Name;
-                rpb.Controls["projectPath"].Text = P.Path;
-                rpb.Controls["projectCreateDate"].Text = P.DateCreated.ToShortDateString();
+                rpb.Controls["projectPath"].Text = P.Path.Length > 70 ? $"{P.Path[..70]}..." : P.Path;
+                rpb.Controls["lastOpenedDate"].Text = $"{P.LastOpened.ToShortDateString()} - {P.LastOpened.TimeOfDay.Hours}:" + (P.LastOpened.TimeOfDay.Minutes == 0 ? "00" : P.LastOpened.TimeOfDay.Minutes);
                 rpb.Click += RecentProjectButton_Click;
                 foreach (Control control in rpb.Controls) {
                     control.Click += RecentProjectButton_Click;
+                    control.MouseMove += PanelBackground_MouseMove;
+                    control.MouseLeave += PanelBackground_MouseLeave;
                 }
             }
         }
 
         private void RecentProjectButton_Click(object sender, EventArgs e) {
-            //open project
+            Project P;
+            if(sender is RecentProjectButton) {
+                P = (sender as RecentProjectButton).Project;
+            }
+            else {
+                P = ((sender as Control).Parent as RecentProjectButton).Project;
+            }
+            openProject($"{P.Path}\\{P.Name}\\{P.Name}.lep");    
         }
 
         private void FormHome_MouseDown(object sender, MouseEventArgs e) {
@@ -108,12 +116,15 @@ namespace LevelEditor {
         }
 
         private void OpenProjectDialog(object sender, EventArgs e) {
-            //open select folder dialog
-            //inside the selected folder should be the project json file
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-            folderBrowser.ShowDialog();
-            string projectPath = folderBrowser.SelectedPath;
-            //MessageBox.Show(projectPath);
+            //open file browser, show only .lep files
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Level Editor Project (*.lep)|*.lep";
+            openFileDialog.Title = "Open Project";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK) {
+                openProject(openFileDialog.FileName);
+            }
 
             //TODO: Open project located in projectPath directory
         }
@@ -122,6 +133,20 @@ namespace LevelEditor {
             CreateNewProject createNewProjectWindow = new CreateNewProject();
             createNewProjectWindow.Show();
             this.Hide();
+        }
+
+        private void openProject(string path) {
+            try {
+                string jsonProjectData = System.IO.File.ReadAllText(path);
+                Project proj = JsonSerializer.Deserialize<Project>(jsonProjectData);
+                ProjectViewForm projectViewForm = new ProjectViewForm(proj);
+                recentProjectsManager.UpdateRecentProjects(proj);
+                projectViewForm.Show();
+                this.Hide();
+            }
+            catch {
+                MessageBox.Show("Error opening project", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

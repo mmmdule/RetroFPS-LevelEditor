@@ -93,14 +93,9 @@ namespace LevelEditor
             if (!File.Exists(path))
                 File.Create(path).Close();
             Console.Write(JsonSerializer.Serialize(this));
-            var options1 = new JsonSerializerOptions
-            {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
             using (StreamWriter outputFile = new StreamWriter(path))
             {
-                outputFile.Write(JsonSerializer.Serialize(this, options1));
+                outputFile.Write(JsonSerializer.Serialize(this, JsonOptions.MyDefaultOptions));
             }
         }
 

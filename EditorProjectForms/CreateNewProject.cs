@@ -51,14 +51,15 @@ namespace LevelEditor {
 
             try {
                 project.CreateProjectDirectory(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
-                project.JsonSerializeProject(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
+                project.SaveToJsonFile(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
                 ProjectViewForm projectViewForm = new ProjectViewForm(project);
+                (new RecentProjectsManager()).AddProject(project);
                 projectViewForm.Show();
                 this.Hide();
             }
             catch (Exception ex) {
                 string errorMsg = "Error creating project directory or project file.";
-                MessageBox.Show(errorMsg,"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(errorMsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -143,7 +144,7 @@ namespace LevelEditor {
                 labelFullProjectPath.Text = $"'{textBoxPath.Text}\\{textBoxProjectName.Text}'";
                 return;
             }
-            
+
             labelFullProjectPath.Text = "Invalid path or name input!";
             labelFullProjectPath.ForeColor = Color.Red;
         }

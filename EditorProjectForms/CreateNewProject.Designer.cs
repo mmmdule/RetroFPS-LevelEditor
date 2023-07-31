@@ -43,6 +43,7 @@
             label9 = new System.Windows.Forms.Label();
             labelFullProjectPath = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
+            label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -71,7 +72,7 @@
             exitButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             exitButton.AutoSize = true;
             exitButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            exitButton.BackColor = System.Drawing.Color.FromArgb(31, 31, 31); 
+            exitButton.BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             exitButton.FlatAppearance.BorderSize = 0;
             exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -195,7 +196,7 @@
             buttonBrowse.AutoSize = true;
             buttonBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             buttonBrowse.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            buttonBrowse.Location = new System.Drawing.Point(792, 324);
+            buttonBrowse.Location = new System.Drawing.Point(801, 324);
             buttonBrowse.Name = "buttonBrowse";
             buttonBrowse.Size = new System.Drawing.Size(72, 29);
             buttonBrowse.TabIndex = 17;
@@ -259,15 +260,27 @@
             // 
             // label10
             // 
-            label10.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label10.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label10.AutoSize = true;
             label10.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             label10.ForeColor = System.Drawing.Color.Red;
-            label10.Location = new System.Drawing.Point(774, 127);
+            label10.Location = new System.Drawing.Point(774, 126);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(19, 19);
             label10.TabIndex = 23;
             label10.Text = "*";
+            // 
+            // label11
+            // 
+            label11.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            label11.AutoSize = true;
+            label11.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            label11.ForeColor = System.Drawing.Color.Red;
+            label11.Location = new System.Drawing.Point(774, 327);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(19, 19);
+            label11.TabIndex = 24;
+            label11.Text = "*";
             // 
             // CreateNewProject
             // 
@@ -276,6 +289,7 @@
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             ClientSize = new System.Drawing.Size(1089, 509);
             ControlBox = false;
+            Controls.Add(label11);
             Controls.Add(label10);
             Controls.Add(labelFullProjectPath);
             Controls.Add(label9);
@@ -328,5 +342,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label labelFullProjectPath;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }

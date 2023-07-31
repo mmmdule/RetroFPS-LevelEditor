@@ -23,33 +23,33 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            projectCreateDate = new System.Windows.Forms.Label();
+            lastOpenedDate = new System.Windows.Forms.Label();
             projectPath = new System.Windows.Forms.Label();
             projectName = new System.Windows.Forms.Label();
             SuspendLayout();
             // 
-            // projectCreateDate
+            // lastOpenedDate
             // 
-            projectCreateDate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            projectCreateDate.AutoSize = true;
-            projectCreateDate.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            projectCreateDate.ForeColor = System.Drawing.Color.LightGray;
-            projectCreateDate.Location = new System.Drawing.Point(18, 74);
-            projectCreateDate.MaximumSize = new System.Drawing.Size(393, 20);
-            projectCreateDate.Name = "projectCreateDate";
-            projectCreateDate.Size = new System.Drawing.Size(105, 19);
-            projectCreateDate.TabIndex = 7;
-            projectCreateDate.Text = "Creation Date";
+            lastOpenedDate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lastOpenedDate.AutoSize = true;
+            lastOpenedDate.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            lastOpenedDate.ForeColor = System.Drawing.Color.LightGray;
+            lastOpenedDate.Location = new System.Drawing.Point(18, 74);
+            lastOpenedDate.MaximumSize = new System.Drawing.Size(393, 20);
+            lastOpenedDate.Name = "lastOpenedDate";
+            lastOpenedDate.Size = new System.Drawing.Size(107, 17);
+            lastOpenedDate.TabIndex = 7;
+            lastOpenedDate.Text = "Last Opened On";
             // 
             // projectPath
             // 
             projectPath.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             projectPath.AutoSize = true;
-            projectPath.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            projectPath.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             projectPath.Location = new System.Drawing.Point(18, 47);
             projectPath.MaximumSize = new System.Drawing.Size(393, 20);
             projectPath.Name = "projectPath";
-            projectPath.Size = new System.Drawing.Size(113, 19);
+            projectPath.Size = new System.Drawing.Size(101, 17);
             projectPath.TabIndex = 6;
             projectPath.Text = "Path to project";
             // 
@@ -69,20 +69,24 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
-            Controls.Add(projectCreateDate);
+            BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            Controls.Add(lastOpenedDate);
             Controls.Add(projectPath);
             Controls.Add(projectName);
             ForeColor = System.Drawing.Color.White;
+            MinimumSize = new System.Drawing.Size(640, 110);
             Name = "RecentProjectButton";
-            Size = new System.Drawing.Size(421, 112);
+            Size = new System.Drawing.Size(640, 110);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label projectCreateDate;
+        private System.Windows.Forms.Label lastOpenedDate;
         private System.Windows.Forms.Label projectPath;
         private System.Windows.Forms.Label projectName;
     }

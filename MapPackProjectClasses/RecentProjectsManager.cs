@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -6,7 +7,10 @@ using System.Windows.Forms;
 
 namespace LevelEditor {
     internal class RecentProjectsManager {
-        List<Project> recentProjects;
+        static List<Project> recentProjects;
+
+        [JsonIgnore]
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/Level Editor";
 
         public RecentProjectsManager() {
             ReadRecentProjectsFromFile();
@@ -14,14 +18,14 @@ namespace LevelEditor {
         }
 
         private void ReadRecentProjectsFromFile() {
-            if (!Directory.Exists("./data"))
-                Directory.CreateDirectory("./data");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
-            if (!File.Exists("./data/recentProjects.json")) {
-                File.Create("./data/recentProjects.json");
+            if (!File.Exists(path + "/recentProjects.json")) {
+                File.Create(path + "/recentProjects.json");
             }
 
-            string json = File.ReadAllText("./data/recentProjects.json");
+            string json = File.ReadAllText(path + "/recentProjects.json");
             try {
                 RecentProjects = JsonSerializer.Deserialize<List<Project>>(json);
             }
@@ -32,18 +36,28 @@ namespace LevelEditor {
         }
 
         public void WriteRecentProjectsToFile() {
-            string json = JsonSerializer.Serialize(RecentProjects);
-            File.WriteAllText("./data/recentProjects.json", json);
+            string json = JsonSerializer.Serialize(RecentProjects, JsonOptions.MyDefaultOptions);
+            File.WriteAllText(path + "/recentProjects.json", json);
         }
 
         private void SortRecentProjects() {
-            RecentProjects.Sort((x, y) => y.LastOpened.CompareTo(x.LastOpened));
+            RecentProjects.Sort((x, y) => x.LastOpened.CompareTo(y.LastOpened));
         }
 
         public void AddProject(Project project) {
             ReadRecentProjectsFromFile();
             RecentProjects.Add(project);
             SortRecentProjects();
+            WriteRecentProjectsToFile();
+        }
+
+        public void UpdateRecentProjects(Project project) {
+            bool found = recentProjects.Exists(x => x.Name == project.Name && x.Path == project.Path);
+            
+            if (!found)
+                return;
+
+            recentProjects.Find(x => x.Name == project.Name && x.Path == project.Path).LastOpened = DateTime.Now;
             WriteRecentProjectsToFile();
         }
 

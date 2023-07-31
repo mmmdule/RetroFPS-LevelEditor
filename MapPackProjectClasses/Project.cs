@@ -48,21 +48,18 @@ namespace LevelEditor {
             Directory.CreateDirectory($"{path}\\{name}\\maps");
         }
 
-        public void JsonSerializeProject(string path, string name) {
-            var jsonOptions = new JsonSerializerOptions {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
-            string jsonString = JsonSerializer.Serialize<Project>(this, jsonOptions);
-            File.WriteAllText($"{path}\\{name}\\{name}.json", jsonString);
+        public void SaveToJsonFile(string path, string name) {
+            string jsonString = JsonSerializer.Serialize<Project>(this, JsonOptions.MyDefaultOptions);
+            File.WriteAllText($"{path}\\{name}\\{name}.lep", jsonString);
+            //lep == Level Editor Project
         }
 
         public List<string> MapNameList { get => mapNameList; set => mapNameList = value; }
         public string Name { get => name; set => name = value; }
         public string GameTitle { get => gameTitle; set => gameTitle = value; }
         public string GameSubtitle { get => gameSubtitle; set => gameSubtitle = value; }
-        [JsonIgnore]
-        public string Path { get => path; set => path = value; } //used for recent projects, not stored in project file
+        
+        public string Path { get => path; set => path = value; } //used for recent projects, not important for project file
         public string Author { get => author; set => author = value; }
         public DateTime DateCreated { get => dateCreated; set => dateCreated = value; }
         public DateTime LastOpened { get => lastOpened; set => lastOpened = value; }

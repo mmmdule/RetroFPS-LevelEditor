@@ -25,8 +25,8 @@
         private void InitializeComponent() {
             exitButton = new System.Windows.Forms.Button();
             panelCreateProject = new System.Windows.Forms.Panel();
-            pictureBoxCreate = new System.Windows.Forms.PictureBox();
             label3 = new System.Windows.Forms.Label();
+            pictureBoxCreate = new System.Windows.Forms.PictureBox();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             panelOpenProject = new System.Windows.Forms.Panel();
@@ -34,13 +34,13 @@
             label4 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
-            flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             noRecentProjectsLabel = new System.Windows.Forms.Label();
+            this.recentProjectsPanel = new System.Windows.Forms.Panel();
             panelCreateProject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCreate).BeginInit();
             panelOpenProject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOpen).BeginInit();
-            flowLayoutPanel.SuspendLayout();
+            this.recentProjectsPanel.SuspendLayout();
             SuspendLayout();
             // 
             // exitButton
@@ -73,17 +73,6 @@
             panelCreateProject.Size = new System.Drawing.Size(452, 104);
             panelCreateProject.TabIndex = 4;
             // 
-            // pictureBoxCreate
-            // 
-            pictureBoxCreate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            pictureBoxCreate.Image = Properties.Resources.create225;
-            pictureBoxCreate.Location = new System.Drawing.Point(31, 23);
-            pictureBoxCreate.Name = "pictureBoxCreate";
-            pictureBoxCreate.Size = new System.Drawing.Size(43, 46);
-            pictureBoxCreate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            pictureBoxCreate.TabIndex = 4;
-            pictureBoxCreate.TabStop = false;
-            // 
             // label3
             // 
             label3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -94,6 +83,17 @@
             label3.Size = new System.Drawing.Size(271, 19);
             label3.TabIndex = 3;
             label3.Text = "Start creating new custom map pack.";
+            // 
+            // pictureBoxCreate
+            // 
+            pictureBoxCreate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            pictureBoxCreate.Image = Properties.Resources.create225;
+            pictureBoxCreate.Location = new System.Drawing.Point(31, 23);
+            pictureBoxCreate.Name = "pictureBoxCreate";
+            pictureBoxCreate.Size = new System.Drawing.Size(43, 46);
+            pictureBoxCreate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            pictureBoxCreate.TabIndex = 4;
+            pictureBoxCreate.TabStop = false;
             // 
             // label2
             // 
@@ -165,41 +165,42 @@
             // 
             label6.AutoSize = true;
             label6.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label6.Location = new System.Drawing.Point(779, 63);
+            label6.Location = new System.Drawing.Point(591, 63);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(117, 19);
             label6.TabIndex = 6;
             label6.Text = "Recent Projects";
-            // 
-            // flowLayoutPanel
-            // 
-            flowLayoutPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            flowLayoutPanel.Controls.Add(noRecentProjectsLabel);
-            flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            flowLayoutPanel.Location = new System.Drawing.Point(779, 101);
-            flowLayoutPanel.Name = "flowLayoutPanel";
-            flowLayoutPanel.Size = new System.Drawing.Size(458, 309);
-            flowLayoutPanel.TabIndex = 7;
             // 
             // noRecentProjectsLabel
             // 
             noRecentProjectsLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             noRecentProjectsLabel.AutoSize = true;
             noRecentProjectsLabel.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            noRecentProjectsLabel.Location = new System.Drawing.Point(3, 0);
+            noRecentProjectsLabel.Location = new System.Drawing.Point(19, 19);
             noRecentProjectsLabel.Name = "noRecentProjectsLabel";
             noRecentProjectsLabel.Size = new System.Drawing.Size(193, 18);
             noRecentProjectsLabel.TabIndex = 8;
             noRecentProjectsLabel.Text = "No recent projects available.";
+            // 
+            // flowLayoutPanel
+            // 
+            this.recentProjectsPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.recentProjectsPanel.AutoScroll = true;
+            this.recentProjectsPanel.Controls.Add(noRecentProjectsLabel);
+            this.recentProjectsPanel.Location = new System.Drawing.Point(591, 98);
+            this.recentProjectsPanel.MinimumSize = new System.Drawing.Size(646, 379);
+            this.recentProjectsPanel.Name = "flowLayoutPanel";
+            this.recentProjectsPanel.Size = new System.Drawing.Size(646, 379);
+            this.recentProjectsPanel.TabIndex = 8;
             // 
             // FormHome
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
-            ClientSize = new System.Drawing.Size(1279, 459);
+            ClientSize = new System.Drawing.Size(1279, 529);
             ControlBox = false;
-            Controls.Add(flowLayoutPanel);
+            Controls.Add(this.recentProjectsPanel);
             Controls.Add(label6);
             Controls.Add(panelOpenProject);
             Controls.Add(panelCreateProject);
@@ -209,7 +210,7 @@
             ForeColor = System.Drawing.Color.White;
             MaximizeBox = false;
             MinimizeBox = false;
-            MinimumSize = new System.Drawing.Size(1295, 475);
+            MinimumSize = new System.Drawing.Size(1295, 545);
             Name = "FormHome";
             panelCreateProject.ResumeLayout(false);
             panelCreateProject.PerformLayout();
@@ -217,8 +218,8 @@
             panelOpenProject.ResumeLayout(false);
             panelOpenProject.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOpen).EndInit();
-            flowLayoutPanel.ResumeLayout(false);
-            flowLayoutPanel.PerformLayout();
+            this.recentProjectsPanel.ResumeLayout(false);
+            this.recentProjectsPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -234,10 +235,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.PictureBox pictureBoxCreate;
         private System.Windows.Forms.PictureBox pictureBoxOpen;
         private System.Windows.Forms.Label noRecentProjectsLabel;
+        private System.Windows.Forms.Panel recentProjectsPanel;
     }
 }
 
