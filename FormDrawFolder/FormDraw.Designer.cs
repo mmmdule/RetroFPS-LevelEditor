@@ -47,21 +47,21 @@
             gameObjectsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             btnWallBrush = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
-            button3 = new System.Windows.Forms.Button();
-            button4 = new System.Windows.Forms.Button();
-            button5 = new System.Windows.Forms.Button();
-            button6 = new System.Windows.Forms.Button();
             button7 = new System.Windows.Forms.Button();
             button8 = new System.Windows.Forms.Button();
             button9 = new System.Windows.Forms.Button();
+            button4 = new System.Windows.Forms.Button();
+            button5 = new System.Windows.Forms.Button();
+            button6 = new System.Windows.Forms.Button();
+            button2 = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
+            button16 = new System.Windows.Forms.Button();
             button10 = new System.Windows.Forms.Button();
-            button11 = new System.Windows.Forms.Button();
             button12 = new System.Windows.Forms.Button();
+            button11 = new System.Windows.Forms.Button();
             button13 = new System.Windows.Forms.Button();
             button14 = new System.Windows.Forms.Button();
             button15 = new System.Windows.Forms.Button();
-            button16 = new System.Windows.Forms.Button();
             button17 = new System.Windows.Forms.Button();
             panel1 = new System.Windows.Forms.Panel();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -479,43 +479,62 @@
             button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             button1.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // button7
             // 
-            button2.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button2.BackColor = System.Drawing.Color.Transparent;
-            button2.BackgroundImage = Properties.Resources.Imp;
-            button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button2.FlatAppearance.BorderSize = 2;
-            button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button2.ForeColor = System.Drawing.Color.White;
-            button2.Location = new System.Drawing.Point(646, 6);
-            button2.Margin = new System.Windows.Forms.Padding(6);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(68, 67);
-            button2.TabIndex = 5;
-            button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button2.UseVisualStyleBackColor = false;
+            button7.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button7.BackColor = System.Drawing.Color.Transparent;
+            button7.BackgroundImage = Properties.Resources.SmallMedkit;
+            button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button7.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button7.FlatAppearance.BorderSize = 2;
+            button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button7.ForeColor = System.Drawing.Color.White;
+            button7.Location = new System.Drawing.Point(166, 6);
+            button7.Margin = new System.Windows.Forms.Padding(6);
+            button7.Name = "button7";
+            button7.Size = new System.Drawing.Size(68, 67);
+            button7.TabIndex = 10;
+            button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button7.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // button8
             // 
-            button3.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button3.BackColor = System.Drawing.Color.Transparent;
-            button3.BackgroundImage = Properties.Resources.Tri_horn;
-            button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button3.FlatAppearance.BorderSize = 2;
-            button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button3.ForeColor = System.Drawing.Color.White;
-            button3.Location = new System.Drawing.Point(726, 6);
-            button3.Margin = new System.Windows.Forms.Padding(6);
-            button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(68, 67);
-            button3.TabIndex = 6;
-            button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button3.UseVisualStyleBackColor = false;
+            button8.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button8.BackColor = System.Drawing.Color.Transparent;
+            button8.BackgroundImage = Properties.Resources.ShotgunAmmo;
+            button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button8.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button8.FlatAppearance.BorderSize = 2;
+            button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button8.ForeColor = System.Drawing.Color.White;
+            button8.Location = new System.Drawing.Point(246, 6);
+            button8.Margin = new System.Windows.Forms.Padding(6);
+            button8.Name = "button8";
+            button8.Size = new System.Drawing.Size(68, 67);
+            button8.TabIndex = 11;
+            button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button8.UseVisualStyleBackColor = false;
+            // 
+            // button9
+            // 
+            button9.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button9.BackColor = System.Drawing.Color.Transparent;
+            button9.BackgroundImage = Properties.Resources.Bullets;
+            button9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button9.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button9.FlatAppearance.BorderSize = 2;
+            button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button9.ForeColor = System.Drawing.Color.White;
+            button9.Location = new System.Drawing.Point(326, 6);
+            button9.Margin = new System.Windows.Forms.Padding(6);
+            button9.Name = "button9";
+            button9.Size = new System.Drawing.Size(68, 67);
+            button9.TabIndex = 12;
+            button9.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button9.UseVisualStyleBackColor = false;
             // 
             // button4
             // 
@@ -574,62 +593,62 @@
             button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             button6.UseVisualStyleBackColor = false;
             // 
-            // button7
+            // button2
             // 
-            button7.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button7.BackColor = System.Drawing.Color.Transparent;
-            button7.BackgroundImage = Properties.Resources.SmallMedkit;
-            button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            button7.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button7.FlatAppearance.BorderSize = 2;
-            button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button7.ForeColor = System.Drawing.Color.White;
-            button7.Location = new System.Drawing.Point(166, 6);
-            button7.Margin = new System.Windows.Forms.Padding(6);
-            button7.Name = "button7";
-            button7.Size = new System.Drawing.Size(68, 67);
-            button7.TabIndex = 10;
-            button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button7.UseVisualStyleBackColor = false;
+            button2.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button2.BackColor = System.Drawing.Color.Transparent;
+            button2.BackgroundImage = Properties.Resources.Imp;
+            button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button2.FlatAppearance.BorderSize = 2;
+            button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button2.ForeColor = System.Drawing.Color.White;
+            button2.Location = new System.Drawing.Point(646, 6);
+            button2.Margin = new System.Windows.Forms.Padding(6);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(68, 67);
+            button2.TabIndex = 5;
+            button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button2.UseVisualStyleBackColor = false;
             // 
-            // button8
+            // button3
             // 
-            button8.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button8.BackColor = System.Drawing.Color.Transparent;
-            button8.BackgroundImage = Properties.Resources.ShotgunAmmo;
-            button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            button8.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button8.FlatAppearance.BorderSize = 2;
-            button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button8.ForeColor = System.Drawing.Color.White;
-            button8.Location = new System.Drawing.Point(246, 6);
-            button8.Margin = new System.Windows.Forms.Padding(6);
-            button8.Name = "button8";
-            button8.Size = new System.Drawing.Size(68, 67);
-            button8.TabIndex = 11;
-            button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button8.UseVisualStyleBackColor = false;
+            button3.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button3.BackColor = System.Drawing.Color.Transparent;
+            button3.BackgroundImage = Properties.Resources.Tri_horn;
+            button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button3.FlatAppearance.BorderSize = 2;
+            button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button3.ForeColor = System.Drawing.Color.White;
+            button3.Location = new System.Drawing.Point(726, 6);
+            button3.Margin = new System.Windows.Forms.Padding(6);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(68, 67);
+            button3.TabIndex = 6;
+            button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button3.UseVisualStyleBackColor = false;
             // 
-            // button9
+            // button16
             // 
-            button9.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button9.BackColor = System.Drawing.Color.Transparent;
-            button9.BackgroundImage = Properties.Resources.Bullets;
-            button9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            button9.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button9.FlatAppearance.BorderSize = 2;
-            button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button9.ForeColor = System.Drawing.Color.White;
-            button9.Location = new System.Drawing.Point(326, 6);
-            button9.Margin = new System.Windows.Forms.Padding(6);
-            button9.Name = "button9";
-            button9.Size = new System.Drawing.Size(68, 67);
-            button9.TabIndex = 12;
-            button9.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button9.UseVisualStyleBackColor = false;
+            button16.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button16.BackColor = System.Drawing.Color.Transparent;
+            button16.BackgroundImage = Properties.Resources.EnergyBall;
+            button16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            button16.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button16.FlatAppearance.BorderSize = 2;
+            button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button16.ForeColor = System.Drawing.Color.White;
+            button16.Location = new System.Drawing.Point(806, 6);
+            button16.Margin = new System.Windows.Forms.Padding(6);
+            button16.Name = "button16";
+            button16.Size = new System.Drawing.Size(68, 67);
+            button16.TabIndex = 19;
+            button16.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button16.UseVisualStyleBackColor = false;
             // 
             // button10
             // 
@@ -650,25 +669,6 @@
             button10.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             button10.UseVisualStyleBackColor = false;
             // 
-            // button11
-            // 
-            button11.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button11.BackColor = System.Drawing.Color.Transparent;
-            button11.BackgroundImage = Properties.Resources.Stone;
-            button11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            button11.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button11.FlatAppearance.BorderSize = 2;
-            button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button11.ForeColor = System.Drawing.Color.White;
-            button11.Location = new System.Drawing.Point(1046, 6);
-            button11.Margin = new System.Windows.Forms.Padding(6);
-            button11.Name = "button11";
-            button11.Size = new System.Drawing.Size(68, 67);
-            button11.TabIndex = 14;
-            button11.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button11.UseVisualStyleBackColor = false;
-            // 
             // button12
             // 
             button12.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -687,6 +687,25 @@
             button12.TabIndex = 15;
             button12.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             button12.UseVisualStyleBackColor = false;
+            // 
+            // button11
+            // 
+            button11.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button11.BackColor = System.Drawing.Color.Transparent;
+            button11.BackgroundImage = Properties.Resources.Stone;
+            button11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            button11.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            button11.FlatAppearance.BorderSize = 2;
+            button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button11.ForeColor = System.Drawing.Color.White;
+            button11.Location = new System.Drawing.Point(1046, 6);
+            button11.Margin = new System.Windows.Forms.Padding(6);
+            button11.Name = "button11";
+            button11.Size = new System.Drawing.Size(68, 67);
+            button11.TabIndex = 14;
+            button11.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            button11.UseVisualStyleBackColor = false;
             // 
             // button13
             // 
@@ -744,25 +763,6 @@
             button15.TabIndex = 18;
             button15.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             button15.UseVisualStyleBackColor = false;
-            // 
-            // button16
-            // 
-            button16.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button16.BackColor = System.Drawing.Color.Transparent;
-            button16.BackgroundImage = Properties.Resources.EnergyBall;
-            button16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            button16.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            button16.FlatAppearance.BorderSize = 2;
-            button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button16.ForeColor = System.Drawing.Color.White;
-            button16.Location = new System.Drawing.Point(806, 6);
-            button16.Margin = new System.Windows.Forms.Padding(6);
-            button16.Name = "button16";
-            button16.Size = new System.Drawing.Size(68, 67);
-            button16.TabIndex = 19;
-            button16.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            button16.UseVisualStyleBackColor = false;
             // 
             // button17
             // 
@@ -1252,6 +1252,7 @@
             Name = "FormDraw";
             ShowIcon = false;
             Text = "Level Editor - Grid Mode (FLOW)";
+            FormClosing += FormDraw_FormClosing;
             Load += FormDraw_Load;
             KeyDown += FormDraw_KeyDown;
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).EndInit();

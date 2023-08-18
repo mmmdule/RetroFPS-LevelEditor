@@ -75,13 +75,13 @@ namespace LevelEditor {
 
         private void RecentProjectButton_Click(object sender, EventArgs e) {
             Project P;
-            if(sender is RecentProjectButton) {
+            if (sender is RecentProjectButton) {
                 P = (sender as RecentProjectButton).Project;
             }
             else {
                 P = ((sender as Control).Parent as RecentProjectButton).Project;
             }
-            openProject($"{P.Path}\\{P.Name}\\{P.Name}.lep");    
+            openProject($"{P.Path}\\{P.Name}\\{P.Name}.lep");
         }
 
         private void FormHome_MouseDown(object sender, MouseEventArgs e) {
@@ -147,6 +147,10 @@ namespace LevelEditor {
             catch {
                 MessageBox.Show("Error opening project", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void FormHome_FormClosing(object sender, FormClosingEventArgs e) {
+            Application.Exit();
         }
     }
 }

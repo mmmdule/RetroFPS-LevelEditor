@@ -10,7 +10,7 @@ namespace LevelEditor
 
     [JsonDerivedType(typeof(Pickup))]
     [JsonDerivedType(typeof(MapNpcObject))]
-    internal class MapObject
+    public partial class MapObject
     {
         protected int x;                  //X coordinate (column in table)
         protected int y;                  //Y coordinate (row in table)
@@ -40,6 +40,10 @@ namespace LevelEditor
             { Resources.wallMoss , "wallMoss" },
             { Resources.tileWall, "tileWall" }
         };
+
+        public MapObject() {
+            SetImageFromType(this.type);
+        }
 
         public MapObject(int x, int y)
         {

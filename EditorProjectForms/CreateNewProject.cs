@@ -160,5 +160,9 @@ namespace LevelEditor {
             textBox.BackColor = Color.Red;
             textBox.ForeColor = Color.Black;
         }
+
+        private void CreateNewProject_FormClosing(object sender, FormClosingEventArgs e) {
+            Application.Exit();
+        }
     }
 }

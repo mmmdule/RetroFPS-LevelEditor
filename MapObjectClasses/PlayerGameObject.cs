@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace LevelEditor
 {
-    internal class PlayerGameObject : MapObject
+    public partial class PlayerGameObject : MapObject
     {
         private int health;
 
@@ -46,6 +46,10 @@ namespace LevelEditor
             revolverAmmo = 75;
             hasShotgun = true;
             shotgunAmmo = 50;
+        }
+
+        //for deserialization purposes
+        public PlayerGameObject() {
         }
 
         public int Health { get => health; set => health = value; }

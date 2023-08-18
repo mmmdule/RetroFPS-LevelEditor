@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Windows.Forms;
 
 namespace LevelEditor {
     public partial class Project {
@@ -52,6 +53,23 @@ namespace LevelEditor {
             string jsonString = JsonSerializer.Serialize<Project>(this, JsonOptions.MyDefaultOptions);
             File.WriteAllText($"{path}\\{name}\\{name}.lep", jsonString);
             //lep == Level Editor Project
+        }
+
+        public Map ReadMap(int index) {
+            string tmpPath = $"{path}\\{name}\\maps\\{mapNameList[index]}.lem";
+            try {
+                //all classes used in map need empty constructor for deserialization
+                Map map = JsonSerializer.Deserialize<Map>(File.ReadAllText($"{tmpPath}")/*, JsonOptions.MyDefaultOptions*/);
+
+                //map adjustments
+                map.JsonAdjust();
+
+                //Map map = dto.convertToMap();
+                return map;
+            }
+            catch {
+                return null;
+            }
         }
 
         public List<string> MapNameList { get => mapNameList; set => mapNameList = value; }

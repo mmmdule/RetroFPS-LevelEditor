@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace LevelEditor
 {
-    internal class Map
+    public partial class Map
     {
         [JsonIgnore]
         private List<MapObject> mapGameObjects;
@@ -24,6 +24,12 @@ namespace LevelEditor
         private int startX;
         private int startY;
         private PlayerGameObject playerGameObject;
+
+        //for deserialization purposes
+        [JsonConstructor]
+        public Map() {
+
+        }
 
         public Map(List<MapObject> mapGameObjects, string name, bool storyTextSegment, string storyText, int wallTexture, int startX, int startY)
         {
@@ -55,7 +61,6 @@ namespace LevelEditor
             startX = playerGameObject.X;
             startY = playerGameObject.Y;
 
-            //turn that foreach into for
 
             for (int i = 0; i < MapGameObjects.Count; i++)
             {
@@ -67,6 +72,27 @@ namespace LevelEditor
                     MapObjects.Add(MapGameObjects[i]);
             }
 
+        }
+
+        public Map(string name, bool storyTextSegment) {
+            this.name = name;
+            this.storyTextSegment = storyTextSegment;
+
+            if (storyTextSegment)
+                return;
+
+            for (int i = 0; i <= 63; i += 63) //HORIZONTAL
+                for (int j = 0; j < 64; j++) {
+                    MapObject tmp = new MapObject(j, i);
+                    tmp.SetTypeFromImage(Resources.wallBrick);
+                    this.MapObjects.Add(tmp);
+                }
+            for (int i = 1; i <= 62; i++) //VERTICAL
+                for (int j = 0; j < 64; j += 63) {
+                    MapObject tmp = new MapObject(j, i);
+                    tmp.SetTypeFromImage(Resources.wallBrick);
+                    this.MapObjects.Add(tmp);
+                }
         }
 
         [JsonIgnore]
@@ -99,6 +125,22 @@ namespace LevelEditor
             }
         }
 
+        public void JsonAdjust() {
+            MapObjects.RemoveAll(x => x == null);
+            MapObjects.ForEach(x => x.SetImageFromType(x.Type));
+            MapGameObjects = new List<MapObject>();
+            foreach (MapObject obj in MapObjects)
+                MapGameObjects.Add(obj);
+            foreach (MapNpcObject obj in MapNpcObjects) {
+                obj.SetImageFromType();
+                MapGameObjects.Add(obj);
+            }
+            foreach (Pickup obj in Pickups) {
+                obj.SetImageFromType();
+                MapGameObjects.Add(obj);
+            }
+            PlayerGameObject.Image = Resources.player;
+        }
 
     }
 }

@@ -35,12 +35,12 @@
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             noRecentProjectsLabel = new System.Windows.Forms.Label();
-            this.recentProjectsPanel = new System.Windows.Forms.Panel();
+            recentProjectsPanel = new System.Windows.Forms.Panel();
             panelCreateProject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCreate).BeginInit();
             panelOpenProject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOpen).BeginInit();
-            this.recentProjectsPanel.SuspendLayout();
+            recentProjectsPanel.SuspendLayout();
             SuspendLayout();
             // 
             // exitButton
@@ -182,16 +182,16 @@
             noRecentProjectsLabel.TabIndex = 8;
             noRecentProjectsLabel.Text = "No recent projects available.";
             // 
-            // flowLayoutPanel
+            // recentProjectsPanel
             // 
-            this.recentProjectsPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.recentProjectsPanel.AutoScroll = true;
-            this.recentProjectsPanel.Controls.Add(noRecentProjectsLabel);
-            this.recentProjectsPanel.Location = new System.Drawing.Point(591, 98);
-            this.recentProjectsPanel.MinimumSize = new System.Drawing.Size(646, 379);
-            this.recentProjectsPanel.Name = "flowLayoutPanel";
-            this.recentProjectsPanel.Size = new System.Drawing.Size(646, 379);
-            this.recentProjectsPanel.TabIndex = 8;
+            recentProjectsPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            recentProjectsPanel.AutoScroll = true;
+            recentProjectsPanel.Controls.Add(noRecentProjectsLabel);
+            recentProjectsPanel.Location = new System.Drawing.Point(591, 98);
+            recentProjectsPanel.MinimumSize = new System.Drawing.Size(646, 379);
+            recentProjectsPanel.Name = "recentProjectsPanel";
+            recentProjectsPanel.Size = new System.Drawing.Size(646, 379);
+            recentProjectsPanel.TabIndex = 8;
             // 
             // FormHome
             // 
@@ -200,7 +200,7 @@
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             ClientSize = new System.Drawing.Size(1279, 529);
             ControlBox = false;
-            Controls.Add(this.recentProjectsPanel);
+            Controls.Add(recentProjectsPanel);
             Controls.Add(label6);
             Controls.Add(panelOpenProject);
             Controls.Add(panelCreateProject);
@@ -212,14 +212,15 @@
             MinimizeBox = false;
             MinimumSize = new System.Drawing.Size(1295, 545);
             Name = "FormHome";
+            FormClosing += FormHome_FormClosing;
             panelCreateProject.ResumeLayout(false);
             panelCreateProject.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCreate).EndInit();
             panelOpenProject.ResumeLayout(false);
             panelOpenProject.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOpen).EndInit();
-            this.recentProjectsPanel.ResumeLayout(false);
-            this.recentProjectsPanel.PerformLayout();
+            recentProjectsPanel.ResumeLayout(false);
+            recentProjectsPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }

@@ -336,5 +336,57 @@ namespace LevelEditor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap upArrow48
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("upArrow48", resourceCulture);
+                (obj as Image).Tag = "upArrow48";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap topArrow48
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("topArrow48", resourceCulture);
+                (obj as Image).Tag = "topArrow48";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bottomArrow48
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("bottomArrow48", resourceCulture);
+                (obj as Image).Tag = "bottomArrow48";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap downArrow48
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("downArrow48", resourceCulture);
+                (obj as Image).Tag = "downArrow48";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

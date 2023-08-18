@@ -315,6 +315,7 @@
             MinimizeBox = false;
             MinimumSize = new System.Drawing.Size(1105, 525);
             Name = "CreateNewProject";
+            FormClosing += CreateNewProject_FormClosing;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

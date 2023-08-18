@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace LevelEditor
-{
+namespace LevelEditor {
     public partial class FormDraw : Form {
         private List<MapObject> MapObjectList = new List<MapObject>();
         private MapObject selectedMapObject = null;
+
+        private Project currentProject = null; //for project saving and loading
+        private Map currentMap = null;
 
         private bool doorAdded = false;
         private bool gateAdded = false;
@@ -38,6 +40,29 @@ namespace LevelEditor
 
         public FormDraw() {
             this.DoubleBuffered = true;
+            InitializeComponent();
+            SetControlsToDarkTheme();
+
+            typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(panel1, true, null);
+
+            AddEventsToControls();
+        }
+
+        public FormDraw(Map m, Project p) {
+            this.DoubleBuffered = true;
+            currentProject = p;
+            //add all mapObjects to MapObjectList, and extended types too
+            foreach (MapObject mObj in m.MapObjects) {
+                MapObjectList.Add(mObj);
+            }
+            foreach (MapNpcObject mObj in m.MapNpcObjects)
+                MapObjectList.Add(mObj);
+            foreach (Pickup mObj in m.Pickups)
+                MapObjectList.Add(mObj);
+            MapObjectList.Add(m.PlayerGameObject);
+
+
+            currentMap = m;
             InitializeComponent();
             SetControlsToDarkTheme();
 
@@ -454,8 +479,8 @@ namespace LevelEditor
                     playerAdded = true;
                     tmpGameObj = new PlayerGameObject(x, y);
                 }
-                else if (  currentPenImage.Tag.Equals("Bullets") 
-                        || currentPenImage.Tag.Equals("ShotgunAmmo") 
+                else if (currentPenImage.Tag.Equals("Bullets")
+                        || currentPenImage.Tag.Equals("ShotgunAmmo")
                         || currentPenImage.Tag.Equals("SmallMedkit")) {
                     tmpGameObj = new Pickup(currentPenImage.Tag.ToString(), x, y, currentPenImage);
                 }
@@ -560,6 +585,10 @@ namespace LevelEditor
                     if (c is NumericUpDown || c is CheckBox)
                         c.Enabled = true;
                 }
+                groupBoxPlayer.Enabled = false;
+                groupBoxPlayer.Visible = false;
+                groupBoxPickup.Visible = false;
+                groupBoxPickup.Enabled = false;
             }
             else if (selectedMapObject is PlayerGameObject) {
                 groupBoxPickup.Visible = false;
@@ -682,6 +711,8 @@ namespace LevelEditor
             //Rectangle r = (sender as Panel).DisplayRectangle;
 
             foreach (MapObject gObject in MapObjectList) {
+                if (gObject is PlayerGameObject) continue;
+
                 if (gObject.X >= drawX && gObject.Y >= drawY)
                     e.Graphics.DrawImage(gObject.Image, (gObject.X - drawX) * CurrentPictureSize, (gObject.Y - drawY) * CurrentPictureSize,
                                      CurrentPictureSize, CurrentPictureSize);
@@ -732,10 +763,20 @@ namespace LevelEditor
 
         private void SerializeList() {
             PlayerGameObject player = MapObjectList.Find(obj => obj is PlayerGameObject) as PlayerGameObject;
+
+            //for debugging
+            if(currentMap == null && currentProject == null) {
+                if (player != null)
+                    new Map(MapObjectList, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
+                else
+                    new Map(MapObjectList, "map1", false, "", wallTextureIndex, -1, -1).WriteMapToJson("C:\\FPS_editor_json", "level1.json"); //start X and Y -1 means no player
+                return;
+            }
+
             if (player != null)
-                new Map(MapObjectList, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, player).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
             else
-                new Map(MapObjectList, "map1", false, "", wallTextureIndex, -1, -1).WriteMapToJson("C:\\FPS_editor_json", "level1.json"); //start X and Y -1 means no player
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, -1, -1).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem"); //start X and Y -1 means no player
 
             //BaseMapObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", BaseMapObjects);
         }
@@ -793,5 +834,23 @@ namespace LevelEditor
             }
         }
 
+        private void FormDraw_FormClosing(object sender, FormClosingEventArgs e) {
+            //show dialog if unsaved changes
+            if (!unsavedChanges)
+                Application.Exit();
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to save changes?", "Save changes", MessageBoxButtons.YesNoCancel);
+            if (dialogResult == DialogResult.Yes) {
+                SerializeList();
+                Application.Exit();
+            }
+            else if (dialogResult == DialogResult.No) {
+                Application.Exit();
+            }
+            else if (dialogResult == DialogResult.Cancel) {
+                //do nothing for now
+            }
+            
+        }
     }
 }

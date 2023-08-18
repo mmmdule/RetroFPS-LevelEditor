@@ -11,7 +11,7 @@ namespace LevelEditor
 {
     //TODO: finish the setDefaultPropsForType() method
 
-    internal class MapNpcObject : MapObject
+    public partial class MapNpcObject : MapObject
     {
         //private string type; //most important, determines prefab to be spawned
         private int health;
@@ -155,6 +155,20 @@ namespace LevelEditor
                     projectileDamage = 3 * 12; //damage of 3 EnergyBall prefabs
                     break;
                 default:
+                    break;
+            }
+        }
+
+        public void SetImageFromType() {
+            switch (Type) {
+                case "Imp":
+                    Image = Resources.Imp;
+                    break;
+                case "Tri_horn":
+                    Image = Resources.Tri_horn;
+                    break;
+                default:
+                    throw new System.Exception("Invalid NPC type while setting image");
                     break;
             }
         }
