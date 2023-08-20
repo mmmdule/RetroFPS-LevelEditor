@@ -58,8 +58,8 @@ namespace LevelEditor
             this.storyText = storyText;
             this.wallTexture = wallTexture;
             this.playerGameObject = playerGameObject;
-            startX = playerGameObject.X;
-            startY = playerGameObject.Y;
+            startX = playerGameObject == null ? -1 : playerGameObject.X;
+            startY = playerGameObject == null ? -1 : playerGameObject.Y;
 
 
             for (int i = 0; i < MapGameObjects.Count; i++)
@@ -133,13 +133,15 @@ namespace LevelEditor
                 MapGameObjects.Add(obj);
             foreach (MapNpcObject obj in MapNpcObjects) {
                 obj.SetImageFromType();
-                MapGameObjects.Add(obj);
+                //MapGameObjects.Add(obj);
             }
             foreach (Pickup obj in Pickups) {
                 obj.SetImageFromType();
-                MapGameObjects.Add(obj);
+                //MapGameObjects.Add(obj);
             }
-            PlayerGameObject.Image = Resources.player;
+            if (PlayerGameObject != null) {
+                PlayerGameObject.Image = Resources.player;
+            }
         }
 
     }

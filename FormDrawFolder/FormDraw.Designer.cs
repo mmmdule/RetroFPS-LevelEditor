@@ -99,6 +99,7 @@
             stoneWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mossWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             blueTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            resetMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)patrolRangeInput).BeginInit();
@@ -1118,7 +1119,7 @@
             // 
             // mapSettingsToolStripMenuItem
             // 
-            mapSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { wallTextureToolStripMenu });
+            mapSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { wallTextureToolStripMenu, resetMapToolStripMenuItem });
             mapSettingsToolStripMenuItem.Name = "mapSettingsToolStripMenuItem";
             mapSettingsToolStripMenuItem.Size = new System.Drawing.Size(97, 21);
             mapSettingsToolStripMenuItem.Text = "Map Settings";
@@ -1231,6 +1232,13 @@
             blueTileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             blueTileToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
+            // resetMapToolStripMenuItem
+            // 
+            resetMapToolStripMenuItem.Name = "resetMapToolStripMenuItem";
+            resetMapToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            resetMapToolStripMenuItem.Text = "Reset Map";
+            resetMapToolStripMenuItem.Click += resetMapToolStripMenuItem_Click;
+            // 
             // FormDraw
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1238,7 +1246,6 @@
             BackColor = System.Drawing.Color.Black;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             ClientSize = new System.Drawing.Size(1902, 914);
-            ControlBox = false;
             Controls.Add(menuStrip1);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
@@ -1251,7 +1258,6 @@
             MinimumSize = new System.Drawing.Size(965, 730);
             Name = "FormDraw";
             ShowIcon = false;
-            Text = "Level Editor - Grid Mode (FLOW)";
             FormClosing += FormDraw_FormClosing;
             Load += FormDraw_Load;
             KeyDown += FormDraw_KeyDown;
@@ -1359,5 +1365,6 @@
         private System.Windows.Forms.CheckBox playerHasShotgunCheckBox;
         private System.Windows.Forms.NumericUpDown playerRevolverAmmoInput;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem resetMapToolStripMenuItem;
     }
 }

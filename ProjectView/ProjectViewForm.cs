@@ -77,11 +77,12 @@ namespace LevelEditor {
                 return;
 
             try {
+                //delete the map file
+                System.IO.File.Delete($"{currentProject.Path}\\{currentProject.Name}\\maps\\{currentProject.MapNameList[selectedMapIndex]}.lem");
                 currentProject.MapNameList.RemoveAt(selectedMapIndex);
                 currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
                 selectedMapIndex = -1;
-                //TODO: remove the map from ./maps folder
             }
             catch (Exception) { }
         }
@@ -165,7 +166,7 @@ namespace LevelEditor {
                 //Open map editor
                 FormDraw formDraw = new FormDraw(map, currentProject);
                 formDraw.ShowDialog();
-                this.WindowState = FormWindowState.Minimized;
+                //this.WindowState = FormWindowState.Minimized;
             }
         }
 

@@ -3,6 +3,7 @@ using LevelEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection.Metadata.Ecma335;
 using System.Windows.Forms;
 
 namespace LevelEditor {
@@ -61,6 +62,8 @@ namespace LevelEditor {
                 MapObjectList.Add(mObj);
             MapObjectList.Add(m.PlayerGameObject);
 
+            this.Text = $"{p.Name} - {m.Name}";
+            unsavedChanges = false;
 
             currentMap = m;
             InitializeComponent();
@@ -203,7 +206,7 @@ namespace LevelEditor {
             Size size = new Size(pictureSize, pictureSize);
 
             if (MapObjectList.Count == 0)
-                AddBasicLevelOutline(panel, pictureSize);
+                AddBasicLevelOutline(panel);
 
             panel.ResumeLayout(true);
             panel.Enabled = true;
@@ -211,11 +214,35 @@ namespace LevelEditor {
             this.UseWaitCursor = false; //this == Form
         }
 
-        private void AddBasicLevelOutline(Panel panel, int pictureSize) {
+        private bool IsItTheFirstTime() {
+            int itemCount = 0;
+            for (int i = 0; i <= 63; i += 63) //HORIZONTAL
+                for (int j = 0; j < 64; j++) { 
+                    if (MapObjectList.Find(x => x.X == j && x.Y == i) != null) {
+                        itemCount++;
+                    }
+                }
+            for (int i = 1; i <= 62; i++) //VERTICAL
+                for (int j = 0; j < 64; j += 63) {
+                    if (MapObjectList.Find(x => x.X == j && x.Y == i) != null) {
+                        itemCount++;
+                    }
+                }
+
+            return itemCount == 252; //252 is the number of items on the border of the Map (64x64 map)
+        }
+
+        private void AddBasicLevelOutline(Panel panel, bool serialize = true) {
             panel.Enabled = false;
             panel.SuspendLayout();
 
-            panel.Controls.Clear();
+            //if firstTime, serialize the Map
+            bool firstTime = IsItTheFirstTime();
+            if (!firstTime && serialize) {
+                return;
+            }
+
+            //panel.Controls.Clear();
             for (int i = 0; i <= 63; i += 63) //HORIZONTAL
                 for (int j = 0; j < 64; j++) {
                     MapObject tmp = new MapObject(j, i);
@@ -231,21 +258,28 @@ namespace LevelEditor {
 
             panel.Invalidate();
             panel.Update();
-
             panel.ResumeLayout(true);
             panel.Enabled = true;
+
+            if (serialize) {
+                SerializeList();
+            }
         }
 
         private void borderWallTextureChange(object sender, EventArgs e) {
+            ChangeBorderTexture((sender as ToolStripMenuItem).Image);
+            panel1.Invalidate();
+            panel1.Update();
+        }
+
+        private void ChangeBorderTexture(Image imageArg) {
             //change texture of border walls
             foreach (MapObject mapGameObject in MapObjectList) {
                 if (mapGameObject.X == 0 || mapGameObject.X == 63 || mapGameObject.Y == 0 || mapGameObject.Y == 63) {
-                    mapGameObject.Image = (sender as ToolStripMenuItem).Image;
-                    mapGameObject.SetTypeFromImage((sender as ToolStripMenuItem).Image);
+                    mapGameObject.Image = imageArg;
+                    mapGameObject.SetTypeFromImage(imageArg);
                 }
             }
-            panel1.Invalidate();
-            panel1.Update();
         }
 
         private void wallBrushChange(object sender, EventArgs e) {
@@ -493,6 +527,7 @@ namespace LevelEditor {
                 tmpGameObj.SetTypeFromImage(currentPenImage);
                 MapObjectList.Add(tmpGameObj);
                 unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
 
                 handleExistingMapObject(panel, x, y, tmpGameObj); //erases game object if it's on (X,Y). Works for NPC, Pickup & Player
 
@@ -524,6 +559,7 @@ namespace LevelEditor {
 
                 MapObjectList.RemoveAt(removeIndex);
                 unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
                 panel.Invalidate();
                 panel.Update();
                 return;
@@ -701,6 +737,7 @@ namespace LevelEditor {
 
 
         private void Panel1_Paint(object sender, PaintEventArgs e) {
+            MapObjectList.RemoveAll(x => x == null); //prevent null reference exception
 
             base.OnPaint(e);
             e.Graphics.Clear(DarkTheme.BackgroundColor); //clear the panel
@@ -765,7 +802,7 @@ namespace LevelEditor {
             PlayerGameObject player = MapObjectList.Find(obj => obj is PlayerGameObject) as PlayerGameObject;
 
             //for debugging
-            if(currentMap == null && currentProject == null) {
+            if (currentMap == null && currentProject == null) {
                 if (player != null)
                     new Map(MapObjectList, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
                 else
@@ -776,9 +813,11 @@ namespace LevelEditor {
             if (player != null)
                 new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, player).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
             else
-                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, -1, -1).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem"); //start X and Y -1 means no player
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, null).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
+                //new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, -1, -1).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem"); //start X and Y -1 means no player
 
-            //BaseMapObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", BaseMapObjects);
+            unsavedChanges = false;
+            this.Text = $"{currentProject.Name} - {currentMap.Name}";
         }
 
         private void resetObjectPropsButton_Click(object sender, EventArgs e) {
@@ -797,21 +836,7 @@ namespace LevelEditor {
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
-            //show dialog if unsaved changes
-            if (!unsavedChanges)
-                this.Close();
-
-            DialogResult dialogResult = MessageBox.Show("Do you want to save changes?", "Save changes", MessageBoxButtons.YesNoCancel);
-            if (dialogResult == DialogResult.Yes) {
-                SerializeList();
-                this.Close();
-            }
-            else if (dialogResult == DialogResult.No) {
-                this.Close();
-            }
-            else if (dialogResult == DialogResult.Cancel) {
-                //do nothing for now
-            }
+            this.Close();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -837,20 +862,30 @@ namespace LevelEditor {
         private void FormDraw_FormClosing(object sender, FormClosingEventArgs e) {
             //show dialog if unsaved changes
             if (!unsavedChanges)
-                Application.Exit();
+                return;
 
             DialogResult dialogResult = MessageBox.Show("Do you want to save changes?", "Save changes", MessageBoxButtons.YesNoCancel);
             if (dialogResult == DialogResult.Yes) {
                 SerializeList();
-                Application.Exit();
             }
             else if (dialogResult == DialogResult.No) {
-                Application.Exit();
+                //just exit the form
+                //maybe remove this else if branch
             }
             else if (dialogResult == DialogResult.Cancel) {
-                //do nothing for now
+                e.Cancel = true;
             }
-            
+        }
+
+        private void resetMapToolStripMenuItem_Click(object sender, EventArgs e) {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset the map?", "Reset Map", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes) {
+                MapObjectList.RemoveAll(x => !(x.Y == 0 || x.Y == 63 || x.X == 0 || x.X == 63));
+                ChangeBorderTexture(Resources.wallBrick);
+                panel1.Invalidate();
+                panel1.Update();
+                //AddBasicLevelOutline(panel1, false);
+            }
         }
     }
 }
