@@ -1,13 +1,18 @@
-﻿using LevelEditor.Properties;
+﻿//using LevelEditor.MapObjectClasses;
+using LevelEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection.Metadata.Ecma335;
 using System.Windows.Forms;
 
 namespace LevelEditor {
     public partial class FormDraw : Form {
         private List<MapObject> MapObjectList = new List<MapObject>();
         private MapObject selectedMapObject = null;
+
+        private Project currentProject = null; //for project saving and loading
+        private Map currentMap = null;
 
         private bool doorAdded = false;
         private bool gateAdded = false;
@@ -36,6 +41,31 @@ namespace LevelEditor {
 
         public FormDraw() {
             this.DoubleBuffered = true;
+            InitializeComponent();
+            SetControlsToDarkTheme();
+
+            typeof(Panel).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(panel1, true, null);
+
+            AddEventsToControls();
+        }
+
+        public FormDraw(Map m, Project p) {
+            this.DoubleBuffered = true;
+            currentProject = p;
+            //add all mapObjects to MapObjectList, and extended types too
+            foreach (MapObject mObj in m.MapObjects) {
+                MapObjectList.Add(mObj);
+            }
+            foreach (MapNpcObject mObj in m.MapNpcObjects)
+                MapObjectList.Add(mObj);
+            foreach (Pickup mObj in m.Pickups)
+                MapObjectList.Add(mObj);
+            MapObjectList.Add(m.PlayerGameObject);
+
+            this.Text = $"{p.Name} - {m.Name}";
+            unsavedChanges = false;
+
+            currentMap = m;
             InitializeComponent();
             SetControlsToDarkTheme();
 
@@ -88,44 +118,44 @@ namespace LevelEditor {
         }
 
         private void SetControlsToDarkTheme() {
-            this.BackColor = Color.FromArgb(31, 31, 31);
+            this.BackColor = DarkTheme.BackgroundColor;
             foreach (Control control in this.Controls)
-                control.BackColor = Color.FromArgb(31, 31, 31);
+                control.BackColor = DarkTheme.BackgroundColor;
             foreach (Control control in panel3.Controls)
-                control.BackColor = Color.FromArgb(31, 31, 31);
+                control.BackColor = DarkTheme.BackgroundColor;
             foreach (Control control in panel4.Controls)
-                control.BackColor = Color.FromArgb(31, 31, 31);
-            button17.BackColor = Color.FromArgb(31, 31, 31);
+                control.BackColor = DarkTheme.BackgroundColor;
+            button17.BackColor = DarkTheme.BackgroundColor;
             foreach (Control c in groupBoxPickup.Controls)
-                c.BackColor = Color.FromArgb(31, 31, 31);
+                c.BackColor = DarkTheme.BackgroundColor;
             foreach (Control c in groupBoxPlayer.Controls)
-                c.BackColor = Color.FromArgb(31, 31, 31);
+                c.BackColor = DarkTheme.BackgroundColor;
 
             //remove groupBox border
             groupBoxPickup.Paint += (sender, e) => {
-                e.Graphics.Clear(Color.FromArgb(31, 31, 31)); //fills the entire control with the specified color
+                e.Graphics.Clear(DarkTheme.BackgroundColor); //fills the entire control with the specified color
             };
             groupBoxPlayer.Paint += (sender, e) => {
-                e.Graphics.Clear(Color.FromArgb(31, 31, 31));
+                e.Graphics.Clear(DarkTheme.BackgroundColor);
             };
 
 
             //adjust menuStrip1 to dark theme
 
-            menuStrip1.Renderer = new CustomToolStripRenderer(Color.FromArgb(31, 31, 31));
+            menuStrip1.Renderer = new CustomToolStripRenderer(DarkTheme.BackgroundColor);
             menuStrip1.ForeColor = Color.White;
 
             foreach (ToolStripMenuItem item in menuStrip1.Items) {
-                item.BackColor = Color.FromArgb(31, 31, 31);
+                item.BackColor = DarkTheme.BackgroundColor;
                 item.ForeColor = Color.White;
-                item.DropDown.BackColor = Color.FromArgb(31, 31, 31);
+                item.DropDown.BackColor = DarkTheme.BackgroundColor;
                 item.DropDown.ForeColor = Color.White;
                 item.DropDown.RenderMode = ToolStripRenderMode.System;
             }
 
             //make wallTextureToolStripMenuItem dropdown menu dark
             wallTextureToolStripMenu.DropDown.ForeColor = Color.White;
-            wallTextureToolStripMenu.DropDown.BackColor = Color.FromArgb(31, 31, 31);
+            wallTextureToolStripMenu.DropDown.BackColor = DarkTheme.BackgroundColor;
         }
 
         private void FormDraw_Load(object sender, EventArgs e) {
@@ -146,8 +176,8 @@ namespace LevelEditor {
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderColor = Color.White;
                 btn.FlatAppearance.BorderSize = 2;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(48, 48, 48);
-                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(56, 56, 56);
+                btn.FlatAppearance.MouseOverBackColor = DarkTheme.ButtonHoverColor;
+                btn.FlatAppearance.MouseDownBackColor = DarkTheme.ButtonMouseDownColor;
             }
 
             (flowPanel.Controls[0] as Button).FlatAppearance.BorderColor = Color.Red;
@@ -176,7 +206,7 @@ namespace LevelEditor {
             Size size = new Size(pictureSize, pictureSize);
 
             if (MapObjectList.Count == 0)
-                AddBasicLevelOutline(panel, pictureSize);
+                AddBasicLevelOutline(panel);
 
             panel.ResumeLayout(true);
             panel.Enabled = true;
@@ -184,11 +214,35 @@ namespace LevelEditor {
             this.UseWaitCursor = false; //this == Form
         }
 
-        private void AddBasicLevelOutline(Panel panel, int pictureSize) {
+        private bool IsItTheFirstTime() {
+            int itemCount = 0;
+            for (int i = 0; i <= 63; i += 63) //HORIZONTAL
+                for (int j = 0; j < 64; j++) { 
+                    if (MapObjectList.Find(x => x.X == j && x.Y == i) != null) {
+                        itemCount++;
+                    }
+                }
+            for (int i = 1; i <= 62; i++) //VERTICAL
+                for (int j = 0; j < 64; j += 63) {
+                    if (MapObjectList.Find(x => x.X == j && x.Y == i) != null) {
+                        itemCount++;
+                    }
+                }
+
+            return itemCount == 252; //252 is the number of items on the border of the Map (64x64 map)
+        }
+
+        private void AddBasicLevelOutline(Panel panel, bool serialize = true) {
             panel.Enabled = false;
             panel.SuspendLayout();
 
-            panel.Controls.Clear();
+            //if firstTime, serialize the Map
+            bool firstTime = IsItTheFirstTime();
+            if (!firstTime && serialize) {
+                return;
+            }
+
+            //panel.Controls.Clear();
             for (int i = 0; i <= 63; i += 63) //HORIZONTAL
                 for (int j = 0; j < 64; j++) {
                     MapObject tmp = new MapObject(j, i);
@@ -204,21 +258,28 @@ namespace LevelEditor {
 
             panel.Invalidate();
             panel.Update();
-
             panel.ResumeLayout(true);
             panel.Enabled = true;
+
+            if (serialize) {
+                SerializeList();
+            }
         }
 
         private void borderWallTextureChange(object sender, EventArgs e) {
+            ChangeBorderTexture((sender as ToolStripMenuItem).Image);
+            panel1.Invalidate();
+            panel1.Update();
+        }
+
+        private void ChangeBorderTexture(Image imageArg) {
             //change texture of border walls
             foreach (MapObject mapGameObject in MapObjectList) {
                 if (mapGameObject.X == 0 || mapGameObject.X == 63 || mapGameObject.Y == 0 || mapGameObject.Y == 63) {
-                    mapGameObject.Image = (sender as ToolStripMenuItem).Image;
-                    mapGameObject.SetTypeFromImage((sender as ToolStripMenuItem).Image);
+                    mapGameObject.Image = imageArg;
+                    mapGameObject.SetTypeFromImage(imageArg);
                 }
             }
-            panel1.Invalidate();
-            panel1.Update();
         }
 
         private void wallBrushChange(object sender, EventArgs e) {
@@ -452,8 +513,8 @@ namespace LevelEditor {
                     playerAdded = true;
                     tmpGameObj = new PlayerGameObject(x, y);
                 }
-                else if (  currentPenImage.Tag.Equals("Bullets") 
-                        || currentPenImage.Tag.Equals("ShotgunAmmo") 
+                else if (currentPenImage.Tag.Equals("Bullets")
+                        || currentPenImage.Tag.Equals("ShotgunAmmo")
                         || currentPenImage.Tag.Equals("SmallMedkit")) {
                     tmpGameObj = new Pickup(currentPenImage.Tag.ToString(), x, y, currentPenImage);
                 }
@@ -466,6 +527,7 @@ namespace LevelEditor {
                 tmpGameObj.SetTypeFromImage(currentPenImage);
                 MapObjectList.Add(tmpGameObj);
                 unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
 
                 handleExistingMapObject(panel, x, y, tmpGameObj); //erases game object if it's on (X,Y). Works for NPC, Pickup & Player
 
@@ -497,6 +559,7 @@ namespace LevelEditor {
 
                 MapObjectList.RemoveAt(removeIndex);
                 unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
                 panel.Invalidate();
                 panel.Update();
                 return;
@@ -558,6 +621,10 @@ namespace LevelEditor {
                     if (c is NumericUpDown || c is CheckBox)
                         c.Enabled = true;
                 }
+                groupBoxPlayer.Enabled = false;
+                groupBoxPlayer.Visible = false;
+                groupBoxPickup.Visible = false;
+                groupBoxPickup.Enabled = false;
             }
             else if (selectedMapObject is PlayerGameObject) {
                 groupBoxPickup.Visible = false;
@@ -670,9 +737,10 @@ namespace LevelEditor {
 
 
         private void Panel1_Paint(object sender, PaintEventArgs e) {
+            MapObjectList.RemoveAll(x => x == null); //prevent null reference exception
 
             base.OnPaint(e);
-            e.Graphics.Clear(Color.FromArgb(31, 31, 31)); //clear the panel
+            e.Graphics.Clear(DarkTheme.BackgroundColor); //clear the panel
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
@@ -680,6 +748,8 @@ namespace LevelEditor {
             //Rectangle r = (sender as Panel).DisplayRectangle;
 
             foreach (MapObject gObject in MapObjectList) {
+                if (gObject is PlayerGameObject) continue;
+
                 if (gObject.X >= drawX && gObject.Y >= drawY)
                     e.Graphics.DrawImage(gObject.Image, (gObject.X - drawX) * CurrentPictureSize, (gObject.Y - drawY) * CurrentPictureSize,
                                      CurrentPictureSize, CurrentPictureSize);
@@ -730,12 +800,24 @@ namespace LevelEditor {
 
         private void SerializeList() {
             PlayerGameObject player = MapObjectList.Find(obj => obj is PlayerGameObject) as PlayerGameObject;
-            if (player != null)
-                new Map(MapObjectList, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
-            else
-                new Map(MapObjectList, "map1", false, "", wallTextureIndex, -1, -1).WriteMapToJson("C:\\FPS_editor_json", "level1.json"); //start X and Y -1 means no player
 
-            //BaseMapObject.WriteCurrentListToJson("C:\\FPS_editor_json", "level1.json", BaseMapObjects);
+            //for debugging
+            if (currentMap == null && currentProject == null) {
+                if (player != null)
+                    new Map(MapObjectList, "map1", false, "", wallTextureIndex, player).WriteMapToJson("C:\\FPS_editor_json", "level1.json");
+                else
+                    new Map(MapObjectList, "map1", false, "", wallTextureIndex, -1, -1).WriteMapToJson("C:\\FPS_editor_json", "level1.json"); //start X and Y -1 means no player
+                return;
+            }
+
+            if (player != null)
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, player).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
+            else
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, null).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
+                //new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, -1, -1).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem"); //start X and Y -1 means no player
+
+            unsavedChanges = false;
+            this.Text = $"{currentProject.Name} - {currentMap.Name}";
         }
 
         private void resetObjectPropsButton_Click(object sender, EventArgs e) {
@@ -754,21 +836,7 @@ namespace LevelEditor {
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
-            //show dialog if unsaved changes
-            if (!unsavedChanges)
-                this.Close();
-
-            DialogResult dialogResult = MessageBox.Show("Do you want to save changes?", "Save changes", MessageBoxButtons.YesNoCancel);
-            if (dialogResult == DialogResult.Yes) {
-                SerializeList();
-                this.Close();
-            }
-            else if (dialogResult == DialogResult.No) {
-                this.Close();
-            }
-            else if (dialogResult == DialogResult.Cancel) {
-                //do nothing for now
-            }
+            this.Close();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -791,5 +859,33 @@ namespace LevelEditor {
             }
         }
 
+        private void FormDraw_FormClosing(object sender, FormClosingEventArgs e) {
+            //show dialog if unsaved changes
+            if (!unsavedChanges)
+                return;
+
+            DialogResult dialogResult = MessageBox.Show("Do you want to save changes?", "Save changes", MessageBoxButtons.YesNoCancel);
+            if (dialogResult == DialogResult.Yes) {
+                SerializeList();
+            }
+            else if (dialogResult == DialogResult.No) {
+                //just exit the form
+                //maybe remove this else if branch
+            }
+            else if (dialogResult == DialogResult.Cancel) {
+                e.Cancel = true;
+            }
+        }
+
+        private void resetMapToolStripMenuItem_Click(object sender, EventArgs e) {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset the map?", "Reset Map", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes) {
+                MapObjectList.RemoveAll(x => !(x.Y == 0 || x.Y == 63 || x.X == 0 || x.X == 63));
+                ChangeBorderTexture(Resources.wallBrick);
+                panel1.Invalidate();
+                panel1.Update();
+                //AddBasicLevelOutline(panel1, false);
+            }
+        }
     }
 }

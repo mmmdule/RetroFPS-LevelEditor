@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace LevelEditor {
+namespace LevelEditor
+{
     //TODO: finish the setDefaultPropsForType() method
 
-    internal class MapNpcObject : MapObject
+    public partial class MapNpcObject : MapObject
     {
         //private string type; //most important, determines prefab to be spawned
         private int health;
@@ -25,20 +26,17 @@ namespace LevelEditor {
 
         private Point location;
 
-        
 
-        public static void WriteCurrentListToJson(string path, string filename, List<MapNpcObject> list) {
+
+        public static void WriteCurrentListToJson(string path, string filename, List<MapNpcObject> list)
+        {
             path = Path.Combine(path, filename);
             if (!File.Exists(path))
                 File.Create(path).Close();
-            Console.Write(JsonSerializer.Serialize(list)); 
-            var options1 = new JsonSerializerOptions {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
-            using (StreamWriter outputFile = new StreamWriter(path)) {
-                
-                outputFile.Write(JsonSerializer.Serialize(list, options1));
+            Console.Write(JsonSerializer.Serialize(list));
+            using (StreamWriter outputFile = new StreamWriter(path))
+            {
+                outputFile.Write(JsonSerializer.Serialize(list, JsonOptions.MyDefaultOptions));
             }
         }
 
@@ -68,13 +66,14 @@ namespace LevelEditor {
             attackRange = 0;
             chaseRange = 0;
             canMove = true;
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
             location = new Point(x, y);
             image = Resources.wallBrick;
         }
 
-        public MapNpcObject(int x, int y, Image image) : base(x, y, image) {
+        public MapNpcObject(int x, int y, Image image) : base(x, y, image)
+        {
             Type = image.Tag.ToString();
             health = 0;
             //projectileDamage = 0;
@@ -83,8 +82,8 @@ namespace LevelEditor {
             attackRange = 0;
             chaseRange = 0;
             canMove = true;
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
             location = new Point(x, y);
             this.image = image;
             setDefaultPropsForType(image.Tag.ToString());
@@ -99,55 +98,77 @@ namespace LevelEditor {
         public bool CanMove { get => canMove; set => canMove = value; }
 
         [JsonIgnore]
-        public Point Location { get {
-                                        if (X != location.X || X != location.Y) {
-                                            location.X = X;
-                                            location.Y = Y;
-                                            return location;
-                                        }   
-                                        else
-                                            return location;
-                                      }
-                                set => location = value; }
+        public Point Location
+        {
+            get
+            {
+                if (X != location.X || X != location.Y)
+                {
+                    location.X = X;
+                    location.Y = Y;
+                    return location;
+                }
+                else
+                    return location;
+            }
+            set => location = value;
+        }
 
-        public override void SetImageFromType(string type) {
+        public override void SetImageFromType(string type)
+        {
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
 
-            this.Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
+            Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
 
-            this.Type = type;
-            this.setDefaultPropsForType(type);
+            Type = type;
+            setDefaultPropsForType(type);
         }
 
-        public void setDefaultPropsForType(string type) {
+        public void setDefaultPropsForType(string type)
+        {
             //based on the type, set default values for health, firing rate, canMove etc.
-            switch (type) {
+            switch (type)
+            {
                 case "Imp":
-                    this.canMove = true;
-                    this.health = 50;
-                    this.firingRate = 2.25f; //pause between attacks
-                    this.patrolRange = 10;
-                    this.attackRange = 18;
-                    this.chaseRange = 18;
-                    this.attackRange = 13.5f;
-                    this.projectileDamage = 16; //damage of fireball prefab
+                    canMove = true;
+                    health = 50;
+                    firingRate = 2.25f; //pause between attacks
+                    patrolRange = 10;
+                    attackRange = 18;
+                    chaseRange = 18;
+                    attackRange = 13.5f;
+                    projectileDamage = 16; //damage of fireball prefab
                     break;
                 //case "EnergyBall":
                 //    this.canMove = false;
                 //    //maybe make damage dynamic
                 //    break;
                 case "Tri_horn":
-                    this.canMove = true;
-                    this.health = 100;
-                    this.firingRate = 1.87f; //pause between attacks
-                    this.patrolRange = 15;
-                    this.attackRange = 20;
-                    this.chaseRange = 25;
-                    this.attackRange = 13.5f;
-                    this.projectileDamage = 3 * 12; //damage of 3 EnergyBall prefabs
+                    canMove = true;
+                    health = 100;
+                    firingRate = 1.87f; //pause between attacks
+                    patrolRange = 15;
+                    attackRange = 20;
+                    chaseRange = 25;
+                    attackRange = 13.5f;
+                    projectileDamage = 3 * 12; //damage of 3 EnergyBall prefabs
                     break;
                 default:
+                    break;
+            }
+        }
+
+        public void SetImageFromType() {
+            switch (Type) {
+                case "Imp":
+                    Image = Resources.Imp;
+                    break;
+                case "Tri_horn":
+                    Image = Resources.Tri_horn;
+                    break;
+                default:
+                    throw new System.Exception("Invalid NPC type while setting image");
                     break;
             }
         }

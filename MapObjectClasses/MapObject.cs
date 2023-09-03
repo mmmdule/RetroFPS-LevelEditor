@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows.Forms;
 
-namespace LevelEditor {
+namespace LevelEditor
+{
 
     [JsonDerivedType(typeof(Pickup))]
     [JsonDerivedType(typeof(MapNpcObject))]
-    internal class MapObject {
+    public partial class MapObject
+    {
         protected int x;                  //X coordinate (column in table)
         protected int y;                  //Y coordinate (row in table)
         protected string type;    //most important, determines prefab to be spawned
@@ -39,23 +41,30 @@ namespace LevelEditor {
             { Resources.tileWall, "tileWall" }
         };
 
-        public MapObject(int x, int y) {
-            this.X = x;
-            this.Y = y;
+        public MapObject() {
+            SetImageFromType(this.type);
+        }
+
+        public MapObject(int x, int y)
+        {
+            X = x;
+            Y = y;
             image = Resources.wallBrick;
         }
 
-        public MapObject(int x, int y, string type) {
-            this.X = x;
-            this.Y = y;
-            this.Type = type;
+        public MapObject(int x, int y, string type)
+        {
+            X = x;
+            Y = y;
+            Type = type;
             SetImageFromType(type);
         }
 
-        public MapObject(int x, int y, Image image) {
-            this.X = x;
-            this.Y = y;
-            this.Image = image;
+        public MapObject(int x, int y, Image image)
+        {
+            X = x;
+            Y = y;
+            Image = image;
         }
 
         public int X { get => x; set => x = value; }
@@ -64,23 +73,25 @@ namespace LevelEditor {
         [JsonIgnore]
         public Image Image { get => image; set => image = value; }
 
-        public virtual void SetTypeFromImage(Image image) {
+        public virtual void SetTypeFromImage(Image image)
+        {
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
 
             //tag-ovi slika postavljeni su u Resources.Designer.cs
-            this.Type = image.Tag.ToString();
+            Type = image.Tag.ToString();
         }
 
 
-        public virtual void SetImageFromType(string type) {
+        public virtual void SetImageFromType(string type)
+        {
             //See which of the images from Resources the param "image" matches
             //And set the Type property of this object based on it
 
 
-            this.Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
+            Image = imageDict.FirstOrDefault(x => x.Value == type).Key;
 
-            this.Type = type;
+            Type = type;
         }
     }
 }

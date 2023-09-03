@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LevelEditor;
 
 namespace LevelEditor
 {
@@ -17,7 +18,8 @@ namespace LevelEditor
             Application.EnableVisualStyles();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormDraw());
+            //Application.Run(new FormDraw());
+            Application.Run(new FormHome());
         }
     }
 }
