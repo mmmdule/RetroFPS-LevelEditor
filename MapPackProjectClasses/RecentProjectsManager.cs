@@ -53,9 +53,11 @@ namespace LevelEditor {
 
         public void UpdateRecentProjects(Project project) {
             bool found = recentProjects.Exists(x => x.Name == project.Name && x.Path == project.Path);
-            
-            if (!found)
+
+            if (!found) {
+                AddProject(project);
                 return;
+            }
 
             recentProjects.Find(x => x.Name == project.Name && x.Path == project.Path).LastOpened = DateTime.Now;
             WriteRecentProjectsToFile();

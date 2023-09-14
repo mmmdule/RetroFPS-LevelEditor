@@ -16,7 +16,7 @@ namespace LevelEditor
 
         public Pickup(string type, int x, int y) : base(x, y)
         {
-            Type = type; //"SmallMedkit", "Bullets", "ShotgunAmmo"
+            Type = type; //"SmallMedkit", "Bullets", "ShotgunAmmo", "SmgAmmo"
             SetDefaultValues();
         }
 
@@ -50,6 +50,9 @@ namespace LevelEditor
                 case "ShotgunAmmo":
                     Value = 7;
                     break;
+                case "smgAmmo":
+                    Value = 40;
+                    break;
                 default:
                     Value = 0;
                     break;
@@ -66,6 +69,9 @@ namespace LevelEditor
                     break;
                 case "ShotgunAmmo":
                     Image = Resources.ShotgunAmmo;
+                    break;
+                case "smgAmmo":
+                    Image = Resources.smgAmmo;
                     break;
                 default:
                     throw new System.Exception("Invalid pickup type while setting image");

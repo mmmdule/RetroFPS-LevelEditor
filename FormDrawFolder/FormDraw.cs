@@ -102,6 +102,8 @@ namespace LevelEditor {
             playerRevolverAmmoInput.ValueChanged += PlayerInputs_AnyValueChanged;
             playerHasShotgunCheckBox.CheckedChanged += PlayerInputs_AnyValueChanged;
             playerShotgunAmmoInput.ValueChanged += PlayerInputs_AnyValueChanged;
+            playerHasSmgCheckBox.CheckedChanged += PlayerInputs_AnyValueChanged;
+            playerSmgAmmoInput.ValueChanged += PlayerInputs_AnyValueChanged;
 
             //wall brush menu toolstrip eventHandlers
             foreach (ToolStripMenuItem item in wallBrushToolStripMenuItem.DropDownItems)
@@ -115,6 +117,43 @@ namespace LevelEditor {
             //their health value will be set to the value of valueInput
             //and it will represent how much health/ammo they give to the player
             valueInput.ValueChanged += ValueInput_ValueChanged;
+
+            foreach (ToolStripMenuItem item in brushesToolStripMenuItem.DropDownItems)
+                item.Click += BrushesViewChange;
+        }
+
+        private void BrushesViewChange(object sender, EventArgs e) {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            item.Checked = true;
+            item.CheckState = CheckState.Checked;
+            //uncheck all other items?
+            foreach (ToolStripMenuItem i in brushesToolStripMenuItem.DropDownItems) {
+                if (i != item) {
+                    i.Checked = false;
+                    i.CheckState = CheckState.Unchecked;
+                }
+            }
+
+            switch (item.Text) {
+                case "All":
+                    ShowAllBrushes();
+                    break;
+                case "Walls":
+                    ShowWallBrushes();
+                    break;
+                case "Enemies":
+                    ShowEnemyBrushes();
+                    break;
+                case "Map Objects":
+                    ShowMapObjectBrushes();
+                    break;
+                case "Pickups":
+                    ShowPickupBrushes();
+                    break;
+                case "Player":
+                    ShowPlayerBrushes();
+                    break;
+            }
         }
 
         private void SetControlsToDarkTheme() {
@@ -156,6 +195,9 @@ namespace LevelEditor {
             //make wallTextureToolStripMenuItem dropdown menu dark
             wallTextureToolStripMenu.DropDown.ForeColor = Color.White;
             wallTextureToolStripMenu.DropDown.BackColor = DarkTheme.BackgroundColor;
+
+            brushesToolStripMenuItem.DropDown.ForeColor = Color.White;
+            brushesToolStripMenuItem.DropDown.BackColor = DarkTheme.BackgroundColor;
         }
 
         private void FormDraw_Load(object sender, EventArgs e) {
@@ -217,7 +259,7 @@ namespace LevelEditor {
         private bool IsItTheFirstTime() {
             int itemCount = 0;
             for (int i = 0; i <= 63; i += 63) //HORIZONTAL
-                for (int j = 0; j < 64; j++) { 
+                for (int j = 0; j < 64; j++) {
                     if (MapObjectList.Find(x => x.X == j && x.Y == i) != null) {
                         itemCount++;
                     }
@@ -357,6 +399,12 @@ namespace LevelEditor {
                     break;
                 case "playerShotgunAmmoInput":
                     player.ShotgunAmmo = (int)playerShotgunAmmoInput.Value;
+                    break;
+                case "playerHasSmgCheckBox":
+                    player.HasSmg = playerHasSmgCheckBox.Checked;
+                    break;
+                case "playerSmgAmmoInput":
+                    player.SmgAmmo = (int)playerSmgAmmoInput.Value;
                     break;
                 default:
                     break;
@@ -515,6 +563,7 @@ namespace LevelEditor {
                 }
                 else if (currentPenImage.Tag.Equals("Bullets")
                         || currentPenImage.Tag.Equals("ShotgunAmmo")
+                        || currentPenImage.Tag.Equals("smgAmmo")
                         || currentPenImage.Tag.Equals("SmallMedkit")) {
                     tmpGameObj = new Pickup(currentPenImage.Tag.ToString(), x, y, currentPenImage);
                 }
@@ -648,6 +697,8 @@ namespace LevelEditor {
                 playerHasRevolverCheckBox.Checked = player.HasRevolver;
                 playerShotgunAmmoInput.Value = (decimal)player.ShotgunAmmo;
                 playerHasShotgunCheckBox.Checked = player.HasShotgun;
+                playerHasSmgCheckBox.Checked = player.HasSmg;
+                playerSmgAmmoInput.Value = (decimal)player.SmgAmmo;
                 playerCoordinatesLabel.Text = $"Coordinates:           ({player.X}, {player.Y})";
                 typeLabel.Text = $"Type:           Player";
                 return;
@@ -811,10 +862,14 @@ namespace LevelEditor {
             }
 
             if (player != null)
-                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, player).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, player).WriteMapToJson($"{currentProject.Path}\\maps", $"{currentMap.Name}.lem");
+            //new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, player).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
             else
-                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, null).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
-                //new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, -1, -1).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem"); //start X and Y -1 means no player
+                new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, null).WriteMapToJson($"{currentProject.Path}\\maps", $"{currentMap.Name}.lem");
+            //new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, null).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem");
+
+
+            //new Map(MapObjectList, currentMap.Name, false, "", wallTextureIndex, -1, -1).WriteMapToJson($"{currentProject.Path}\\{currentProject.Name}\\maps", $"{currentMap.Name}.lem"); //start X and Y -1 means no player
 
             unsavedChanges = false;
             this.Text = $"{currentProject.Name} - {currentMap.Name}";
@@ -887,5 +942,104 @@ namespace LevelEditor {
                 //AddBasicLevelOutline(panel1, false);
             }
         }
+
+        private void ShowAllBrushes() {
+            foreach(Button btn in gameObjectsFlowLayoutPanel.Controls) {
+                btn.Visible = true;
+                btn.Enabled = true;
+            }
+        }
+
+        private void ShowWallBrushes(){
+            List<string> wallNames = new List<string>{ "Cobweb_Wall", "wallBrick", "wallMoss", "wallStone", "tileWall" };
+            foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
+                if(btn.BackgroundImage == null) { 
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else if (wallNames.IndexOf( (string)btn.BackgroundImage.Tag ) == -1) {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else {
+                    btn.Visible = true;
+                    btn.Enabled = true;
+                }
+            }
+        }
+        private void ShowEnemyBrushes(){
+            List<string> npcNames = new List<string> { "Imp", "Tri_horn" };
+            foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
+                if (btn.BackgroundImage == null)
+                {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else if (npcNames.IndexOf( (string)btn.BackgroundImage.Tag ) == -1) {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else {
+                    btn.Visible = true;
+                    btn.Enabled = true;
+                }
+            }
+        }
+        private void ShowMapObjectBrushes(){
+            List<string> objNames = new List<string> { "ArchwaySingle", "ArchwaySmall", "ArmorBlink", "DoorGate", "EnergyBall", "ExitDoor", "Key", "Stone", "Torch"};
+            foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
+                if (btn.BackgroundImage == null)
+                {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else if (objNames.IndexOf((string)btn.BackgroundImage.Tag) == -1) {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else {
+                    btn.Visible = true;
+                    btn.Enabled = true;
+                }
+            }
+        }
+        private void ShowPickupBrushes(){
+            List<string> pickupNames = new List<string> { "Bullets", "ShotgunAmmo", "SmallMedkit", "smgAmmo" };
+            foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
+                if (btn.BackgroundImage == null)
+                {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else if (pickupNames.IndexOf((string)btn.BackgroundImage.Tag) == -1) {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else {
+                    btn.Visible = true;
+                    btn.Enabled = true;
+                }
+            }
+
+        }
+        private void ShowPlayerBrushes() {
+            foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
+                if (btn.BackgroundImage == null)
+                {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+                else if (btn.BackgroundImage.Tag.Equals("player")) {
+                    btn.Visible = true;
+                    btn.Enabled = true;
+                }
+                else {
+                    btn.Visible = false;
+                    btn.Enabled = false;
+                }
+            }
+            
+        }
+
     }
 }

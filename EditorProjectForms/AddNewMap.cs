@@ -69,7 +69,8 @@ namespace LevelEditor {
             map = new Map(textBoxMapName.Text.Trim(), rbStory.Checked);
             project.MapNameList.Add(map.Name);
             //lem == Level Editor Map
-            map.WriteMapToJson($"{project.Path}\\{project.Name}\\maps", map.Name + ".lem");
+            //map.WriteMapToJson($"{project.Path}\\{project.Name}\\maps", map.Name + ".lem");
+            map.WriteMapToJson($"{project.Path}\\maps", map.Name + ".lem");
             project.SaveToJsonFile(project.Path, project.Name);
             updateDelegate(); //refreshes the UI on the ProjectViewForm
             this.Close();
