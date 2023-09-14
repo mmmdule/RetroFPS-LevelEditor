@@ -14,6 +14,9 @@ namespace LevelEditor
 
         private bool hasShotgun;
         private int shotgunAmmo;
+        
+        private bool hasSmg;
+        private int smgAmmo;
 
         //private int x;
         //private int y;
@@ -24,7 +27,7 @@ namespace LevelEditor
         //private readonly Image image = Resources.player;
         ////A readonly field can't be assigned after the constructor exits
 
-        public PlayerGameObject(int health, bool hasRevolver, int revolverAmmo, bool hasShotgun, int shotgunAmmo, int x, int y) : base(x, y)
+        public PlayerGameObject(int health, bool hasRevolver, int revolverAmmo, bool hasShotgun, int shotgunAmmo, bool hasSmg, int smgAmmo, int x, int y) : base(x, y)
         {
             type = "player";
             image = Resources.player;
@@ -34,6 +37,8 @@ namespace LevelEditor
             this.revolverAmmo = revolverAmmo;
             this.hasShotgun = hasShotgun;
             this.shotgunAmmo = shotgunAmmo;
+            this.hasSmg = hasSmg;
+            this.smgAmmo = smgAmmo;
         }
 
         public PlayerGameObject(int x, int y) : base(x, y)
@@ -46,6 +51,8 @@ namespace LevelEditor
             revolverAmmo = 75;
             hasShotgun = true;
             shotgunAmmo = 50;
+            hasSmg = true;
+            smgAmmo = 200;
         }
 
         //for deserialization purposes
@@ -57,6 +64,8 @@ namespace LevelEditor
         public int RevolverAmmo { get => revolverAmmo; set => revolverAmmo = value; }
         public bool HasShotgun { get => hasShotgun; set => hasShotgun = value; }
         public int ShotgunAmmo { get => shotgunAmmo; set => shotgunAmmo = value; }
+        public bool HasSmg { get => hasSmg; set => hasSmg = value; }
+        public int SmgAmmo { get => smgAmmo; set => smgAmmo = value; }
 
         public override string ToString()
         {

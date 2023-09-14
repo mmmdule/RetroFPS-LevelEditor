@@ -45,7 +45,7 @@ namespace LevelEditor {
             if (!validInputs)
                 return;
 
-            Project project = new Project(textBoxProjectName.Text.Trim(), textBoxGameTitle.Text.Trim(), textBoxSubtitle.Text.Trim(), textBoxPath.Text.Trim(), textBoxAuthor.Text.Trim());
+            Project project = new Project(textBoxProjectName.Text.Trim(), textBoxGameTitle.Text.Trim(), textBoxSubtitle.Text.Trim(), textBoxPath.Text.Trim() + $"\\{textBoxProjectName.Text.Trim()}", textBoxAuthor.Text.Trim());
 
             //create directory for project
 

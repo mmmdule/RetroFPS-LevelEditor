@@ -388,5 +388,18 @@ namespace LevelEditor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smgAmmo
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("smgAmmo", resourceCulture);
+                (obj as Image).Tag = "smgAmmo";
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

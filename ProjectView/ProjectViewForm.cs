@@ -78,7 +78,8 @@ namespace LevelEditor {
 
             try {
                 //delete the map file
-                System.IO.File.Delete($"{currentProject.Path}\\{currentProject.Name}\\maps\\{currentProject.MapNameList[selectedMapIndex]}.lem");
+                //System.IO.File.Delete($"{currentProject.Path}\\{currentProject.Name}\\maps\\{currentProject.MapNameList[selectedMapIndex]}.lem");
+                System.IO.File.Delete($"{currentProject.Path}\\maps\\{currentProject.MapNameList[selectedMapIndex]}.lem");
                 currentProject.MapNameList.RemoveAt(selectedMapIndex);
                 currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
@@ -161,6 +162,8 @@ namespace LevelEditor {
 
             if (map.StoryTextSegment) {
                 //Open text editor
+                ProjectView.StoryEditor storyEditor = new ProjectView.StoryEditor(map, currentProject);
+                storyEditor.ShowDialog();
             }
             else {
                 //Open map editor

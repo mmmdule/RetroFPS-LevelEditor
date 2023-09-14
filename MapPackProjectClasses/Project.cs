@@ -51,12 +51,14 @@ namespace LevelEditor {
 
         public void SaveToJsonFile(string path, string name) {
             string jsonString = JsonSerializer.Serialize<Project>(this, JsonOptions.MyDefaultOptions);
-            File.WriteAllText($"{path}\\{name}\\{name}.lep", jsonString);
+            //File.WriteAllText($"{path}\\{name}\\{name}.lep", jsonString);
+            File.WriteAllText($"{path}\\{name}.lep", jsonString);
             //lep == Level Editor Project
         }
 
         public Map ReadMap(int index) {
-            string tmpPath = $"{path}\\{name}\\maps\\{mapNameList[index]}.lem";
+            //string tmpPath = $"{path}\\{name}\\maps\\{mapNameList[index]}.lem";
+            string tmpPath = $"{path}\\maps\\{mapNameList[index]}.lem";
             try {
                 //all classes used in map need empty constructor for deserialization
                 Map map = JsonSerializer.Deserialize<Map>(File.ReadAllText($"{tmpPath}")/*, JsonOptions.MyDefaultOptions*/);

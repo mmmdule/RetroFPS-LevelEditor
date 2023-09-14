@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.IO;
 
 namespace LevelEditor {
     public partial class FormHome : Form {
@@ -81,7 +82,8 @@ namespace LevelEditor {
             else {
                 P = ((sender as Control).Parent as RecentProjectButton).Project;
             }
-            openProject($"{P.Path}\\{P.Name}\\{P.Name}.lep");
+            //openProject($"{P.Path}\\{P.Name}\\{P.Name}.lep");
+            openProject($"{P.Path}\\{P.Name}.lep");
         }
 
         private void FormHome_MouseDown(object sender, MouseEventArgs e) {
@@ -139,6 +141,9 @@ namespace LevelEditor {
             try {
                 string jsonProjectData = System.IO.File.ReadAllText(path);
                 Project proj = JsonSerializer.Deserialize<Project>(jsonProjectData);
+                //set path to folder in which file is located
+                proj.Path = Path.GetDirectoryName(path);
+                proj.SaveToJsonFile(proj.Path, $"{proj.Name}");
                 ProjectViewForm projectViewForm = new ProjectViewForm(proj);
                 recentProjectsManager.UpdateRecentProjects(proj);
                 projectViewForm.Show();
