@@ -36,6 +36,7 @@
             label6 = new System.Windows.Forms.Label();
             noRecentProjectsLabel = new System.Windows.Forms.Label();
             recentProjectsPanel = new System.Windows.Forms.Panel();
+            btnClearRecents = new System.Windows.Forms.Button();
             panelCreateProject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxCreate).BeginInit();
             panelOpenProject.SuspendLayout();
@@ -193,6 +194,18 @@
             recentProjectsPanel.Size = new System.Drawing.Size(646, 379);
             recentProjectsPanel.TabIndex = 8;
             // 
+            // btnClearRecents
+            // 
+            btnClearRecents.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btnClearRecents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnClearRecents.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            btnClearRecents.Location = new System.Drawing.Point(1161, 59);
+            btnClearRecents.Name = "btnClearRecents";
+            btnClearRecents.Size = new System.Drawing.Size(76, 33);
+            btnClearRecents.TabIndex = 26;
+            btnClearRecents.Text = "Clear";
+            btnClearRecents.UseVisualStyleBackColor = true;
+            // 
             // FormHome
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,6 +213,7 @@
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             ClientSize = new System.Drawing.Size(1279, 529);
             ControlBox = false;
+            Controls.Add(btnClearRecents);
             Controls.Add(recentProjectsPanel);
             Controls.Add(label6);
             Controls.Add(panelOpenProject);
@@ -240,6 +254,7 @@
         private System.Windows.Forms.PictureBox pictureBoxOpen;
         private System.Windows.Forms.Label noRecentProjectsLabel;
         private System.Windows.Forms.Panel recentProjectsPanel;
+        private System.Windows.Forms.Button btnClearRecents;
     }
 }
 

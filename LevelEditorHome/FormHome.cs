@@ -51,6 +51,13 @@ namespace LevelEditor {
                 control.MouseLeave += PanelBackground_MouseLeave;
                 control.Click += OpenProjectDialog;
             }
+
+            btnClearRecents.Click += BtnClearRecents_Click;
+        }
+
+        private void BtnClearRecents_Click(object sender, EventArgs e) {
+            recentProjectsManager.ClearRecentProjects();
+            recentProjectsPanel.Controls.Clear();
         }
 
         private void AddRecentProjectsToPanel() {

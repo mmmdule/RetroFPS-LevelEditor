@@ -69,6 +69,11 @@ namespace LevelEditor {
             RecentProjectsManager recentProjectsManager = new RecentProjectsManager();
             int index = recentProjectsManager.RecentProjects.FindIndex(x => x.Name == currentProject.Name && x.Path == currentProject.Path && currentProject.Author == x.Author && currentProject.GameTitle == x.GameTitle && currentProject.GameSubtitle == x.GameSubtitle);
 
+            if (currentProject.Name != textBoxProjectName.Text.Trim()) {
+                currentProject.HandleProjectRename(currentProject.Name);
+                projectNameLabel.Text = textBoxProjectName.Text.Trim();
+            }
+
             currentProject.Name = textBoxProjectName.Text.Trim();
             currentProject.Author = textBoxAuthor.Text.Trim();
             currentProject.GameTitle = textBoxGameTitle.Text.Trim();
@@ -78,10 +83,7 @@ namespace LevelEditor {
             recentProjectsManager.RecentProjects[index] = currentProject;
             recentProjectsManager.WriteRecentProjectsToFile();
 
-            if (currentProject.Name != textBoxProjectName.Text.Trim()) {
-                currentProject.HandleProjectRename(currentProject.Name);
-                projectNameLabel.Text = currentProject.Name;
-            }
+            
         }
 
         private void BtnAddMap_Click(object sender, EventArgs e) {

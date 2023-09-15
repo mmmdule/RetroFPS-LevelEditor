@@ -83,6 +83,7 @@ namespace LevelEditor {
         public void HandleProjectRename(string newName) {
             //rename lep file
             File.Move($"{path}\\{name}.lep", $"{path}\\{newName}.lep");
+            File.Delete($"{path}\\{name}.lep");
         }
 
         public List<string> MapNameList { get => mapNameList; set => mapNameList = value; }

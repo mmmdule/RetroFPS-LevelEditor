@@ -63,6 +63,11 @@ namespace LevelEditor {
             WriteRecentProjectsToFile();
         }
 
+        public void ClearRecentProjects() {
+            recentProjects.Clear();
+            WriteRecentProjectsToFile();
+        }
+
         public List<Project> RecentProjects { get => recentProjects; set => recentProjects = value; }
     }
 }
