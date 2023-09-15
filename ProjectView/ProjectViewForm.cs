@@ -25,7 +25,7 @@ namespace LevelEditor {
             AddProjectInfoToForm();
             AddMapsToPanel();
             currentProject.LastOpened = DateTime.Now;
-            currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
+            currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
 
             refreshUiDelegate = new RefreshUiDelegate(AddMapsToPanel);
         }
@@ -61,6 +61,27 @@ namespace LevelEditor {
 
             btnRemoveMap.Click += BtnRemoveMap_Click;
             btnAddMap.Click += BtnAddMap_Click;
+
+            btnSaveInfoChanges.Click += BtnSaveInfoChanges_Click;
+        }
+
+        private void BtnSaveInfoChanges_Click(object sender, EventArgs e) {
+            RecentProjectsManager recentProjectsManager = new RecentProjectsManager();
+            int index = recentProjectsManager.RecentProjects.FindIndex(x => x.Name == currentProject.Name && x.Path == currentProject.Path && currentProject.Author == x.Author && currentProject.GameTitle == x.GameTitle && currentProject.GameSubtitle == x.GameSubtitle);
+
+            currentProject.Name = textBoxProjectName.Text.Trim();
+            currentProject.Author = textBoxAuthor.Text.Trim();
+            currentProject.GameTitle = textBoxGameTitle.Text.Trim();
+            currentProject.GameSubtitle = textBoxSubtitle.Text.Trim();
+            currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
+
+            recentProjectsManager.RecentProjects[index] = currentProject;
+            recentProjectsManager.WriteRecentProjectsToFile();
+
+            if (currentProject.Name != textBoxProjectName.Text.Trim()) {
+                currentProject.HandleProjectRename(currentProject.Name);
+                projectNameLabel.Text = currentProject.Name;
+            }
         }
 
         private void BtnAddMap_Click(object sender, EventArgs e) {
@@ -81,7 +102,7 @@ namespace LevelEditor {
                 //System.IO.File.Delete($"{currentProject.Path}\\{currentProject.Name}\\maps\\{currentProject.MapNameList[selectedMapIndex]}.lem");
                 System.IO.File.Delete($"{currentProject.Path}\\maps\\{currentProject.MapNameList[selectedMapIndex]}.lem");
                 currentProject.MapNameList.RemoveAt(selectedMapIndex);
-                currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
+                currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
                 selectedMapIndex = -1;
             }
@@ -184,7 +205,7 @@ namespace LevelEditor {
                 string tmp = currentProject.MapNameList[index];
                 currentProject.MapNameList[index] = currentProject.MapNameList[index - 1];
                 currentProject.MapNameList[index - 1] = tmp;
-                currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
+                currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
             }
             catch (Exception) { }
@@ -201,7 +222,7 @@ namespace LevelEditor {
                 string tmp = currentProject.MapNameList[index];
                 currentProject.MapNameList[index] = currentProject.MapNameList[index + 1];
                 currentProject.MapNameList[index + 1] = tmp;
-                currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
+                currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
             }
             catch (Exception) { }
@@ -217,7 +238,7 @@ namespace LevelEditor {
                 string tmp = currentProject.MapNameList[index];
                 currentProject.MapNameList.RemoveAt(index);
                 currentProject.MapNameList.Insert(0, tmp);
-                currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
+                currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
             }
             catch (Exception) { }
@@ -234,7 +255,7 @@ namespace LevelEditor {
                 string tmp = currentProject.MapNameList[index];
                 currentProject.MapNameList.RemoveAt(index);
                 currentProject.MapNameList.Add(tmp);
-                currentProject.SaveToJsonFile(currentProject.Path, currentProject.Name);
+                currentProject.SaveToLepFile(currentProject.Path, currentProject.Name);
                 AddMapsToPanel();
             }
             catch (Exception) { }

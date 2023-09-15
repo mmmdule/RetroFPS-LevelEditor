@@ -1,4 +1,5 @@
 ﻿//using LevelEditor.MapObjectClasses;
+using LevelEditor.FormDrawFolder;
 using LevelEditor.Properties;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Windows.Forms;
 
 namespace LevelEditor {
     public partial class FormDraw : Form {
+        private UndoRedoHandler undoRedoHandler = new UndoRedoHandler();
+
         private List<MapObject> MapObjectList = new List<MapObject>();
         private MapObject selectedMapObject = null;
 
@@ -105,6 +108,10 @@ namespace LevelEditor {
             playerHasSmgCheckBox.CheckedChanged += PlayerInputs_AnyValueChanged;
             playerSmgAmmoInput.ValueChanged += PlayerInputs_AnyValueChanged;
 
+            //undo/redo eventHandlers
+            undoToolStripMenuItem.Click += Undo_Click;
+            redoToolStripMenuItem.Click += Redo_Click;
+
             //wall brush menu toolstrip eventHandlers
             foreach (ToolStripMenuItem item in wallBrushToolStripMenuItem.DropDownItems)
                 item.Click += wallBrushChange;
@@ -120,6 +127,20 @@ namespace LevelEditor {
 
             foreach (ToolStripMenuItem item in brushesToolStripMenuItem.DropDownItems)
                 item.Click += BrushesViewChange;
+        }
+
+        private void Redo_Click(object sender, EventArgs e) {
+            if (undoRedoHandler.CanRedo()) {
+                MapObjectList = undoRedoHandler.Redo();
+                panel1.Invalidate();
+            }
+        }
+
+        private void Undo_Click(object sender, EventArgs e) {
+            if (undoRedoHandler.CanUndo()) {
+                MapObjectList = undoRedoHandler.Undo(MapObjectList);
+                panel1.Invalidate();
+            }
         }
 
         private void BrushesViewChange(object sender, EventArgs e) {
@@ -316,6 +337,9 @@ namespace LevelEditor {
 
         private void ChangeBorderTexture(Image imageArg) {
             //change texture of border walls
+            undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
+            unsavedChanges = true;
+            this.Text = $"{currentProject.Name} - {currentMap.Name}*";
             foreach (MapObject mapGameObject in MapObjectList) {
                 if (mapGameObject.X == 0 || mapGameObject.X == 63 || mapGameObject.Y == 0 || mapGameObject.Y == 63) {
                     mapGameObject.Image = imageArg;
@@ -342,6 +366,9 @@ namespace LevelEditor {
         private void ValueInput_ValueChanged(object sender, EventArgs e) {
             if (selectedMapObject != null && selectedMapObject is Pickup) {
                 (selectedMapObject as Pickup).Value = (int)valueInput.Value;
+                undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
+                unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
             }
         }
 
@@ -349,6 +376,9 @@ namespace LevelEditor {
             //apply changes to selected object
             if (selectedMapObject != null && (selectedMapObject.Type == "Imp" || selectedMapObject.Type == "Tri_horn")) {
                 MapNpcObject selectedMapGameObject = selectedMapObject as MapNpcObject;
+                undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
+                unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
                 switch ((sender as Control).Name) {
                     case "attackRangeInput":
                         selectedMapGameObject.AttackRange = (float)attackRangeInput.Value;
@@ -383,6 +413,9 @@ namespace LevelEditor {
             if (player == null || selectedMapObject is not PlayerGameObject)
                 return;
 
+            undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
+            unsavedChanges = true;
+            this.Text = $"{currentProject.Name} - {currentMap.Name}*";
             //apply changes to player object
             switch ((sender as Control).Name) {
                 case "playerHealthInput":
@@ -574,6 +607,7 @@ namespace LevelEditor {
                     tmpGameObj = new MapObject(x, y, currentPenImage);
                 }
                 tmpGameObj.SetTypeFromImage(currentPenImage);
+                undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
                 MapObjectList.Add(tmpGameObj);
                 unsavedChanges = true;
                 this.Text = $"{currentProject.Name} - {currentMap.Name}*";
@@ -605,7 +639,7 @@ namespace LevelEditor {
                     playerAdded = false;
                     playerSelected = false;
                 }
-
+                undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
                 MapObjectList.RemoveAt(removeIndex);
                 unsavedChanges = true;
                 this.Text = $"{currentProject.Name} - {currentMap.Name}*";
@@ -935,6 +969,9 @@ namespace LevelEditor {
         private void resetMapToolStripMenuItem_Click(object sender, EventArgs e) {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset the map?", "Reset Map", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes) {
+                undoRedoHandler.AddMove(new List<MapObject>(MapObjectList));
+                unsavedChanges = true;
+                this.Text = $"{currentProject.Name} - {currentMap.Name}*";
                 MapObjectList.RemoveAll(x => !(x.Y == 0 || x.Y == 63 || x.X == 0 || x.X == 63));
                 ChangeBorderTexture(Resources.wallBrick);
                 panel1.Invalidate();
@@ -944,20 +981,20 @@ namespace LevelEditor {
         }
 
         private void ShowAllBrushes() {
-            foreach(Button btn in gameObjectsFlowLayoutPanel.Controls) {
+            foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
                 btn.Visible = true;
                 btn.Enabled = true;
             }
         }
 
-        private void ShowWallBrushes(){
-            List<string> wallNames = new List<string>{ "Cobweb_Wall", "wallBrick", "wallMoss", "wallStone", "tileWall" };
+        private void ShowWallBrushes() {
+            List<string> wallNames = new List<string> { "Cobweb_Wall", "wallBrick", "wallMoss", "wallStone", "tileWall" };
             foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
-                if(btn.BackgroundImage == null) { 
+                if (btn.BackgroundImage == null) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
-                else if (wallNames.IndexOf( (string)btn.BackgroundImage.Tag ) == -1) {
+                else if (wallNames.IndexOf((string)btn.BackgroundImage.Tag) == -1) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
@@ -967,15 +1004,14 @@ namespace LevelEditor {
                 }
             }
         }
-        private void ShowEnemyBrushes(){
+        private void ShowEnemyBrushes() {
             List<string> npcNames = new List<string> { "Imp", "Tri_horn" };
             foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
-                if (btn.BackgroundImage == null)
-                {
+                if (btn.BackgroundImage == null) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
-                else if (npcNames.IndexOf( (string)btn.BackgroundImage.Tag ) == -1) {
+                else if (npcNames.IndexOf((string)btn.BackgroundImage.Tag) == -1) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
@@ -985,11 +1021,10 @@ namespace LevelEditor {
                 }
             }
         }
-        private void ShowMapObjectBrushes(){
-            List<string> objNames = new List<string> { "ArchwaySingle", "ArchwaySmall", "ArmorBlink", "DoorGate", "EnergyBall", "ExitDoor", "Key", "Stone", "Torch"};
+        private void ShowMapObjectBrushes() {
+            List<string> objNames = new List<string> { "ArchwaySingle", "ArchwaySmall", "ArmorBlink", "DoorGate", "EnergyBall", "ExitDoor", "Key", "Stone", "Torch" };
             foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
-                if (btn.BackgroundImage == null)
-                {
+                if (btn.BackgroundImage == null) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
@@ -1003,11 +1038,10 @@ namespace LevelEditor {
                 }
             }
         }
-        private void ShowPickupBrushes(){
+        private void ShowPickupBrushes() {
             List<string> pickupNames = new List<string> { "Bullets", "ShotgunAmmo", "SmallMedkit", "smgAmmo" };
             foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
-                if (btn.BackgroundImage == null)
-                {
+                if (btn.BackgroundImage == null) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
@@ -1024,8 +1058,7 @@ namespace LevelEditor {
         }
         private void ShowPlayerBrushes() {
             foreach (Button btn in gameObjectsFlowLayoutPanel.Controls) {
-                if (btn.BackgroundImage == null)
-                {
+                if (btn.BackgroundImage == null) {
                     btn.Visible = false;
                     btn.Enabled = false;
                 }
@@ -1038,7 +1071,7 @@ namespace LevelEditor {
                     btn.Enabled = false;
                 }
             }
-            
+
         }
 
     }

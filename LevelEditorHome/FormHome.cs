@@ -143,7 +143,7 @@ namespace LevelEditor {
                 Project proj = JsonSerializer.Deserialize<Project>(jsonProjectData);
                 //set path to folder in which file is located
                 proj.Path = Path.GetDirectoryName(path);
-                proj.SaveToJsonFile(proj.Path, $"{proj.Name}");
+                proj.SaveToLepFile(proj.Path, $"{proj.Name}");
                 ProjectViewForm projectViewForm = new ProjectViewForm(proj);
                 recentProjectsManager.UpdateRecentProjects(proj);
                 projectViewForm.Show();

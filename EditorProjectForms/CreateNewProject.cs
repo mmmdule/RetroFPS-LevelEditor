@@ -51,7 +51,7 @@ namespace LevelEditor {
 
             try {
                 project.CreateProjectDirectory(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
-                project.SaveToJsonFile(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
+                project.CreateToLepFile(textBoxPath.Text.Trim(), textBoxProjectName.Text.Trim());
                 ProjectViewForm projectViewForm = new ProjectViewForm(project);
                 (new RecentProjectsManager()).AddProject(project);
                 projectViewForm.Show();
@@ -68,7 +68,7 @@ namespace LevelEditor {
         private void ButtonBrowse_Click(object sender, EventArgs e) {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.ShowDialog();
-            folderBrowserDialog.SelectedPath = textBoxPath.Text;
+            textBoxPath.Text = folderBrowserDialog.SelectedPath;
             UpdatePathLabel(ProjectInfoIsValid());
         }
 

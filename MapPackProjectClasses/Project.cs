@@ -49,10 +49,16 @@ namespace LevelEditor {
             Directory.CreateDirectory($"{path}\\{name}\\maps");
         }
 
-        public void SaveToJsonFile(string path, string name) {
+        public void SaveToLepFile(string path, string name) {
             string jsonString = JsonSerializer.Serialize<Project>(this, JsonOptions.MyDefaultOptions);
             //File.WriteAllText($"{path}\\{name}\\{name}.lep", jsonString);
             File.WriteAllText($"{path}\\{name}.lep", jsonString);
+            //lep == Level Editor Project
+        }
+
+        public void CreateToLepFile(string path, string name) {
+            string jsonString = JsonSerializer.Serialize<Project>(this, JsonOptions.MyDefaultOptions);
+            File.WriteAllText($"{path}\\{name}\\{name}.lep", jsonString);
             //lep == Level Editor Project
         }
 
@@ -72,6 +78,11 @@ namespace LevelEditor {
             catch {
                 return null;
             }
+        }
+
+        public void HandleProjectRename(string newName) {
+            //rename lep file
+            File.Move($"{path}\\{name}.lep", $"{path}\\{newName}.lep");
         }
 
         public List<string> MapNameList { get => mapNameList; set => mapNameList = value; }

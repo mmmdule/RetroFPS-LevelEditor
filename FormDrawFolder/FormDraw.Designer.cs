@@ -99,6 +99,7 @@
             wallsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             enemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mapObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            pickupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             playerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mapSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             wallTextureToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,7 +113,9 @@
             stoneWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mossWallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             blueTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            pickupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)attackRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sightRangeInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)patrolRangeInput).BeginInit();
@@ -1172,7 +1175,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, mapSettingsToolStripMenuItem, wallBrushToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, viewToolStripMenuItem, mapSettingsToolStripMenuItem, wallBrushToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -1214,7 +1217,7 @@
             // 
             brushesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { wallsToolStripMenuItem, wallsToolStripMenuItem1, enemiesToolStripMenuItem, mapObjectsToolStripMenuItem, pickupsToolStripMenuItem, playerToolStripMenuItem });
             brushesToolStripMenuItem.Name = "brushesToolStripMenuItem";
-            brushesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            brushesToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             brushesToolStripMenuItem.Text = "Brushes";
             // 
             // wallsToolStripMenuItem
@@ -1222,31 +1225,37 @@
             wallsToolStripMenuItem.Checked = true;
             wallsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             wallsToolStripMenuItem.Name = "wallsToolStripMenuItem";
-            wallsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            wallsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             wallsToolStripMenuItem.Text = "All";
             // 
             // wallsToolStripMenuItem1
             // 
             wallsToolStripMenuItem1.Name = "wallsToolStripMenuItem1";
-            wallsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            wallsToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
             wallsToolStripMenuItem1.Text = "Walls";
             // 
             // enemiesToolStripMenuItem
             // 
             enemiesToolStripMenuItem.Name = "enemiesToolStripMenuItem";
-            enemiesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            enemiesToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             enemiesToolStripMenuItem.Text = "Enemies";
             // 
             // mapObjectsToolStripMenuItem
             // 
             mapObjectsToolStripMenuItem.Name = "mapObjectsToolStripMenuItem";
-            mapObjectsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            mapObjectsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             mapObjectsToolStripMenuItem.Text = "Map Objects";
+            // 
+            // pickupsToolStripMenuItem
+            // 
+            pickupsToolStripMenuItem.Name = "pickupsToolStripMenuItem";
+            pickupsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            pickupsToolStripMenuItem.Text = "Pickups";
             // 
             // playerToolStripMenuItem
             // 
             playerToolStripMenuItem.Name = "playerToolStripMenuItem";
-            playerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            playerToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             playerToolStripMenuItem.Text = "Player";
             // 
             // mapSettingsToolStripMenuItem
@@ -1371,11 +1380,26 @@
             blueTileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             blueTileToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
-            // pickupsToolStripMenuItem
+            // editToolStripMenuItem
             // 
-            pickupsToolStripMenuItem.Name = "pickupsToolStripMenuItem";
-            pickupsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            pickupsToolStripMenuItem.Text = "Pickups";
+            editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { undoToolStripMenuItem, redoToolStripMenuItem });
+            editToolStripMenuItem.Name = "editToolStripMenuItem";
+            editToolStripMenuItem.Size = new System.Drawing.Size(42, 21);
+            editToolStripMenuItem.Text = "Edit";
+            // 
+            // undoToolStripMenuItem
+            // 
+            undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            undoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z;
+            undoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            undoToolStripMenuItem.Text = "Undo";
+            // 
+            // redoToolStripMenuItem
+            // 
+            redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            redoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y;
+            redoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            redoToolStripMenuItem.Text = "Redo";
             // 
             // FormDraw
             // 
@@ -1518,5 +1542,8 @@
         private System.Windows.Forms.ToolStripMenuItem mapObjectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem playerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pickupsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }
