@@ -2,7 +2,7 @@
 
 Level Editor desktop app for my [RetroFPS game](https://github.com/mmmdule/RetroFPS).
 
-The app allows map creation with many customization options planned. Configure each level's layout, textures, enemy and pickup placement and much more with great ease.
+The app allows map creation with many customization options. Configure each level's layout, textures, enemy and pickup placement and much more with great ease.
 
 ## Features
 - Graphical grid display of map layouts
